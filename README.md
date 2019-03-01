@@ -150,3 +150,7 @@ s.browser.button(s.lctr(name: "name of the button", scope: "Some form"))
 s.browser.button(s.lctr("name of the button", scope: "Some form"))
 ```
 That may be helpful in case of migration from plain watir to watir + locatine
+
+## What else?
+
+Version of Locatine is 0.00463 only. It means so far this is a draft. It's work. But... Well... You know...
