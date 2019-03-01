@@ -1,0 +1,664 @@
+{
+  "data": {
+    "Main": {
+      "login field": {
+        "0": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-control",
+            "stability": "9"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "input-dark",
+            "stability": "9"
+          },
+          {
+            "name": "maxlength",
+            "type": "attribute",
+            "value": "254",
+            "stability": "9"
+          },
+          {
+            "name": "name",
+            "type": "attribute",
+            "value": "email",
+            "stability": "9"
+          },
+          {
+            "name": "pattern",
+            "type": "attribute",
+            "value": "^.{1,64}@.{1,255}$",
+            "stability": "9"
+          },
+          {
+            "name": "type",
+            "type": "attribute",
+            "value": "email",
+            "stability": "9"
+          },
+          {
+            "name": "tag",
+            "value": "input",
+            "type": "tag",
+            "stability": "9"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-group",
+            "stability": "9"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "9"
+          }
+        ],
+        "2": [
+          {
+            "name": "action",
+            "type": "attribute",
+            "value": "/login",
+            "stability": "9"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "login-form",
+            "stability": "9"
+          },
+          {
+            "name": "method",
+            "type": "attribute",
+            "value": "post",
+            "stability": "9"
+          },
+          {
+            "name": "tag",
+            "value": "form",
+            "type": "tag",
+            "stability": "9"
+          }
+        ]
+      },
+      "pass field": {
+        "0": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-control",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "input-dark",
+            "stability": "8"
+          },
+          {
+            "name": "name",
+            "type": "attribute",
+            "value": "pwd",
+            "stability": "8"
+          },
+          {
+            "name": "type",
+            "type": "attribute",
+            "value": "password",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "input",
+            "type": "tag",
+            "stability": "8"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-group",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "8"
+          }
+        ],
+        "2": [
+          {
+            "name": "action",
+            "type": "attribute",
+            "value": "/login",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "login-form",
+            "stability": "8"
+          },
+          {
+            "name": "method",
+            "type": "attribute",
+            "value": "post",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "form",
+            "type": "tag",
+            "stability": "8"
+          }
+        ]
+      }
+    },
+    "Default": {
+      "sing in button": {
+        "0": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "btn",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "btn-dark",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "text-left",
+            "stability": "8"
+          },
+          {
+            "name": "type",
+            "type": "attribute",
+            "value": "submit",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "button",
+            "type": "tag",
+            "stability": "8"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-group",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-bttns",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "h4",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "8"
+          }
+        ],
+        "2": [
+          {
+            "name": "action",
+            "type": "attribute",
+            "value": "/login",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "login-form",
+            "stability": "8"
+          },
+          {
+            "name": "method",
+            "type": "attribute",
+            "value": "post",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "form",
+            "type": "tag",
+            "stability": "8"
+          }
+        ]
+      }
+    },
+    "Pay page": {
+      "proceed button": {
+        "0": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "btn",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "btn-success",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "['btn-'",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "+",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "($ctrl.type",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "||",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "'success'),",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "$ctrl.size",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "?",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "('btn-'",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "$ctrl.size)",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": ":",
+            "stability": "8"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "null]",
+            "stability": "8"
+          },
+          {
+            "name": "ng_click",
+            "type": "attribute",
+            "value": "$ctrl.submit($event)",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "$ctrl.ngDisabled",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "||",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "$ctrl.submitting",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "(!$ctrl.ignoreInvalid",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "&&",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "$ctrl.svForm",
+            "stability": "8"
+          },
+          {
+            "name": "ng_disabled",
+            "type": "attribute",
+            "value": "$ctrl.svForm.form.$invalid)",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "button",
+            "type": "tag",
+            "stability": "8"
+          },
+          {
+            "name": "text",
+            "value": "Proceed",
+            "type": "text",
+            "stability": "8"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "pull-right",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "ng-isolate-scope",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "style__btn-wrapper___2BdIh",
+            "stability": "8"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "btn",
+            "stability": "8"
+          },
+          {
+            "name": "data_role",
+            "type": "attribute",
+            "value": "button-pay",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "sv-submit",
+            "type": "tag",
+            "stability": "8"
+          }
+        ],
+        "2": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-group",
+            "stability": "8"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "8"
+          }
+        ]
+      },
+      "iframe": {
+        "0": [
+          {
+            "name": "cd_frame_id_",
+            "type": "attribute",
+            "value": "b2c74c49a3f9e9334025f046890125f8",
+            "stability": "1"
+          },
+          {
+            "name": "data_role",
+            "type": "attribute",
+            "value": "payments:iframe",
+            "stability": "4"
+          },
+          {
+            "name": "ng_src",
+            "type": "attribute",
+            "value": "https://terminal.ecommpay.com/?amount=100&callback_method=4&currency=EUR&decline_url=https%3A%2F%2Fportal.servers.com%2Fecommpay%2Fdecline&description=Card+payment&external_id=b2e4dcf3802b&followup=1&iframe=1&language=en&payment_group_id=1&recurring_register=1&sign=93f320a5af5335665bb25e966cd09f38d7fdce7a&site_id=2377&site_login=seleznev%40servers.com&success_url=https%3A%2F%2Fportal.servers.com%2Fecommpay%2Fsuccess",
+            "stability": "1"
+          },
+          {
+            "name": "src",
+            "type": "attribute",
+            "value": "https://terminal.ecommpay.com/?amount=100&callback_method=4&currency=EUR&decline_url=https%3A%2F%2Fportal.servers.com%2Fecommpay%2Fdecline&description=Card+payment&external_id=b2e4dcf3802b&followup=1&iframe=1&language=en&payment_group_id=1&recurring_register=1&sign=93f320a5af5335665bb25e966cd09f38d7fdce7a&site_id=2377&site_login=seleznev%40servers.com&success_url=https%3A%2F%2Fportal.servers.com%2Fecommpay%2Fsuccess",
+            "stability": "1"
+          },
+          {
+            "name": "width",
+            "type": "attribute",
+            "value": "100%",
+            "stability": "4"
+          },
+          {
+            "name": "tag",
+            "value": "iframe",
+            "type": "tag",
+            "stability": "4"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "iframe-container",
+            "stability": "4"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "ng-scope",
+            "stability": "4"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "sv-iframe-container",
+            "stability": "4"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "4"
+          }
+        ],
+        "2": [
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "{'svTrackable-reloading':",
+            "stability": "4"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "status",
+            "stability": "4"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "==",
+            "stability": "4"
+          },
+          {
+            "name": "ng_class",
+            "type": "attribute",
+            "value": "'reloading'}",
+            "stability": "4"
+          },
+          {
+            "name": "ng_show",
+            "type": "attribute",
+            "value": "status",
+            "stability": "4"
+          },
+          {
+            "name": "ng_show",
+            "type": "attribute",
+            "value": "==",
+            "stability": "4"
+          },
+          {
+            "name": "ng_show",
+            "type": "attribute",
+            "value": "'loaded'",
+            "stability": "4"
+          },
+          {
+            "name": "ng_show",
+            "type": "attribute",
+            "value": "||",
+            "stability": "4"
+          },
+          {
+            "name": "ng_show",
+            "type": "attribute",
+            "value": "'reloading'",
+            "stability": "4"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "4"
+          }
+        ]
+      },
+      "holder field": {
+        "0": [
+          {
+            "name": "autocomplete",
+            "type": "attribute",
+            "value": "off",
+            "stability": "1"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-control",
+            "stability": "1"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "cardholder",
+            "stability": "1"
+          },
+          {
+            "name": "id",
+            "type": "attribute",
+            "value": "cardholder",
+            "stability": "1"
+          },
+          {
+            "name": "name",
+            "type": "attribute",
+            "value": "holder",
+            "stability": "1"
+          },
+          {
+            "name": "type",
+            "type": "attribute",
+            "value": "text",
+            "stability": "1"
+          },
+          {
+            "name": "tag",
+            "value": "input",
+            "type": "tag",
+            "stability": "1"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "form-group",
+            "stability": "1"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "1"
+          }
+        ],
+        "2": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "col-md-4",
+            "stability": "1"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "col-md-offset-2",
+            "stability": "1"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "col-sm-6",
+            "stability": "1"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "1"
+          }
+        ]
+      }
+    }
+  }
+}
