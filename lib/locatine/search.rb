@@ -9,13 +9,13 @@ module Locatine
   ##
   # Search is the main class of the Locatine
   #
-  # Locatine can dance.
+  # Locatine can search.
   class Search
 
     attr_accessor :data, :depth, :browser, :learn, :json, :stability_limit, :scope
 
     ##
-    # Creates a new instance of Dance
+    # Creates a new instance of Search
     #
     # Params:
     # +json+ is the name of file to store//read data. Default => "./Locatine_files/default.json"
