@@ -87,7 +87,7 @@ module Locatine
       if args.last.class == Hash
         args.last[:return_locator] = true
       else
-        args.push {return_locator: true}
+        args.push({return_locator: true})
       end
       find(args)
     end

@@ -68,7 +68,7 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
 
 **learn** mode is used to train locatine to search your elements. By default is false. But if you are starting your test like:
 
-$ LEARN=true ruby path_to_your_test.rb
+    $ LEARN=true ruby path_to_your_test.rb
 
 it will turn learn to true by default.
 
