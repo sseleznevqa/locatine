@@ -6,7 +6,7 @@ It is asking you what element do you mean
 It is remembering your answer and collecting information about selected element
 After that it is finding element itself
 If your element will be lost (due to id change for example) locatine will locate the most similar element
-Thats it.
+That's it.
 
 ## Installation
 
@@ -129,7 +129,7 @@ find(name: "account name", locator:{text: "stablePart_#{random_string}")
 
 **look_in** is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode
 
-**iframe** that is in order to find element inside an iframe
+**iframe** that is in order to find element inside of an iframe
 
 **return_locator** true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
 
@@ -153,4 +153,4 @@ That may be helpful in case of migration from plain watir to watir + locatine
 
 ## What else?
 
-Version of Locatine is 0.00552 only. It means so far this is a draft. It's work. But... Well... You know...
+Version of Locatine is 0.00552 only. It means so far this is a draft. It works. But... Well... You know...
