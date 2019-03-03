@@ -9,20 +9,25 @@ module Locatine
   ##
   # Search is the main class of the Locatine
   #
-  # Locatine can dance.
+  # Locatine can search.
   class Search
 
     attr_accessor :data, :depth, :browser, :learn, :json, :stability_limit, :scope
 
     ##
-    # Creates a new instance of Dance
+    # Creates a new instance of Search
     #
     # Params:
     # +json+ is the name of file to store//read data. Default => "./Locatine_files/default.json"
+    #
     # +depth+ is the value that shows how many data will be stored for element.
+    #
     # +browser+ is the instance of Watir::Browser. Unless provided it gonna be created with locatine-app onboard.
+    #
     # +learn+ shows will locatine ask for assistance from user or will fail on error. learn is true when LEARN parameter is set in environment.
+    #
     # +stability_limit+ shows max times attribute should be present to consider it trusted.
+    #
     # +scope+ will be used in search (if not provided) defaulkt is "Default"
     def initialize(json: "./Locatine_files/default.json",
                    depth: 3,
@@ -49,12 +54,19 @@ module Locatine
     # Looking for the element
     #
     # Params:
+    #
     # +scope+ is a parameter that is used to get information about the element from @data. Default is "Default"
+    #
     # +name+ is a parameter that is used to get information about the element from @data. Must not be nil.
+    #
     # +exact+ if true locatine will be forced to use only basic search. Default is false
+    #
     # +locator+ if not empty it is used for the first attempt to find the element. Default is {}
+    #
     # +vars+ hash of variables that will be used for dynamic attributes. See readme for example
+    #
     # +look_in+ only elements of that kind will be used. Use Watir::Browser methods returning collections (:text_fields, :links, :divs, etc.)
+    #
     # +iframe+ if provided locatine will look for elements inside of it
     def find(simple_name = nil, name: nil, scope: nil, exact: false, locator: {}, vars: {}, look_in: nil, iframe: nil, return_locator: false)
       name ||= simple_name
@@ -82,7 +94,7 @@ module Locatine
     end
 
     ##
-    # Find alias with return_locator enforced
+    # Find alias with return_locator option enforced
     def lctr(*args)
       if args.last.class == Hash
         args.last[:return_locator] = true
@@ -160,7 +172,8 @@ module Locatine
     end
 
     def get_trusted(array)
-      return (array.select {|i| i["stability"].to_i == (array.max_by {|i| i["stability"].to_i})["stability"].to_i}).uniq
+      max_stability = (array.max_by {|i| i["stability"].to_i})["stability"].to_i
+      return (array.select {|i| i["stability"].to_i == max_stability}).uniq
     end
 
     def generate_xpath(data, vars)
@@ -216,7 +229,8 @@ module Locatine
       @cold_time = timeout
       raise RuntimeError, "Locatine is unable to find element #{name} in #{scope}" if all.length == 0
       # Something esoteric here :)
-      suggestion = (all.select {|i| all.count(i) == all.count(all.max_by {|i| all.count(i)})}).uniq
+      max = all.count(all.max_by {|i| all.count(i)})
+      suggestion = (all.select {|i| all.count(i) == max}).uniq
       attributes = generate_data(suggestion, vars)
       return suggestion, attributes
     end
@@ -293,7 +307,8 @@ module Locatine
         all = all + find_by_locator({xpath: "//*[@*[contains(., '#{part}')]]"}).to_a
       end
       if all.length>0
-        guess = (all.select {|i| all.count(i) == all.count(all.max_by {|i| all.count(i)})}).uniq
+        max = all.count(all.max_by {|i| all.count(i)})
+        guess = (all.select {|i| all.count(i) == max}).uniq
         guess_data = generate_data(guess, vars)
         if (engine.elements.length/find_by_data(guess_data, vars).length <=4)
           puts "Locatine has no good guess for #{name} in #{scope}. Try to change the name. Or just define it."
@@ -315,7 +330,7 @@ module Locatine
       if !element.nil?
         attributes = generate_data(element, vars)
       else
-        element, attributes = find_by_guess(scope, name, vars)
+        element, attributes = find_by_guess(scope, name, vars) if name.length >= 5
       end
       while !finished do
         sleep 0.1

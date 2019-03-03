@@ -1,4 +1,4 @@
-#Version 0.00463
+# Version 0.00463
 First release. Locatine can
 - store information about element (elements) to json
 - find element\\elements by stored information
@@ -12,3 +12,8 @@ First release. Locatine can
 - return locators suitable for watir
 - launch browser
 - do couple of other pretty things
+
+# Version 0.00506
+- Some comments are fixed
+- Guessing for too short name is turned off
+- Algorithms are fixed so their performance is highly increased

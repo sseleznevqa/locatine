@@ -131,7 +131,7 @@ find(name: "account name", locator:{text: "stablePart_#{random_string}")
 
 **iframe** that is in order to find element inside an iframe
 
-**return_locator** true is returning the locator if element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
+**return_locator** true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
 
 ## Other ways to use find
 
@@ -153,4 +153,4 @@ That may be helpful in case of migration from plain watir to watir + locatine
 
 ## What else?
 
-Version of Locatine is 0.00463 only. It means so far this is a draft. It's work. But... Well... You know...
+Version of Locatine is 0.00506 only. It means so far this is a draft. It's work. But... Well... You know...
