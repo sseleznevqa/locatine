@@ -2,7 +2,6 @@ require "watir"
 require "json"
 require "fileutils"
 require "chromedriver-helper"
-require "pry"
 
 module Locatine
 
@@ -172,8 +171,12 @@ module Locatine
     end
 
     def get_trusted(array)
-      max_stability = (array.max_by {|i| i["stability"].to_i})["stability"].to_i
-      return (array.select {|i| i["stability"].to_i == max_stability}).uniq
+      if array.length > 0
+        max_stability = (array.max_by {|i| i["stability"].to_i})["stability"].to_i
+        return (array.select {|i| i["stability"].to_i == max_stability}).uniq
+      else
+        return []
+      end
     end
 
     def generate_xpath(data, vars)
@@ -310,7 +313,8 @@ module Locatine
         max = all.count(all.max_by {|i| all.count(i)})
         guess = (all.select {|i| all.count(i) == max}).uniq
         guess_data = generate_data(guess, vars)
-        if (engine.elements.length/find_by_data(guess_data, vars).length <=4)
+        by_data = find_by_data(guess_data, vars)
+        if by_data.nil? || (engine.elements.length/find_by_data(guess_data, vars).length <=4)
           puts "Locatine has no good guess for #{name} in #{scope}. Try to change the name. Or just define it."
           guess = nil
           guess_data = {}
@@ -350,13 +354,17 @@ module Locatine
         if old_element != element
           mass_highlight_turn(old_element, false) if old_element
           mass_highlight_turn(element) if element
-          puts "#{element.length} elemens were selected as #{name} in #{scope}"
+          if element.nil?
+            puts "Nothing is selected as #{name} in #{scope}"
+          else
+            puts "#{element.length} elemens were selected as #{name} in #{scope}"
+          end
         end
         old_element, old_tag, old_index = element, tag, index
         case get_from_app("locatineconfirmed")
         when "true"
           send_to_app("locatineconfirmed", "ok")
-          send_to_app("locatinetitle", "You are defining nothing. So no button will work")
+          send_to_app("locatinetitle", "Right now you are defining nothing. So no button will work")
           send_to_app("locatinehint", "Place for a smart hint here")
           finished = true
         when "declined"

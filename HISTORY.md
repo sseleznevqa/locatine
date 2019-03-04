@@ -19,3 +19,7 @@ First release. Locatine can
 - Algorithms are fixed so their performance is highly increased
 
 # Version 0.00552
+- Minor fixes in README.md
+- Fixed giant bug with titles and iframes
+- Fixed bug with getting stable attributes when there are no attributes of element at all
+- Fixed bug with Clear selection
