@@ -357,7 +357,7 @@ module Locatine
           if element.nil?
             puts "Nothing is selected as #{name} in #{scope}"
           else
-            puts "#{element.length} elemens were selected as #{name} in #{scope}"
+            puts "#{element.length} elements were selected as #{name} in #{scope}"
           end
         end
         old_element, old_tag, old_index = element, tag, index
