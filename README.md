@@ -99,13 +99,14 @@ s.find(name: "some name",
        vars: {},
        look_in: nil,
        iframe: nil,
-       return_locator: false)
+       return_locator: false,
+       collection: false)
 ```
 **name** should be always provided. Name of element to look for. Must be uniq one per scope. Ideally name should be made of 2-4 words separated by spaces describing its nature ("pay bill button", "search input", etc.) It will help Locatine to find them.
 
 **scope** group of elements. Must be uniq per file. This is to help to store elements with same names from different pages in one file
 
-**exact** unless it is true locatine will always try to find lost element using all the power it has. Use exact: false if you want to assert that your element is not present
+**exact** unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want to assert that your element is not present. In that case locatine will return nil if nothing was found.
 
 **locator** you may provide your own locator to use. Same syntax as in Watir:
 ```ruby
@@ -133,11 +134,13 @@ random_string #=> "qljcrt24jh"
 find(name: "account name", locator:{text: "stablePart_#{random_string}")
 ```
 
-**look_in** is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode
+**look_in** is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode. If your look_in setting and real element are from different types. Locatine will be unable to find it.
 
 **iframe** that is in order to find element inside of an iframe
 
 **return_locator** true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
+
+**collection** if true array of elements will be returned. If false only the one element will be returned.
 
 ## Other ways to use find
 

@@ -1,17 +1,14 @@
-require './lib/locatine'
-ENV['VERSION'] = Locatine::VERSION
 Gem::Specification.new do |s|
-  s.name        = Locatine::NAME
-  s.version     = Locatine::VERSION
+  s.name        = "locatine"
+  s.version     = "0.0092"
   s.summary     = "Element locating tool based on watir"
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
   s.email       = 's_seleznev_qa@hotmail.com'
-  s.files       = ["lib/locatine.rb"] + Dir.glob("lib/locatine/*.rb") + Dir.glob("lib/app/*")
+  s.files       = ["lib/locatine.rb"] + Dir.glob("lib/locatine/*.rb") + Dir.glob("lib/locatine/app/*.*")
   s.homepage    =
     'https://github.com/sseleznevqa/locatine'
   s.license       = 'MIT'
-
   s.add_development_dependency "bundler", '~> 0'
   s.add_development_dependency "rspec", '~> 0'
   s.add_development_dependency "simplecov", '~> 0'
