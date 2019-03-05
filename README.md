@@ -1,11 +1,17 @@
 # Locatine
 
 Element location tool based on Watir.
+
 You are asking Locatine to find element for you.
-It is asking you what element do you mean
-It is remembering your answer and collecting information about selected element
-After that it is finding element itself
-If your element will be lost (due to id change for example) locatine will locate the most similar element
+
+It is asking you what element do you mean.
+
+It is remembering your answer and collecting information about selected element.
+
+After that it is finding element by itself.
+
+If your element will be lost (due to id change for example) locatine will locate the most similar element.
+
 That's it.
 
 ## Installation

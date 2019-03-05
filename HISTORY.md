@@ -28,3 +28,4 @@ First release. Locatine can
 - More titles for application
 - Fixed bug with no turning on waiting from ruby
 - First tests are added (Instance creation)
+- Minor fixes in README.md
