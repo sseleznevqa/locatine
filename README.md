@@ -1,11 +1,17 @@
 # Locatine
 
 Element location tool based on Watir.
+
 You are asking Locatine to find element for you.
-It is asking you what element do you mean
-It is remembering your answer and collecting information about selected element
-After that it is finding element itself
-If your element will be lost (due to id change for example) locatine will locate the most similar element
+
+It is asking you what element do you mean.
+
+It is remembering your answer and collecting information about selected element.
+
+After that it is finding element by itself.
+
+If your element will be lost (due to id change for example) locatine will locate the most similar element.
+
 That's it.
 
 ## Installation
@@ -153,4 +159,4 @@ That may be helpful in case of migration from plain watir to watir + locatine
 
 ## What else?
 
-Version of Locatine is 0.00552 only. It means so far this is a draft. It works. But... Well... You know...
+Version of Locatine is 0.00695 only. It means so far this is a draft. It works. But... Well... You know...

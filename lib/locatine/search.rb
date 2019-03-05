@@ -289,12 +289,15 @@ module Locatine
       end
     end
 
+    def set_title(text)
+      puts text
+      send_to_app("locatinetitle", text)
+    end
+
     ##
     # Sending request to locatine app
     def start_listening(scope, name)
       send_to_app("locatinestyle", "blocked", @browser) if @iframe
-      puts "You are defining #{name} in #{scope}" # TODO send to app
-      send_to_app("locatinetitle", "You are defining #{name} in #{scope}.")
       send_to_app("locatinehint", "Toggle single//collection mode button if you need. If you want to do some actions on the page toggle Locatine waiting button. You also can select element on devtools -> Elements. Do not forget to confirm your selection.")
       send_to_app("locatinestyle", "set_true")
       sleep 0.5
@@ -315,12 +318,12 @@ module Locatine
         guess_data = generate_data(guess, vars)
         by_data = find_by_data(guess_data, vars)
         if by_data.nil? || (engine.elements.length/find_by_data(guess_data, vars).length <=4)
-          puts "Locatine has no good guess for #{name} in #{scope}. Try to change the name. Or just define it."
+          set_title "Locatine has no good guess for #{name} in #{scope}. Try to change the name. Or just define it."
           guess = nil
           guess_data = {}
         end
       else
-        puts "Locatine has no guess for #{name} in #{scope}. Try to change the name. Or just define it."
+        set_title "Locatine has no guess for #{name} in #{scope}. Try to change the name. Or just define it."
       end
       @cold_time = timeout
       return guess, guess_data.to_h
@@ -334,6 +337,7 @@ module Locatine
       if !element.nil?
         attributes = generate_data(element, vars)
       else
+        set_title("Locatine is trying to guess what is #{name} in #{scope}.")
         element, attributes = find_by_guess(scope, name, vars) if name.length >= 5
       end
       while !finished do
@@ -355,9 +359,9 @@ module Locatine
           mass_highlight_turn(old_element, false) if old_element
           mass_highlight_turn(element) if element
           if element.nil?
-            puts "Nothing is selected as #{name} in #{scope}"
+            set_title "Nothing is selected as #{name} in #{scope}"
           else
-            puts "#{element.length} elements were selected as #{name} in #{scope}"
+            set_title "#{element.length} elements were selected as #{name} in #{scope}. If it is correct - confirm the selection."
           end
         end
         old_element, old_tag, old_index = element, tag, index
