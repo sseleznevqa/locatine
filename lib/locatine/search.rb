@@ -2,7 +2,6 @@ require "watir"
 require "json"
 require "fileutils"
 require "chromedriver-helper"
-require 'pry'
 
 module Locatine
 
