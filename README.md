@@ -162,4 +162,4 @@ That may be helpful in case of migration from plain watir to watir + locatine
 
 ## What else?
 
-Version of Locatine is 0.0092 only. It means so far this is a draft. It works. But... Well... You know...
+Version of Locatine is 0.01084 only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
