@@ -23,3 +23,8 @@ First release. Locatine can
 - Fixed giant bug with titles and iframes
 - Fixed bug with getting stable attributes when there are no attributes of element at all
 - Fixed bug with Clear selection
+
+# Version 0.00695
+- More titles for application
+- Fixed bug with no turning on waiting from ruby
+- First tests are added (Instance creation)
