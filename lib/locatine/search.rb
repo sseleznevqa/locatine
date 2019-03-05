@@ -67,7 +67,16 @@ module Locatine
     # +look_in+ only elements of that kind will be used. Use Watir::Browser methods returning collections (:text_fields, :links, :divs, etc.)
     #
     # +iframe+ if provided locatine will look for elements inside of it
-    def find(simple_name = nil, name: nil, scope: nil, exact: false, locator: {}, vars: {}, look_in: nil, iframe: nil, return_locator: false)
+    def find(simple_name = nil,
+             name: nil,
+             scope: nil,
+             exact: false,
+             locator: {},
+             vars: {},
+             look_in: nil,
+             iframe: nil,
+             return_locator: false,
+             collection: false)
       name ||= simple_name
       raise ArgumentError, ":name should be provided" if !name
       @type = look_in
@@ -85,11 +94,14 @@ module Locatine
         end
       end
       result, attributes = ask(scope, name, result, vars) if @learn
-      raise RuntimeError, "Nothing was found for #{scope} #{name}" if !result
-      attributes = generate_data(result, vars) if !attributes
-      @type = nil
-      store(attributes, scope, name)
-      return return_locator ? {xpath: generate_xpath(attributes, vars)} : to_subtype(result)
+      raise RuntimeError, "Nothing was found for #{scope} #{name}" if !result && !exact
+      if result
+        attributes = generate_data(result, vars) if !attributes
+        store(attributes, scope, name)
+        return return_locator ? {xpath: generate_xpath(attributes, vars)} : to_subtype(result, collection)
+      else
+        return nil
+      end
     end
 
     ##
@@ -101,6 +113,12 @@ module Locatine
         args.push({return_locator: true})
       end
       find(args)
+    end
+
+    ##
+    # Find alias with collection option enforced
+    def collect(*args)
+      enforce(:collection, true, *args)
     end
 
     private
@@ -121,6 +139,18 @@ module Locatine
         f.puts '{"data" : {}}'
         f.close
         return Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = {}}}
+      end
+    end
+
+    def enforce(what, value, *args)
+      if args.last.class == Hash
+        args.last[what] = value
+        find(*args)
+      else
+        temp = Hash.new
+        temp[what] = value
+        args.push(temp)
+        find(*args)
       end
     end
 
@@ -556,11 +586,14 @@ module Locatine
     #
     # Params:
     # +result+ must be Watir::HTMLElementCollection or Array
-    def to_subtype(result)
-      if result.size == 1
-        return result[0].to_subtype
-      else
+    #
+    # +collection+ nil, true or false
+    def to_subtype(result, collection)
+      case collection
+      when true
         return result
+      when false
+        return result.first.to_subtype
       end
     end
   end

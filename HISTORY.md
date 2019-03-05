@@ -29,3 +29,9 @@ First release. Locatine can
 - Fixed bug with no turning on waiting from ruby
 - First tests are added (Instance creation)
 - Minor fixes in README.md
+
+# Version 0.0092
+- Fixed critical bug with the gemspec file!
+- Now locatine returning nil if there is exact and nothing was found
+- Now it is possible to determine type of output Array\\Collection or single element
+- Bug with lctr is fixed

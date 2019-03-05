@@ -1,1 +1,2 @@
-Dir.glob("./lib/locatine/*.rb").each {|it| require it}
+require "locatine/search"
+require "locatine/version"
