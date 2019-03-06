@@ -107,12 +107,7 @@ module Locatine
     ##
     # Find alias with return_locator option enforced
     def lctr(*args)
-      if args.last.class == Hash
-        args.last[:return_locator] = true
-      else
-        args.push({return_locator: true})
-      end
-      find(args)
+      enforce(:return_locator, true, *args)
     end
 
     ##
@@ -210,7 +205,7 @@ module Locatine
     end
 
     def generate_xpath(data, vars)
-      xpath = ''
+      xpath = "[not(@id = 'locatine_magic_div')]"
       data.each_pair do |depth, array|
         trusted = get_trusted(array)
         trusted.each do |hash|
@@ -277,21 +272,21 @@ module Locatine
         full_part = full_part + "[contains(name(), '#{part}')]"
       end
       xpath = full_part + "[., '#{process_string(hash["value"], vars)}')]]"
-      find_by_locator(xpath: "#{full_part}[contains(., '#{process_string(hash["value"], vars)}')]]#{correction}")
+      find_by_locator(xpath: "#{full_part}[contains(., '#{process_string(hash["value"], vars)}')]]#{correction}[not(@id = 'locatine_magic_div')]")
     end
 
     ##
     # Getting elements by tag
     def find_by_tag(hash, vars, depth = 0)
       correction = "/*" * depth.to_i
-      find_by_locator(xpath: "//*[self::#{process_string(hash["value"], vars)}')]#{correction}")
+      find_by_locator(xpath: "//*[self::#{process_string(hash["value"], vars)}')]#{correction}[not(@id = 'locatine_magic_div')]")
     end
 
     ##
     # Getting elements by text
     def find_by_text(hash, vars, depth = 0)
       correction = "/*" * depth.to_i
-      find_by_locator(xpath: "//*[contains(text(), '#{process_string(hash["value"], vars)}')]#{correction}")
+      find_by_locator(xpath: "//*[contains(text(), '#{process_string(hash["value"], vars)}')]#{correction}[not(@id = 'locatine_magic_div')]")
     end
 
     ##
@@ -338,16 +333,16 @@ module Locatine
       timeout = @cold_time
       @cold_time = 0
       name.split(" ").each do |part|
-        all = all + find_by_locator({tag_name: part}).to_a
-        all = all + find_by_locator({xpath: "//*[contains(text(),'#{part}')]"}).to_a
-        all = all + find_by_locator({xpath: "//*[@*[contains(., '#{part}')]]"}).to_a
+        all = all + find_by_locator({xpath: "//#{part}[not(@id = 'locatine_magic_div')]"}).to_a
+        all = all + find_by_locator({xpath: "//*[contains(text(),'#{part}')][not(@id = 'locatine_magic_div')]"}).to_a
+        all = all + find_by_locator({xpath: "//*[@*[contains(., '#{part}')]][not(@id = 'locatine_magic_div')]"}).to_a
       end
       if all.length>0
         max = all.count(all.max_by {|i| all.count(i)})
         guess = (all.select {|i| all.count(i) == max}).uniq
         guess_data = generate_data(guess, vars)
         by_data = find_by_data(guess_data, vars)
-        if by_data.nil? || (engine.elements.length/find_by_data(guess_data, vars).length <=4)
+        if by_data.nil? || (engine.elements.length/by_data.length <=4)
           set_title "Locatine has no good guess for #{name} in #{scope}. Try to change the name. Or just define it."
           guess = nil
           guess_data = {}
@@ -366,9 +361,9 @@ module Locatine
       element, attributes, finished, old_tag, old_index, old_element = result, {}, false, nil, nil, nil
       if !element.nil?
         attributes = generate_data(element, vars)
-      else
+      elsif name.length >= 5
         set_title("Locatine is trying to guess what is #{name} in #{scope}.")
-        element, attributes = find_by_guess(scope, name, vars) if name.length >= 5
+        element, attributes = find_by_guess(scope, name, vars)
       end
       while !finished do
         sleep 0.1

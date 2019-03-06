@@ -35,3 +35,8 @@ First release. Locatine can
 - Now locatine returning nil if there is exact and nothing was found
 - Now it is possible to determine type of output Array\\Collection or single element
 - Bug with lctr is fixed
+
+# Version 0.01084
+- E2E tests are added (covering main user cases)
+- Fixed bug with locatine was finding itself
+- Fixed bug with non-working lctr
