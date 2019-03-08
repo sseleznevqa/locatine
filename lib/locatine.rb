@@ -1,2 +1,2 @@
-require "locatine/search"
-require "locatine/version"
+require 'locatine/search'
+require 'locatine/version'

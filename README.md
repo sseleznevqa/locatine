@@ -160,6 +160,13 @@ s.browser.button(s.lctr("name of the button", scope: "Some form"))
 ```
 That may be helpful in case of migration from plain watir to watir + locatine
 
+If you want to find collection of elements you can use:
+```ruby
+s = Locatine.Search.new
+s.collect("group of elements") # Will return an array
+```
+
+
 ## What else?
 
 Version of Locatine is 0.01100 only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
