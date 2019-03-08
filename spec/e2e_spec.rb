@@ -5,6 +5,7 @@ describe 'E2E basic user story' do
     @path2 = "file://#{Dir.pwd}/spec/test_data/test-2.html"
     @path3 = "file://#{Dir.pwd}/spec/test_data/test-3.html"
     @path4 = "file://#{Dir.pwd}/spec/test_data/test-4.html"
+    @path5 = "file://#{Dir.pwd}/spec/test_data/test-5.html"
     @dir = './Locatine_files/'
     @file = './Locatine_files/default.json'
     Watir.default_timeout = 3
@@ -53,11 +54,16 @@ describe 'E2E basic user story' do
   it "Ignoring unstable attributes" do
     Watir.default_timeout = 60
     start = Time.now
-    @s = Locatine::Search.new
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
     expect(Time.now-start).to be < 10
+  end
+  it "Finds element if nesting structure is broken" do
+    Watir.default_timeout = 3
+    @s.browser.goto @path5
+    expect(@s.collect(name: "lis").length).to be == 3
+    expect(@s.find(name: "element").text).to be == "Element"
   end
   after(:all) do
     File.delete(@file) if File.exist?(@file)
