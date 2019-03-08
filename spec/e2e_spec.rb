@@ -7,7 +7,7 @@ describe 'E2E basic user story' do
     @path4 = "file://#{Dir.pwd}/spec/test_data/test-4.html"
     @dir = './Locatine_files/'
     @file = './Locatine_files/default.json'
-    Watir.default_timeout = 10
+    Watir.default_timeout = 3
   end
   before(:each) do
     @s = Locatine::Search.new
@@ -51,12 +51,13 @@ describe 'E2E basic user story' do
     expect(@s.find(name: "element").text).to be == "Element"
   end
   it "Ignoring unstable attributes" do
+    Watir.default_timeout = 60
     start = Time.now
     @s = Locatine::Search.new
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
-    expect(Time.now-start).to be < 5
+    expect(Time.now-start).to be < 10
   end
   after(:all) do
     File.delete(@file) if File.exist?(@file)

@@ -40,3 +40,8 @@ First release. Locatine can
 - E2E tests are added (covering main user cases)
 - Fixed bug with locatine was finding itself
 - Fixed bug with non-working lctr
+
+# Version 0.01100
+- Information about "collect" is added to readme
+- Full rubocoping
+- Many little fixes and tweaks
