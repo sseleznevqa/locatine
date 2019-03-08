@@ -43,4 +43,5 @@ First release. Locatine can
 
 # Version 0.01100
 - Information about "collect" is added to readme
-- Initial rubocoping(80 offenses)
+- Full rubocoping
+- Many little fixes and tweaks
