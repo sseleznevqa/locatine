@@ -29,7 +29,10 @@ describe 'E2E basic user story' do
     expect(@s.find(name: "element").text).to be == "Element"
     # Guess test
     expect(@s.find(name: "important span").text).to be == "Abrakadabra"
-    expect(@s.find(name: "span for guess").text).to be == "for guess"
+  end
+  it "Ignores exact if element still unstable" do
+    @s.browser.goto @path2
+    expect(@s.find(name: "span for guess", exact: true).text).to be == "for guess"
   end
   it "Finding exacts" do
     @s.browser.goto @path2
@@ -40,11 +43,12 @@ describe 'E2E basic user story' do
     @s.browser.goto @path3
     expect(@s.collect(name: "lis", exact: true)).to be == nil
     expect(@s.find(name: "element", exact: true)).to be == nil
+    expect(@s.find(name: "span for guess", exact: true)).to be == nil
   end
   it "Fails when elements are lost and there is nothing similar" do
     @s.browser.goto @path4
-    expect{@s.collect(name: "lis")}.to raise_error(RuntimeError)
-    expect{@s.find(name: "element")}.to raise_error(RuntimeError)
+    expect{@s.collect(name: "lis")}.to raise_error(RuntimeError, 'Unable to find element lis in Default')
+    expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Unable to find element similar to element in Default')
   end
   it "Finding lost elements" do
     @s.browser.goto @path3

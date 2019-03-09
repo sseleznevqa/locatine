@@ -61,7 +61,8 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      browser: nil,
                      learn: ENV['LEARN'].nil? ? false : true,
                      stability_limit: 10,
-                     scope: "Default")
+                     scope: "Default",
+                     tolerance: 30)
 ```
 **json** the file where data collected about elements will be stored
 
@@ -89,6 +90,8 @@ s.learn #=> true
 s.learn = false
 ```
 
+**tolerance** If attributes of element were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 at least something is ok - it goes. Default if 15.
+
 ## Locatine::Search find options
 
 ```ruby
@@ -100,7 +103,8 @@ s.find(name: "some name",
        look_in: nil,
        iframe: nil,
        return_locator: false,
-       collection: false)
+       collection: false,
+       tolerance: nil)
 ```
 **name** should be always provided. Name of element to look for. Must be uniq one per scope. Ideally name should be made of 2-4 words separated by spaces describing its nature ("pay bill button", "search input", etc.) It will help Locatine to find them.
 
@@ -141,6 +145,8 @@ find(name: "account name", locator:{text: "stablePart_#{random_string}")
 **return_locator** true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
 
 **collection** if true array of elements will be returned. If false only the one element will be returned.
+
+**tolerance** You can state custom tolerance for the element.
 
 ## Other ways to use find
 

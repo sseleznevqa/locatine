@@ -26,7 +26,8 @@ module Locatine
                    browser: nil,
                    learn: ENV['LEARN'].nil? ? false : true,
                    stability_limit: 10,
-                   scope: 'Default')
+                   scope: 'Default',
+                   tolerance: 15)
       browser ||= right_browser
       @browser = browser
       @json = json
@@ -37,6 +38,7 @@ module Locatine
       @learn = learn
       @stability_limit = stability_limit
       @scope = scope
+      @tolerance = tolerance
     end
 
     ##
@@ -77,10 +79,12 @@ module Locatine
              look_in: nil,
              iframe: nil,
              return_locator: false,
-             collection: false)
+             collection: false,
+             tolerance: nil)
       name = set_name(simple_name, name)
       @type = look_in
       @iframe = iframe
+      @tolerance ||= tolerance
       scope ||= @scope.nil? ? 'Default' : @scope
       result, attributes = full_search(name, scope, vars, locator, exact)
       return { xpath: generate_xpath(attributes, vars) } if result &&
