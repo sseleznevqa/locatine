@@ -14,29 +14,31 @@ module Locatine
     def stable?(attributes)
       s = []
       attributes.each_pair do |_depth, array|
-        s.push (array.max_by {|item| item['stability'].to_i})['stability'].to_i
+        s.push array.max_by { |item| item['stability'].to_i }['stability'].to_i
       end
       s.max > 1
     end
 
-    def core_search(result, name, scope, vars, exact)
+    def data_search(name, scope, vars, exact)
+      result = find_by_data(@data[scope][name], vars)
+      attributes = generate_data(result, vars) if result
+      if !result && (!exact || !stable?(@data[scope][name]))
+        result, attributes = find_by_magic(name, scope,
+                                           @data[scope][name], vars)
+      end
+      return result, attributes
+    end
+
+    def core_search(name, scope, vars, exact)
       if @data[scope][name].to_h != {}
-        result = find_by_data(@data[scope][name], vars)
-        attributes = generate_data(result, vars) if result
-        if !result && (!exact || !stable?(@data[scope][name]))
-          result, attributes = find_by_magic(name, scope,
-                                             @data[scope][name], vars)
-        end
+        result, attributes = data_search(name, scope, vars, exact)
       end
       return result, attributes
     end
 
     def full_search(name, scope, vars, locator, exact)
       result, attributes = locator_search(locator, vars)
-      unless result
-        result, attributes = core_search(result, name, scope,
-                                         vars, exact)
-      end
+      result, attributes = core_search(name, scope, vars, exact) unless result
       result, attributes = ask(scope, name, result, vars) if @learn
       raise "Nothing was found for #{scope} #{name}" if !result && !exact
 
