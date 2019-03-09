@@ -50,10 +50,10 @@ module Locatine
     def find_by_guess(scope, name, vars)
       @cold_time = 0
       all = main_guess(name)
-      if !all.empty?
-        guess, guess_data = check_guess(all, vars, name, scope)
-      else
+      if all.empty?
         push_title "Locatine has no guess for #{name} in #{scope}."
+      else
+        guess, guess_data = check_guess(all, vars, name, scope)
       end
       @cold_time = nil
       return guess, guess_data.to_h

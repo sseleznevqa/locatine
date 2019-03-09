@@ -50,3 +50,6 @@ First release. Locatine can
 - Search for lost element is improved. Now it is not relay on stability of a DOM tree structure.
 - Tolerance added in order to ensure that locatine is not too loyal.
 - Now exact option will be ignored if element is not stable still (was found once only)
+
+# Version 0.01215
+- Forgotten feature with changing data file on fly is implemented

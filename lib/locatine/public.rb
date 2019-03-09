@@ -30,11 +30,8 @@ module Locatine
                    tolerance: 15)
       browser ||= right_browser
       @browser = browser
-      @json = json
-      @folder = File.dirname(@json)
-      @name = File.basename(@json)
+      set_file(json)
       @depth = depth
-      @data = read_create
       @learn = learn
       @stability_limit = stability_limit
       @scope = scope
@@ -102,6 +99,10 @@ module Locatine
     # Find alias with collection option enforced
     def collect(*args)
       enforce(:collection, true, *args)
+    end
+
+    def json=(value)
+      set_file(value)
     end
   end
 end
