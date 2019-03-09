@@ -63,7 +63,7 @@ module Locatine
     ##
     # Getting elements by tag
     def find_by_tag(hash, vars, depth = 0)
-      correction = '/*' * depth.to_i
+      correction = '//*' if depth.to_i > 0
       xpath = "//*[self::#{process_string(hash['value'], vars)}]"
       find_by_locator(xpath: "#{xpath}#{correction}#{not_magic_div}")
     end
@@ -71,7 +71,7 @@ module Locatine
     ##
     # Getting elements by text
     def find_by_text(hash, vars, depth = 0)
-      correction = '/*' * depth.to_i
+      correction = '//*' if depth.to_i > 0
       xpath = "//*[contains(text(), '#{process_string(hash['value'], vars)}')]"
       find_by_locator(xpath: "#{xpath}#{correction}#{not_magic_div}")
     end
@@ -79,7 +79,7 @@ module Locatine
     ##
     # Getting elements by attribute
     def find_by_attribute(hash, vars, depth = 0)
-      correction = '/*' * depth.to_i
+      correction = '//*' if depth.to_i > 0
       full_part = '//*[@*'
       hash['name'].split('_').each do |part|
         full_part += "[contains(name(), '#{part}')]"

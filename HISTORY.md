@@ -45,3 +45,8 @@ First release. Locatine can
 - Information about "collect" is added to readme
 - Full rubocoping
 - Many little fixes and tweaks
+
+# Version 0.01135
+- Search for lost element is improved. Now it is not relay on stability of a DOM tree structure.
+- Tolerance added in order to ensure that locatine is not too loyal.
+- Now exact option will be ignored if element is not stable still (was found once only)

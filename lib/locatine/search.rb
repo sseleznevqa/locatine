@@ -4,19 +4,19 @@ require 'fileutils'
 require 'chromedriver-helper'
 
 # Internal requires
+require 'locatine/merge'
 require 'locatine/public'
-require 'locatine/find_logic'
-require 'locatine/file_work'
 require 'locatine/helpers'
+require 'locatine/file_work'
+require 'locatine/highlight'
+require 'locatine/find_logic'
+require 'locatine/dialog_logic'
+require 'locatine/find_by_magic'
+require 'locatine/find_by_guess'
+require 'locatine/data_generate'
+require 'locatine/dialog_actions'
 require 'locatine/xpath_generator'
 require 'locatine/find_by_locator'
-require 'locatine/find_by_magic'
-require 'locatine/dialog_logic'
-require 'locatine/find_by_guess'
-require 'locatine/highlight'
-require 'locatine/data_generate'
-require 'locatine/merge'
-require 'locatine/dialog_actions'
 
 module Locatine
   ##
@@ -44,6 +44,7 @@ module Locatine
                   :learn,
                   :json,
                   :stability_limit,
-                  :scope
+                  :scope,
+                  :tolerance
   end
 end

@@ -5,6 +5,7 @@ describe 'E2E basic user story' do
     @path2 = "file://#{Dir.pwd}/spec/test_data/test-2.html"
     @path3 = "file://#{Dir.pwd}/spec/test_data/test-3.html"
     @path4 = "file://#{Dir.pwd}/spec/test_data/test-4.html"
+    @path5 = "file://#{Dir.pwd}/spec/test_data/test-5.html"
     @dir = './Locatine_files/'
     @file = './Locatine_files/default.json'
     Watir.default_timeout = 3
@@ -28,7 +29,10 @@ describe 'E2E basic user story' do
     expect(@s.find(name: "element").text).to be == "Element"
     # Guess test
     expect(@s.find(name: "important span").text).to be == "Abrakadabra"
-    expect(@s.find(name: "span for guess").text).to be == "for guess"
+  end
+  it "Ignores exact if element still unstable" do
+    @s.browser.goto @path2
+    expect(@s.find(name: "span for guess", exact: true).text).to be == "for guess"
   end
   it "Finding exacts" do
     @s.browser.goto @path2
@@ -39,11 +43,12 @@ describe 'E2E basic user story' do
     @s.browser.goto @path3
     expect(@s.collect(name: "lis", exact: true)).to be == nil
     expect(@s.find(name: "element", exact: true)).to be == nil
+    expect(@s.find(name: "span for guess", exact: true)).to be == nil
   end
   it "Fails when elements are lost and there is nothing similar" do
     @s.browser.goto @path4
-    expect{@s.collect(name: "lis")}.to raise_error(RuntimeError)
-    expect{@s.find(name: "element")}.to raise_error(RuntimeError)
+    expect{@s.collect(name: "lis")}.to raise_error(RuntimeError, 'Unable to find element lis in Default')
+    expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Unable to find element similar to element in Default')
   end
   it "Finding lost elements" do
     @s.browser.goto @path3
@@ -53,11 +58,16 @@ describe 'E2E basic user story' do
   it "Ignoring unstable attributes" do
     Watir.default_timeout = 60
     start = Time.now
-    @s = Locatine::Search.new
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
     expect(Time.now-start).to be < 10
+  end
+  it "Finds element if nesting structure is broken" do
+    Watir.default_timeout = 3
+    @s.browser.goto @path5
+    expect(@s.collect(name: "lis").length).to be == 3
+    expect(@s.find(name: "element").text).to be == "Element"
   end
   after(:all) do
     File.delete(@file) if File.exist?(@file)

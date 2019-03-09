@@ -13,9 +13,21 @@ module Locatine
       @cold_time = nil
       raise "Unable to find element #{name} in #{scope}" if all.empty?
 
+      suggest_by_all(all, data, vars, name, scope)
+    end
+
+    def similar_enough(data, attributes)
+      (same_entries(data['0'], attributes, '0').length * 100 /
+      data['0'].length) > @tolerance
+    end
+
+    def suggest_by_all(all, data, vars, name, scope)
       max = all.count(all.max_by { |i| all.count(i) })
       suggestion = (all.select { |i| all.count(i) == max }).uniq
       attributes = generate_data(suggestion, vars)
+      ok = similar_enough(data, attributes)
+      raise "Unable to find element similar to #{name} in #{scope}" unless ok
+
       return suggestion, attributes
     end
 
