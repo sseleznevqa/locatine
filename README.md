@@ -62,7 +62,7 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      learn: ENV['LEARN'].nil? ? false : true,
                      stability_limit: 10,
                      scope: "Default",
-                     tolerance: 30)
+                     tolerance: 15)
 ```
 **json** the file where data collected about elements will be stored
 
