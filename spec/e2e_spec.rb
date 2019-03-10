@@ -20,15 +20,29 @@ describe 'E2E basic user story' do
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
     # Guess test
-    expect(@s.find(name: "important span").text).to be == "Abrakadabra"
+    expect(@s.find(name: "important span", vars: {"tag":"span", "text":"kadabra", "var":"che"}).text).to be == "Abrakadabra"
     expect(@s.find(name: "span for guess").text).to be == "for guess"
   end
   it "Finding elements" do
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
+  end
+  it "Finding elelements with dynamic vars" do
     # Guess test
-    expect(@s.find(name: "important span").text).to be == "Abrakadabra"
+    @s.browser.goto @path2
+    Watir.default_timeout = 30
+    start = Time.now
+    expect(@s.find(name: "important span", vars: {"tag":"spoon", "text":"kedavra", "var":"ba"}).text).to be == "Abrakedavra"
+    Watir.default_timeout = 3
+    expect(Time.now-start).to be < 10
+  end
+  it "can return a locator" do
+    @s.browser.goto @path2
+    expect(@s.browser.elements(@s.lctr(name: "lis")).length).to be == 3
+    expect(@s.browser.element(@s.lctr(name: "element")).text).to be == "Element"
+    # Guess test
+    expect(@s.browser.element(@s.lctr(name: "important span", vars: {"tag":"spoon", "text":"kedavra", "var":"ba"})).text).to be == "Abrakedavra"
   end
   it "Ignores exact if element still unstable" do
     @s.browser.goto @path2
