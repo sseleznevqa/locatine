@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "locatine"
-  s.version     = "0.01215"
+  s.version     = "0.01300"
   s.summary     = "Element locating tool based on watir"
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
