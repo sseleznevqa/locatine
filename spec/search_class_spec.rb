@@ -66,9 +66,22 @@ describe "We can create Locatine::Search class" do
     before(:all) do
       @path = './spec/test_data/dummy.json'
       @s = Locatine::Search.new(json: @path)
+      @dir = './new_files/'
+      @path2 = './new_files/deep/new.json'
     end
     it "has non-empty data" do
       expect(@s.data["A"]["B"]). to be == "c"
+    end
+    it "switches to a new file and back" do
+      @s.json = @path2
+      expect(File.exist?(@path2)).to be true
+      expect(@s.data["A"]["B"]). to be == {}
+      @s.json = @path
+      expect(@s.data["A"]["B"]). to be == "c"
+    end
+    after(:all) do
+      File.delete(@path2) if File.exist?(@path2)
+      FileUtils.remove_dir(@dir) if File.directory?(@dir)
     end
   end
 end

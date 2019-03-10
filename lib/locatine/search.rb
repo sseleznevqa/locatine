@@ -42,9 +42,9 @@ module Locatine
                   :depth,
                   :browser,
                   :learn,
-                  :json,
                   :stability_limit,
                   :scope,
                   :tolerance
+    attr_reader   :json
   end
 end

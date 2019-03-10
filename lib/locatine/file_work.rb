@@ -15,6 +15,13 @@ module Locatine
       hash.merge(JSON.parse(File.read(@json))['data'])
     end
 
+    def set_file(json)
+      @json = json
+      @folder = File.dirname(@json)
+      @name = File.basename(@json)
+      @data = read_create
+    end
+
     def create_json_file
       f = File.new(@json, 'w')
       f.puts '{"data" : {}}'

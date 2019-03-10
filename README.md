@@ -175,4 +175,4 @@ s.collect("group of elements") # Will return an array
 
 ## What else?
 
-Version of Locatine is 0.01135 only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
+Version of Locatine is 0.01215 only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
