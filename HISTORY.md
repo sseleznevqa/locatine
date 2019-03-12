@@ -55,3 +55,6 @@ First release. Locatine can
 - Forgotten feature with changing data file on fly is implemented
 - Test with vars added to E2E
 - E2E test for lctr is added
+
+# Version 0.01300
+- Little example added
