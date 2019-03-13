@@ -55,3 +55,9 @@ First release. Locatine can
 - Forgotten feature with changing data file on fly is implemented
 - Test with vars added to E2E
 - E2E test for lctr is added
+
+# Version 0.01300
+- Little example added
+- Little iframe fix
+- Fixed annoying bug with loosing element information on transfer from app to ruby
+- Fixed bug with loosing element that's changing after click (or constantly)

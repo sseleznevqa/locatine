@@ -30,7 +30,7 @@ module Locatine
     end
 
     def fix_iframe
-      @iframe = @browser.iframe(@iframe.selector) if @iframe
+      @iframe = @browser.iframe(@iframe.selector) if @iframe && @iframe.stale?
     end
 
     def push_title(text)
@@ -40,7 +40,8 @@ module Locatine
 
     ##
     # Sending request to locatine app
-    def start_listening(_scope, _name)
+    def start_listening(scope, name)
+      push_title "You are selecting #{name} in #{scope}"
       send_to_app('locatinestyle', 'blocked', @browser) if @iframe
       send_to_app('locatinehint', 'Toggle single//collection mode button if '\
         'you need. If you want to do some actions on the page toggle Locatine'\
@@ -59,13 +60,12 @@ module Locatine
 
     def response_action(element)
       send_to_app('locatineconfirmed', 'ok')
-      send_to_app('locatinetitle', 'Right now you are defining nothing. '\
-                                   'So no button will work')
+      push_title 'Right now you are defining nothing. So no button will work'
       send_to_app('locatinehint', 'Place for a smart hint here')
       mass_highlight_turn(element, false)
       send_to_app('locatinestyle', 'set_false')
       send_to_app('locatinestyle', 'ok', @browser) if @iframe
-      sleep 0.5
+      sleep 1
     end
   end
 end
