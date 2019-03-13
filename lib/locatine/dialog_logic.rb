@@ -43,19 +43,35 @@ module Locatine
 
       warn "Maybe #{tag} can't be found as a #{@type}?" if @type && !element
 
-      return find_by_data(attributes, vars).to_a, attributes.to_h unless element
+      return_selected(element, attributes, new_attributes, vars)
+    end
 
+    def return_old_selection(attrs, vars)
+      return find_by_data(attrs, vars).to_a, attrss.to_h if attrs.to_h != {}
+
+      return nil, {}
+    end
+
+    def return_selected(element, attributes, new_attributes, vars)
+      if !element && new_attributes.to_h != {}
+        push_title 'Selected element was lost before locatine locate it. '\
+                 'Consider choosing it from devtools or write your own locator'
+        return return_old_selection(attributes, vars)
+
+      end
       return element, new_attributes
     end
 
     def what_was_selected(element, attributes, vars, name, scope)
-      send_to_app('locatineconfirmed', 'ok')
       tag, index = tag_index
+      send_to_app('locatineconfirmed', 'ok')
       mass_highlight_turn(element, false) if element
       element, attributes = working_on_selected(tag, index, vars, attributes)
-      mass_highlight_turn(element) if element
-      push_title "#{element.length} elements were selected as #{name} in "\
+      if element
+        mass_highlight_turn(element)
+        push_title "#{element.length} elements were selected as #{name} in "\
                   "#{scope}. If it is correct - confirm the selection."
+      end
       return element, attributes
     end
 

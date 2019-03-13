@@ -58,3 +58,6 @@ First release. Locatine can
 
 # Version 0.01300
 - Little example added
+- Little iframe fix
+- Fixed annoying bug with loosing element information on transfer from app to ruby
+- Fixed bug with loosing element that's changing after click (or constantly)

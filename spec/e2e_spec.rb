@@ -22,11 +22,15 @@ describe 'E2E basic user story' do
     # Guess test
     expect(@s.find(name: "important span", vars: {"tag":"span", "text":"kadabra", "var":"che"}).text).to be == "Abrakadabra"
     expect(@s.find(name: "span for guess").text).to be == "for guess"
+    iframe = @s.find(name: "iframe")
+    expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
   end
   it "Finding elements" do
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
+    iframe = @s.find(name: "iframe")
+    expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
   end
   it "Finding elelements with dynamic vars" do
     # Guess test

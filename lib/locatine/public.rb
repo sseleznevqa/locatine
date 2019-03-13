@@ -30,7 +30,7 @@ module Locatine
                    tolerance: 15)
       browser ||= right_browser
       @browser = browser
-      set_file(json)
+      import_file(json)
       @depth = depth
       @learn = learn
       @stability_limit = stability_limit
@@ -102,7 +102,7 @@ module Locatine
     end
 
     def json=(value)
-      set_file(value)
+      import_file(value)
     end
   end
 end
