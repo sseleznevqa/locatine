@@ -32,24 +32,25 @@ module Locatine
       b = right_browser unless browser
       b = browser if browser.class == Watir::Browser
       b = Watir::Browser.new(browser) if s_class == Selenium::WebDriver::Driver
-      css = b.execute_script(%Q[const dummy = document.createElement('dummy');
-                                document.body.appendChild(dummy);
-                                return getComputedStyle(dummy);])
       @browser = b
       @default_styles = default_styles
     end
 
+    def css_text_to_hash(text)
+      almost_hash = []
+      array = text[0..-2].split('; ')
+      array.each do |item|
+        almost_hash.push item.split(': ')
+      end
+      almost_hash.to_h
+    end
+
     def default_styles
-      hash = {}
       css =
          engine.execute_script(%Q[const dummy = document.createElement('dummy');
                                   document.body.appendChild(dummy);
-                                  return getComputedStyle(dummy);])
-      element = engine.element(xpath: "//dummy")
-      css.each do |style|
-        hash[style] = element.style(style)
-      end
-      hash
+                                  return getComputedStyle(dummy).cssText;])
+      css_text_to_hash(css)
     end
 
     def process_string(str, vars)

@@ -57,10 +57,10 @@ module Locatine
 
     def get_dynamic_css(element, vars)
       attrs = []
-      styles = engine.execute_script("return getComputedStyle(arguments[0])",
-                                     element)
-      styles.each do |style|
-        hash = hash_by_style(style, element.style(style), vars)
+      script = "return getComputedStyle(arguments[0]).cssText"
+      styles = css_text_to_hash(engine.execute_script(script, element))
+      styles.each_pair do |style, value|
+        hash = hash_by_style(style, value, vars)
         attrs.push(hash) if hash
       end
       attrs
