@@ -34,6 +34,8 @@ module Locatine
         "[contains(text(), '#{value}')]"
       when 'attribute'
         generate_xpath_part_from_attribute(hash, value)
+      when 'css'
+        '' # TODO Make that place better
       end
     end
 

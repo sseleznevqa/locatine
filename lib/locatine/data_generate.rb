@@ -44,6 +44,25 @@ module Locatine
       attrs = get_dynamic_attributes(element, vars)
       attrs.push get_dynamic_tag(element, vars)
       attrs += get_dynamic_text(element, vars)
+      attrs += get_dynamic_css(element, vars)
+      attrs
+    end
+
+    def hash_by_style(style, value, vars)
+      unless @default_styles.to_h[style] == value
+        value.gsub!(vars[style.to_sym], "\#{#{style}}") if vars[style.to_sym]
+        { 'name' => style, 'value' => value, 'type' => 'css' }
+      end
+    end
+
+    def get_dynamic_css(element, vars)
+      attrs = []
+      styles = engine.execute_script("return getComputedStyle(arguments[0])",
+                                     element)
+      styles.each do |style|
+        hash = hash_by_style(style, element.style(style), vars)
+        attrs.push(hash) if hash
+      end
       attrs
     end
 

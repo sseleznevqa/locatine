@@ -27,6 +27,31 @@ module Locatine
       Watir::Browser.new(:chrome, switches: ["--load-extension=#{HOME}/app"])
     end
 
+    def import_browser(browser)
+      s_class = browser.class.superclass
+      b = right_browser unless browser
+      b = browser if browser.class == Watir::Browser
+      b = Watir::Browser.new(browser) if s_class == Selenium::WebDriver::Driver
+      css = b.execute_script(%Q[const dummy = document.createElement('dummy');
+                                document.body.appendChild(dummy);
+                                return getComputedStyle(dummy);])
+      @browser = b
+      @default_styles = default_styles
+    end
+
+    def default_styles
+      hash = {}
+      css =
+         engine.execute_script(%Q[const dummy = document.createElement('dummy');
+                                  document.body.appendChild(dummy);
+                                  return getComputedStyle(dummy);])
+      element = engine.element(xpath: "//dummy")
+      css.each do |style|
+        hash[style] = element.style(style)
+      end
+      hash
+    end
+
     def process_string(str, vars)
       str = str.to_s
       thevar = str.match(/\#{([^\#{]*)}/)[1] unless str.match(/\#{(.*)}/).nil?

@@ -40,11 +40,11 @@ module Locatine
 
     attr_accessor :data,
                   :depth,
-                  :browser,
                   :learn,
                   :stability_limit,
                   :scope,
                   :tolerance
-    attr_reader   :json
+    attr_reader   :json,
+                  :browser
   end
 end
