@@ -52,10 +52,7 @@ module Locatine
         end
       end
 
-      puts Time.now - t
-      t = Time.now
       # getting raw css of all els in b rowser
-      ## TODO It is too slow!!
 
       script = %Q[function walk(elm, result) {
           let node;
@@ -77,14 +74,6 @@ module Locatine
       return walk(document.body,[])]
       raws = engine.execute_script(script)
 
-      # raws = []
-      # engine.elements.each do |el|
-      #   if el.exists?
-      #     raws.push({el: el, css: get_raw_css(el).to_s})
-      #   end
-      # end
-      puts Time.now - t
-      t = Time.now
       # Finally
       all = []
       q_css.each do |item|
@@ -94,8 +83,6 @@ module Locatine
           elm if elm.exists?
         end
       end
-      puts Time.now - t
-      t = Time.now
       all.compact
     end
 
