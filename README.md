@@ -62,7 +62,7 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      learn: ENV['LEARN'].nil? ? false : true,
                      stability_limit: 10,
                      scope: "Default",
-                     tolerance: 15)
+                     tolerance: 33)
 ```
 **json** the file where data collected about elements will be stored
 
@@ -90,7 +90,7 @@ s.learn #=> true
 s.learn = false
 ```
 
-**tolerance** If attributes of element were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 at least something is ok - it goes. Default if 15.
+**tolerance** If metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 - at least something is found - it goes. Default if 33.
 
 ## Locatine::Search find options
 

@@ -38,6 +38,33 @@ module Locatine
           all += one_option_array(hash, vars, depth)
         end
       end
+      all += full_find_by_css(data, vars)
+      all
+    end
+
+    def full_find_by_css(data, vars)
+      #making q_css hash
+      q_css = []
+      get_trusted(data['0']).each do |hash|
+        if hash['type'] == 'css'
+          q_css.push("#{hash['name']}: #{hash['value']}")
+        end
+      end
+
+      # getting raw css of all els in b rowser
+      raws = []
+      engine.elements.each do |el|
+        if el.exists?
+          raws.push({el: el, css: get_raw_css(el).to_s})
+        end
+      end
+
+      # Finally
+      all = []
+      q_css.each do |item|
+        caught = (raws.select {|i| i[:css].include?(item)})
+        all += caught.map {|i| i[:el]}
+      end
       all
     end
 
@@ -49,6 +76,8 @@ module Locatine
         find_by_text(hash, vars, depth).to_a
       when 'attribute'
         find_by_attribute(hash, vars, depth).to_a
+      when 'css'
+        []
       end
     end
   end

@@ -1,4 +1,12 @@
 <html>
+  <head>
+    <style>
+      .css {background-color: powderblue;
+             color: blue;
+             text-align: center;
+             size: 45px;}
+    </style>
+  </head>
   <body>
     <div id="big" class="some div" other="1 2 3 4 5 6 7">
       <ul id="list" class="some list">
@@ -24,6 +32,7 @@
     </div>
     <div>
       <div>
+        <h4 class="css">h4 css</h4>
         <iframe id="iframe" src="iframe.html"></iframe>
       </div>
     </div>
@@ -76,4 +85,6 @@
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 18000);
   setTimeout(function() {locatineTestSelect("", "", false)}, 19000);
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 20000);
+  setTimeout(function() {locatineTestSelect("", "", false)}, 23000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 24000);
 </script>

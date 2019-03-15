@@ -33,7 +33,7 @@ module Locatine
       b = browser if browser.class == Watir::Browser
       b = Watir::Browser.new(browser) if s_class == Selenium::WebDriver::Driver
       @browser = b
-      @default_styles = default_styles
+      @default_styles = default_styles.to_a
     end
 
     def css_text_to_hash(text)
@@ -47,7 +47,7 @@ module Locatine
 
     def default_styles
       css =
-         engine.execute_script(%Q[const dummy = document.createElement('dummy');
+         engine.execute_script(%q[const dummy = document.createElement('dummy');
                                   document.body.appendChild(dummy);
                                   return getComputedStyle(dummy).cssText;])
       css_text_to_hash(css)

@@ -32,7 +32,7 @@ describe "We can create Locatine::Search class" do
       @path = "./new_files/ooops.json"
       @dir = "./new_files/"
       @depth = 2
-      @browser = "Browser"
+      @browser = Watir::Browser.new
       @learn = true
       @stability_limit = 9
       @scope = "Unknown"

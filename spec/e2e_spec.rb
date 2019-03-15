@@ -24,6 +24,7 @@ describe 'E2E basic user story' do
     expect(@s.find(name: "span for guess").text).to be == "for guess"
     iframe = @s.find(name: "iframe")
     expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
+    expect(@s.find("h4 css").text).to be == "h4 css"
   end
   it "Finding elements" do
     @s.browser.goto @path2
@@ -72,9 +73,10 @@ describe 'E2E basic user story' do
     @s.browser.goto @path3
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
+    expect(@s.find("h4 css").text).to be == "found anyway"
   end
   it "Ignoring unstable attributes" do
-    Watir.default_timeout = 60
+    Watir.default_timeout = 15
     start = Time.now
     @s.browser.goto @path2
     expect(@s.collect(name: "lis").length).to be == 3
