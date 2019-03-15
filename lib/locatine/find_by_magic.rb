@@ -43,6 +43,7 @@ module Locatine
     end
 
     def full_find_by_css(data, vars)
+      t = Time.now
       #making q_css hash
       q_css = []
       get_trusted(data['0']).each do |hash|
@@ -51,21 +52,51 @@ module Locatine
         end
       end
 
+      puts Time.now - t
+      t = Time.now
       # getting raw css of all els in b rowser
-      raws = []
-      engine.elements.each do |el|
-        if el.exists?
-          raws.push({el: el, css: get_raw_css(el).to_s})
-        end
-      end
+      ## TODO It is too slow!!
 
+      script = %Q[function walk(elm, result) {
+          let node;
+
+          const tagName = elm.tagName;
+          const array = Array.prototype.slice.call( document.getElementsByTagName(tagName) );
+          const index = array.indexOf(elm);
+
+          result.push("(//" + tagName + ")[" + (index+1) + "]:::" + getComputedStyle(elm).cssText)
+
+          // Handle child elements
+          for (node = elm.firstChild; node; node = node.nextSibling) {
+              if (node.nodeType === 1) { // 1 == Element
+                  result = walk(node, result);
+              }
+          }
+          return result
+      }
+      return walk(document.body,[])]
+      raws = engine.execute_script(script)
+
+      # raws = []
+      # engine.elements.each do |el|
+      #   if el.exists?
+      #     raws.push({el: el, css: get_raw_css(el).to_s})
+      #   end
+      # end
+      puts Time.now - t
+      t = Time.now
       # Finally
       all = []
       q_css.each do |item|
-        caught = (raws.select {|i| i[:css].include?(item)})
-        all += caught.map {|i| i[:el]}
+        caught = (raws.select {|i| i.include?(item)})
+        all += caught.map do |i|
+          elm = engine.element(xpath: i.split(':::')[0])
+          elm if elm.exists?
+        end
       end
-      all
+      puts Time.now - t
+      t = Time.now
+      all.compact
     end
 
     def one_option_array(hash, vars, depth)
