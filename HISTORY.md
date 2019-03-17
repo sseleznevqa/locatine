@@ -61,3 +61,7 @@ First release. Locatine can
 - Little iframe fix
 - Fixed annoying bug with loosing element information on transfer from app to ruby
 - Fixed bug with loosing element that's changing after click (or constantly)
+
+# Version 0.01309
+- Little bug about selecting element with devtools is fixed
+- Searching for element now is slower but now we are using css values too

@@ -52,7 +52,10 @@ module Locatine
         end
       end
 
+      puts Time.now - t
+      t = Time.now
       # getting raw css of all els in b rowser
+      ## TODO It is too slow!!
 
       script = %Q[function walk(elm, result) {
           let node;
@@ -61,7 +64,7 @@ module Locatine
           const array = Array.prototype.slice.call( document.getElementsByTagName(tagName) );
           const index = array.indexOf(elm);
 
-          result.push("(//" + tagName + ")[" + (index+1) + "]:::" + getComputedStyle(elm).cssText)
+          result.push(tagName + "<:::>" + index + "<:::>" + getComputedStyle(elm).cssText)
 
           // Handle child elements
           for (node = elm.firstChild; node; node = node.nextSibling) {
@@ -71,18 +74,34 @@ module Locatine
           }
           return result
       }
-      return walk(document.body,[])]
+      let array = walk(document.body,[]);
+      array.shift();
+      return array;
+    ]
       raws = engine.execute_script(script)
 
+      # raws = []
+      # engine.elements.each do |el|
+      #   if el.exists?
+      #     raws.push({el: el, css: get_raw_css(el).to_s})
+      #   end
+      # end
+      puts Time.now - t
+      t = Time.now
       # Finally
       all = []
+      help_hash = {}
       q_css.each do |item|
         caught = (raws.select {|i| i.include?(item)})
         all += caught.map do |i|
-          elm = engine.element(xpath: i.split(':::')[0])
-          elm if elm.exists?
+          splitted = i.split('<:::>')
+          help_hash[splitted[0]] ||= engine.elements(tag_name: splitted[0]).to_a
+          elm = help_hash[splitted[0]][splitted[1].to_i]
+          elm if elm
         end
       end
+      puts Time.now - t
+      t = Time.now
       all.compact
     end
 
