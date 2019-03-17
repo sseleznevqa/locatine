@@ -95,7 +95,7 @@ module Locatine
         caught = (raws.select {|i| i.include?(item)})
         all += caught.map do |i|
           splitted = i.split('<:::>')
-          help_hash[splitted[0]] ||= engine.elements(tag_name: splitted[0]).to_a
+          help_hash[splitted[0]] ||= engine.elements(tag_name: splitted[0].downcase).to_a
           elm = help_hash[splitted[0]][splitted[1].to_i]
           elm if elm
         end
