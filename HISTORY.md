@@ -65,3 +65,6 @@ First release. Locatine can
 # Version 0.01309
 - Little bug about selecting element with devtools is fixed
 - Searching for element now is slower but now we are using css values too
+
+# Version 0.01439
+- Now we are storing x,y and size
