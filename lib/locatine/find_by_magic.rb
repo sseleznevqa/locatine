@@ -35,20 +35,21 @@ module Locatine
       all = []
       data.each_pair do |depth, array|
         get_trusted(array).each do |hash|
-          all += one_option_array(hash, vars, depth)
+          all += one_option_array(hash, vars, depth).to_a
         end
       end
+      all += full_find_by_css(data, vars)
       all
     end
 
     def one_option_array(hash, vars, depth)
       case hash['type']
       when 'tag'
-        find_by_tag(hash, vars, depth).to_a
+        find_by_tag(hash, vars, depth)
       when 'text'
-        find_by_text(hash, vars, depth).to_a
+        find_by_text(hash, vars, depth)
       when 'attribute'
-        find_by_attribute(hash, vars, depth).to_a
+        find_by_attribute(hash, vars, depth)
       end
     end
   end

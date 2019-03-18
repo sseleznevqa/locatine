@@ -10,6 +10,7 @@ require 'locatine/helpers'
 require 'locatine/file_work'
 require 'locatine/highlight'
 require 'locatine/find_logic'
+require 'locatine/find_by_css'
 require 'locatine/dialog_logic'
 require 'locatine/find_by_magic'
 require 'locatine/find_by_guess'
@@ -30,6 +31,7 @@ module Locatine
     include Locatine::FileWork
     include Locatine::FindLogic
     include Locatine::Highlight
+    include Locatine::FindByCss
     include Locatine::FindByMagic
     include Locatine::DialogLogic
     include Locatine::FindByGuess
@@ -40,11 +42,11 @@ module Locatine
 
     attr_accessor :data,
                   :depth,
-                  :browser,
                   :learn,
                   :stability_limit,
                   :scope,
                   :tolerance
-    attr_reader   :json
+    attr_reader   :json,
+                  :browser
   end
 end

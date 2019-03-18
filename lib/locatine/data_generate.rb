@@ -40,10 +40,36 @@ module Locatine
 
     ##
     # Generating array of hashes representing data of the element
-    def get_element_info(element, vars)
+    def get_element_info(element, vars, depth)
       attrs = get_dynamic_attributes(element, vars)
       attrs.push get_dynamic_tag(element, vars)
       attrs += get_dynamic_text(element, vars)
+      attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
+      attrs
+    end
+
+    def hash_by_style(style, value, vars)
+      value.gsub!(vars[style.to_sym], "\#{#{style}}") if vars[style.to_sym]
+      { 'name' => style, 'value' => value, 'type' => 'css' }
+    end
+
+    def get_raw_css(element)
+      test_script = 'return typeof(arguments[0])'
+      ok = engine.execute_script(test_script, element) == 'object'
+      script = 'return getComputedStyle(arguments[0]).cssText'
+      return engine.execute_script(script, element) if ok
+    end
+
+    def get_dynamic_css(element, vars)
+      attrs = []
+      raw = get_raw_css(element)
+      if raw
+        styles = css_text_to_hash(get_raw_css(element))
+        (styles.to_a - @default_styles).to_h.each_pair do |style, value|
+          hash = hash_by_style(style, value, vars)
+          attrs.push(hash) if hash
+        end
+      end
       attrs
     end
 
@@ -60,14 +86,13 @@ module Locatine
     ##
     # Getting element\\parents information
     def get_family_info(element, vars)
-      current_depth = 0
+      i = 0
       attributes = {}
-      while current_depth != @depth
-        attributes[current_depth.to_s] = get_element_info(element, vars)
-        current_depth += 1
+      while i != @depth
+        attributes[i.to_s] = get_element_info(element, vars, i)
+        i += 1
         element = element.parent
-        # Sometimes watir is not returning a valid parent that's why:
-        current_depth = @depth unless element.parent.exists?
+        i = @depth unless element.exists?
       end
       attributes
     end

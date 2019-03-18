@@ -21,15 +21,19 @@ module Locatine
     # consider it trusted.
     #
     # +scope+ will be used in search (if not provided) defaulkt is "Default"
+    #
+    # +tolerance+ Shows how similar must be an element found as alternative
+    # to the lost one. Default is 33 which means that if less than 33% of
+    # metrics of alternative elements are the same as of the lost element
+    # will not be returned
     def initialize(json: './Locatine_files/default.json',
                    depth: 3,
                    browser: nil,
                    learn: ENV['LEARN'].nil? ? false : true,
                    stability_limit: 10,
                    scope: 'Default',
-                   tolerance: 15)
-      browser ||= right_browser
-      @browser = browser
+                   tolerance: 33)
+      import_browser browser
       import_file(json)
       @depth = depth
       @learn = learn
@@ -103,6 +107,10 @@ module Locatine
 
     def json=(value)
       import_file(value)
+    end
+
+    def browser=(value)
+      import_browser(value)
     end
   end
 end
