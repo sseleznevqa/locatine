@@ -44,7 +44,7 @@ module Locatine
       attrs = get_dynamic_attributes(element, vars)
       attrs.push get_dynamic_tag(element, vars)
       attrs += get_dynamic_text(element, vars)
-      attrs += get_dynamic_css(element, vars) if depth.to_i == 0
+      attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
       attrs
     end
 
@@ -86,14 +86,13 @@ module Locatine
     ##
     # Getting element\\parents information
     def get_family_info(element, vars)
-      current_depth = 0
+      i = 0
       attributes = {}
-      while current_depth != @depth
-        attributes[current_depth.to_s] =
-                               get_element_info(element, vars, current_depth)
-        current_depth += 1
+      while i != @depth
+        attributes[i.to_s] = get_element_info(element, vars, i)
+        i += 1
         element = element.parent
-        current_depth = @depth unless element.exists?
+        i = @depth unless element.exists?
       end
       attributes
     end

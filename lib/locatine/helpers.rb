@@ -47,9 +47,9 @@ module Locatine
 
     def default_styles
       css =
-         engine.execute_script(%q[const dummy = document.createElement('dummy');
-                                  document.body.appendChild(dummy);
-                                  return getComputedStyle(dummy).cssText;])
+        engine.execute_script("const dummy = document.createElement('dummy');
+                               document.body.appendChild(dummy);
+                               return getComputedStyle(dummy).cssText;")
       css_text_to_hash(css)
     end
 

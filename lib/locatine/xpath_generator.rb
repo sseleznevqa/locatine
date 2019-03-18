@@ -17,7 +17,7 @@ module Locatine
       xpath = "[not(@id = 'locatine_magic_div')]"
       data.each_pair do |_depth, array|
         get_trusted(array).each do |hash|
-          xpath = generate_xpath_part(hash, vars) + xpath
+          xpath = generate_xpath_part(hash, vars).to_s + xpath
         end
         xpath = '/*' + xpath
       end
@@ -34,8 +34,6 @@ module Locatine
         "[contains(text(), '#{value}')]"
       when 'attribute'
         generate_xpath_part_from_attribute(hash, value)
-      when 'css'
-        '' # TODO Make that place better
       end
     end
 
