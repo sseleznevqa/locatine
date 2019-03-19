@@ -18,7 +18,7 @@ module Locatine
 
     def similar_enough(data, attributes)
       (same_entries(data['0'], attributes, '0').length * 100 /
-      data['0'].length) > @tolerance
+      data['0'].length) >= @tolerance
     end
 
     def suggest_by_all(all, data, vars, name, scope)
@@ -26,6 +26,8 @@ module Locatine
       suggestion = (all.select { |i| all.count(i) == max }).uniq
       attributes = generate_data(suggestion, vars)
       ok = similar_enough(data, attributes)
+      require 'pry'
+      binding.pry if !ok
       raise "Unable to find element similar to #{name} in #{scope}" unless ok
 
       return suggestion, attributes
@@ -39,7 +41,33 @@ module Locatine
         end
       end
       all += full_find_by_css(data, vars)
+      all += find_by_dimensions(data, vars)
+      puts all
       all
+    end
+
+    def dimension_search_field(sizes)
+      x = sizes[0].to_i + (sizes[2].to_i / 2)
+      y = sizes[1].to_i + (sizes[3].to_i / 2)
+      x_min = x - (sizes[2].to_i * (100 + @tolerance)) / 200
+      x_max = x + (sizes[2].to_i * (100 + @tolerance)) / 200
+      y_min = y - (sizes[3].to_i * (100 + @tolerance)) / 200
+      y_max = y + (sizes[3].to_i * (100 + @tolerance)) / 200
+      return x_min, x_max, y_min, y_max
+    end
+
+    def find_by_dimensions(data, vars)
+      b_w, b_h = window_size
+      size = "#{b_w}x#{b_h}"
+      dimensions = data['0'].map { |i| i if (i['type'] == 'dimensions') && (i['name'] == size) }
+      unless dimensions.compact.empty?
+        sizes = dimensions.compact.first['value'].split('x')
+        xmi, xma, ymi, yma = dimension_search_field(sizes)
+        script = File.read("#{HOME}/large_scripts/dimensions.js")
+        engine.execute_script(script, xmi, xma, ymi, yma).compact
+      else
+        []
+      end
     end
 
     def one_option_array(hash, vars, depth)

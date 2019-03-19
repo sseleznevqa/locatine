@@ -18,7 +18,7 @@ module Locatine
     def get_dynamic_tag(element, vars)
       tag = element.tag_name
       tag = "\#{tag}" if vars[:tag] == tag
-      { 'name' => 'tag', 'value' => tag, 'type' => 'tag' }
+      push_hash('tag', tag, 'tag')
     end
 
     def real_text_of(element)
@@ -33,7 +33,7 @@ module Locatine
                      else
                        word
                      end
-        attrs.push('name' => 'text', 'value' => final_word, 'type' => 'text')
+        attrs.push push_hash('text', final_word, 'text')
       end
       attrs
     end
@@ -45,12 +45,34 @@ module Locatine
       attrs.push get_dynamic_tag(element, vars)
       attrs += get_dynamic_text(element, vars)
       attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
+      attrs.push get_dimensions(element, vars) if depth.to_i.zero?
       attrs
+    end
+
+    def mesure(element)
+      b_w, b_h = window_size
+      xy = element.location
+      wh = element.size
+      return b_w, b_h, xy.x, xy.y, wh.width, wh.height
+    end
+
+    def processed_dimensions(element, vars)
+      b_w, b_h, x, y, width, height = mesure(element)
+      x = x.to_s.gsub(vars[:x], "\#{#{x}}") if vars[:x]
+      y = y.to_s.gsub(vars[:y], "\#{#{y}}") if vars[:y]
+      width = width.to_s.gsub(vars[:width], "\#{#{width}}") if vars[:width]
+      height = height.to_s.gsub(vars[:height], "\#{#{height}}") if vars[:height]
+      return b_w, b_h, x, y, width, height
+    end
+
+    def get_dimensions(element, vars)
+      b_w, b_h, x, y, w, h = processed_dimensions(element, vars)
+      push_hash("#{b_w}x#{b_h}", "#{x}x#{y}x#{w}x#{h}", 'dimensions')
     end
 
     def hash_by_style(style, value, vars)
       value.gsub!(vars[style.to_sym], "\#{#{style}}") if vars[style.to_sym]
-      { 'name' => style, 'value' => value, 'type' => 'css' }
+      push_hash(style, value, 'css')
     end
 
     def get_raw_css(element)

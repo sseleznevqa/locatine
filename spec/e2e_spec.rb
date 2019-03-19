@@ -25,6 +25,7 @@ describe 'E2E basic user story' do
     iframe = @s.find(name: "iframe")
     expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
     expect(@s.find("h4 css").text).to be == "h4 css"
+    expect(@s.find("by coordinates").present?).to be == true
   end
   it "Finding elements" do
     @s.browser.goto @path2
@@ -67,6 +68,7 @@ describe 'E2E basic user story' do
   it "Fails when elements are lost and there is nothing similar" do
     @s.browser.goto @path4
     expect{@s.collect(name: "lis")}.to raise_error(RuntimeError, 'Unable to find element lis in Default')
+    binding.pry
     expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Unable to find element similar to element in Default')
   end
   it "Finding lost elements" do
@@ -74,6 +76,7 @@ describe 'E2E basic user story' do
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
     expect(@s.find("h4 css").text).to be == "found anyway"
+    expect(@s.find("by coordinates").text).to be == "O"
   end
   it "Ignoring unstable attributes" do
     Watir.default_timeout = 15

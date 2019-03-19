@@ -23,6 +23,18 @@ module Locatine
       "[not(@id = 'locatine_magic_div')]"
     end
 
+    def push_hash(name, value, type)
+      { 'name' => name,
+        'value' => value,
+        'type' => type }
+    end
+
+    def window_size
+      b_w = engine.execute_script('return window.innerWidth')
+      b_h = engine.execute_script('return window.innerHeight')
+      return b_w, b_h
+    end
+
     def right_browser
       Watir::Browser.new(:chrome, switches: ["--load-extension=#{HOME}/app"])
     end
