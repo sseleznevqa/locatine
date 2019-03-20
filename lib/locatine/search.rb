@@ -9,6 +9,7 @@ require 'locatine/public'
 require 'locatine/helpers'
 require 'locatine/file_work'
 require 'locatine/highlight'
+require 'locatine/data_logic'
 require 'locatine/find_logic'
 require 'locatine/find_by_css'
 require 'locatine/dialog_logic'
@@ -29,6 +30,7 @@ module Locatine
     include Locatine::Public
     include Locatine::Helpers
     include Locatine::FileWork
+    include Locatine::DataLogic
     include Locatine::FindLogic
     include Locatine::Highlight
     include Locatine::FindByCss

@@ -1,28 +1,23 @@
 module Locatine
   ##
-  # Generating locatine json info from element itself
+  # Collecting data of element and making it dynamic
   module DataGenerate
     private
 
-    def get_dynamic_attributes(element, vars)
-      attrs = []
-      get_attributes(element).each do |hash|
-        if vars[hash['name'].to_sym]
-          hash['value'].gsub!(vars[hash['name'].to_sym], "\#{#{hash['name']}}")
-        end
-        attrs.push hash
-      end
-      attrs
+    def real_text_of(element)
+      element.text == element.inner_html ? element.text : ''
+    end
+
+    def mesure(element)
+      xy = element.location
+      wh = element.size
+      return xy.x, xy.y, wh.width, wh.height
     end
 
     def get_dynamic_tag(element, vars)
       tag = element.tag_name
       tag = "\#{tag}" if vars[:tag] == tag
       push_hash('tag', tag, 'tag')
-    end
-
-    def real_text_of(element)
-      element.text == element.inner_html ? element.text : ''
     end
 
     def get_dynamic_text(element, vars)
@@ -38,36 +33,25 @@ module Locatine
       attrs
     end
 
-    ##
-    # Generating array of hashes representing data of the element
-    def get_element_info(element, vars, depth)
-      attrs = get_dynamic_attributes(element, vars)
-      attrs.push get_dynamic_tag(element, vars)
-      attrs += get_dynamic_text(element, vars)
-      attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
-      attrs.push get_dimensions(element, vars) if depth.to_i.zero?
-      attrs
-    end
-
-    def mesure(element)
-      b_w, b_h = window_size
-      xy = element.location
-      wh = element.size
-      return b_w, b_h, xy.x, xy.y, wh.width, wh.height
+    def process_dimension(name, value, vars)
+      s_name = name.to_s
+      value = value.to_s.gsub(vars[name], "\#{#{s_name}}") if vars[name]
+      value
     end
 
     def processed_dimensions(element, vars)
-      b_w, b_h, x, y, width, height = mesure(element)
-      x = x.to_s.gsub(vars[:x], "\#{#{x}}") if vars[:x]
-      y = y.to_s.gsub(vars[:y], "\#{#{y}}") if vars[:y]
-      width = width.to_s.gsub(vars[:width], "\#{#{width}}") if vars[:width]
-      height = height.to_s.gsub(vars[:height], "\#{#{height}}") if vars[:height]
-      return b_w, b_h, x, y, width, height
+      x, y, width, height = mesure(element)
+      x = process_dimension(:x, x, vars)
+      y = process_dimension(:y, y, vars)
+      width = process_dimension(:width, width, vars)
+      height = process_dimension(:height, height, vars)
+      return x, y, width, height
     end
 
     def get_dimensions(element, vars)
-      b_w, b_h, x, y, w, h = processed_dimensions(element, vars)
-      push_hash("#{b_w}x#{b_h}", "#{x}x#{y}x#{w}x#{h}", 'dimensions')
+      resolution = window_size
+      x, y, w, h = processed_dimensions(element, vars)
+      push_hash(resolution, "#{x}*#{y}*#{w}*#{h}", 'dimensions')
     end
 
     def hash_by_style(style, value, vars)
@@ -93,30 +77,6 @@ module Locatine
         end
       end
       attrs
-    end
-
-    ##
-    # Generating data for group of elements
-    def generate_data(result, vars)
-      family = {}
-      result.each do |item|
-        family = get_commons(get_family_info(item, vars), family)
-      end
-      family
-    end
-
-    ##
-    # Getting element\\parents information
-    def get_family_info(element, vars)
-      i = 0
-      attributes = {}
-      while i != @depth
-        attributes[i.to_s] = get_element_info(element, vars, i)
-        i += 1
-        element = element.parent
-        i = @depth unless element.exists?
-      end
-      attributes
     end
 
     ##

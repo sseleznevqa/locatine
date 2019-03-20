@@ -32,7 +32,7 @@ module Locatine
     def window_size
       b_w = engine.execute_script('return window.innerWidth')
       b_h = engine.execute_script('return window.innerHeight')
-      return b_w, b_h
+      "#{b_w}x#{b_h}"
     end
 
     def right_browser

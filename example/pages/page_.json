@@ -7,96 +7,276 @@
             "name": "aria_autocomplete",
             "type": "attribute",
             "value": "both",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria_haspopup",
             "type": "attribute",
             "value": "false",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria_label",
             "type": "attribute",
             "value": "Rech.",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocapitalize",
             "type": "attribute",
             "value": "off",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocomplete",
             "type": "attribute",
             "value": "off",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocorrect",
             "type": "attribute",
             "value": "off",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "class",
             "type": "attribute",
             "value": "gLFyf",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "class",
             "type": "attribute",
             "value": "gsfi",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsaction",
             "type": "attribute",
             "value": "paste:puy29d",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "maxlength",
             "type": "attribute",
             "value": "2048",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "name",
             "type": "attribute",
             "value": "q",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "role",
             "type": "attribute",
             "value": "combobox",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "spellcheck",
             "type": "attribute",
             "value": "false",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "title",
             "type": "attribute",
             "value": "Rechercher",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "type",
             "type": "attribute",
             "value": "text",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "input",
             "type": "tag",
+            "stability": "2"
+          },
+          {
+            "name": "border-bottom-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-left-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-right-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "cursor",
+            "value": "text",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "display",
+            "value": "flex",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "font-family",
+            "value": "arial, sans-serif",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "height",
+            "value": "34px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "line-height",
+            "value": "34px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "margin-top",
+            "value": "-37px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "min-height",
+            "value": "auto",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "min-width",
+            "value": "auto",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "outline-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "overflow-wrap",
+            "value": "break-word",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration",
+            "value": "none solid rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "width",
+            "value": "414px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "column-rule-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "flex-basis",
+            "value": "100%",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "flex-grow",
+            "value": "1",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-locale",
+            "value": "\"fr-CY\"",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "perspective-origin",
+            "value": "207px 17px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-tap-highlight-color",
+            "value": "rgba(0, 0, 0, 0)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-emphasis-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-fill-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-stroke-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "transform-origin",
+            "value": "207px 17px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "caret-color",
+            "value": "rgba(0, 0, 0, 0.87)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "1200x953",
+            "value": "385x322.5x414x34",
+            "type": "dimensions",
             "stability": "1"
           }
         ],
@@ -105,31 +285,31 @@
             "name": "class",
             "type": "attribute",
             "value": "a4bIc",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsaction",
             "type": "attribute",
             "value": "dFyQEf;input:d3sQLd;focus:dFyQEf;blur:jI3wzf",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jscontroller",
             "type": "attribute",
             "value": "iDPoPb",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsname",
             "type": "attribute",
             "value": "gLFyf",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ],
         "2": [
@@ -137,13 +317,13 @@
             "name": "class",
             "type": "attribute",
             "value": "SDkEP",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ]
       },
@@ -153,78 +333,216 @@
             "name": "alt",
             "type": "attribute",
             "value": "Google",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "data_atf",
             "type": "attribute",
             "value": "1",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "height",
             "type": "attribute",
             "value": "92",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "id",
             "type": "attribute",
             "value": "hplogo",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "onload",
             "type": "attribute",
             "value": "window.lol&&lol()",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "src",
             "type": "attribute",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "1x,",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "2x",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "style",
             "type": "attribute",
             "value": "padding-top:109px",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "width",
             "type": "attribute",
             "value": "272",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "img",
             "type": "tag",
+            "stability": "2"
+          },
+          {
+            "name": "border-bottom-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-left-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-right-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "font-family",
+            "value": "arial, sans-serif",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "font-size",
+            "value": "13px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "height",
+            "value": "92px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "outline-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "padding-top",
+            "value": "109px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-align",
+            "value": "-webkit-center",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration",
+            "value": "none solid rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "width",
+            "value": "272px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "column-rule-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-locale",
+            "value": "\"fr-CY\"",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "perspective-origin",
+            "value": "136px 100.5px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-emphasis-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-fill-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-stroke-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "transform-origin",
+            "value": "136px 100.5px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "caret-color",
+            "value": "rgb(34, 34, 34)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "1200x953",
+            "value": "464x89x272x201",
+            "type": "dimensions",
             "stability": "1"
           }
         ],
@@ -233,19 +551,19 @@
             "name": "id",
             "type": "attribute",
             "value": "lga",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "style",
             "type": "attribute",
             "value": "height:233px;margin-top:89px",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ],
         "2": [
@@ -253,7 +571,7 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ]
       },
@@ -263,42 +581,342 @@
             "name": "aria_label",
             "type": "attribute",
             "value": "Recherche",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria_label",
             "type": "attribute",
             "value": "Google",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "name",
             "type": "attribute",
             "value": "btnK",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "type",
             "type": "attribute",
             "value": "submit",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "value",
             "type": "attribute",
             "value": "Recherche",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "value",
             "type": "attribute",
             "value": "Google",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "input",
             "type": "tag",
+            "stability": "2"
+          },
+          {
+            "name": "background-color",
+            "value": "rgb(242, 242, 242)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "background-image",
+            "value": "-webkit-linear-gradient(top, rgb(245, 245, 245), rgb(241, 241, 241))",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-bottom-color",
+            "value": "rgb(242, 242, 242)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-bottom-left-radius",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-bottom-right-radius",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-bottom-style",
+            "value": "solid",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-bottom-width",
+            "value": "1px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-left-color",
+            "value": "rgb(242, 242, 242)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-left-style",
+            "value": "solid",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-left-width",
+            "value": "1px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-right-color",
+            "value": "rgb(242, 242, 242)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-right-style",
+            "value": "solid",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-right-width",
+            "value": "1px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-color",
+            "value": "rgb(242, 242, 242)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-left-radius",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-right-radius",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-style",
+            "value": "solid",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "border-top-width",
+            "value": "1px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "box-sizing",
+            "value": "border-box",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "cursor",
+            "value": "pointer",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "display",
+            "value": "inline-block",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "font-family",
+            "value": "arial, sans-serif",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "font-size",
+            "value": "14px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "height",
+            "value": "36px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "line-height",
+            "value": "27px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "margin-bottom",
+            "value": "11px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "margin-left",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "margin-right",
+            "value": "4px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "margin-top",
+            "value": "11px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "min-width",
+            "value": "54px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "outline-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "padding-left",
+            "value": "16px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "padding-right",
+            "value": "16px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-align",
+            "value": "center",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration",
+            "value": "none solid rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "text-decoration-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "white-space",
+            "value": "pre",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "width",
+            "value": "150.75px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "column-rule-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "align-items",
+            "value": "flex-start",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-locale",
+            "value": "\"fr-CY\"",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "perspective-origin",
+            "value": "75.375px 18px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-emphasis-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-fill-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "-webkit-text-stroke-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "transform-origin",
+            "value": "75.375px 18px",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "user-select",
+            "value": "none",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "caret-color",
+            "value": "rgb(95, 99, 104)",
+            "type": "css",
+            "stability": "1"
+          },
+          {
+            "name": "1200x953",
+            "value": "457.390625x393x151x36",
+            "type": "dimensions",
             "stability": "1"
           }
         ],
@@ -307,7 +925,7 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ],
         "2": [
@@ -315,19 +933,19 @@
             "name": "class",
             "type": "attribute",
             "value": "FPdoLc",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "class",
             "type": "attribute",
             "value": "VlcLAe",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ]
       }
