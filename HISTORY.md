@@ -65,3 +65,9 @@ First release. Locatine can
 # Version 0.01309
 - Little bug about selecting element with devtools is fixed
 - Searching for element now is slower but now we are using css values too
+
+# Version 0.01439
+- Now we are storing x,y and size and using it in search (well, not often)
+- Fixed bug with quotation marks in attribute and text
+- Fixed bug with page reloading with devtools opened in the learn mode
+- visual_search option is added in order to turn off css and position search by default (since css seems to be much less stable than html)

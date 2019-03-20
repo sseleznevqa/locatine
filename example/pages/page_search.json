@@ -7,25 +7,13 @@
             "name": "class",
             "type": "attribute",
             "value": "LC20lb",
-            "stability": "1"
+            "stability": "4"
           },
           {
             "name": "tag",
             "value": "h3",
             "type": "tag",
-            "stability": "1"
-          },
-          {
-            "name": "text",
-            "value": "Grace",
-            "type": "text",
-            "stability": "1"
-          },
-          {
-            "name": "text",
-            "value": "Hopper",
-            "type": "text",
-            "stability": "1"
+            "stability": "4"
           }
         ],
         "1": [
@@ -33,7 +21,7 @@
             "name": "tag",
             "value": "a",
             "type": "tag",
-            "stability": "1"
+            "stability": "4"
           }
         ],
         "2": [
@@ -41,13 +29,13 @@
             "name": "class",
             "type": "attribute",
             "value": "r",
-            "stability": "1"
+            "stability": "4"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "4"
           }
         ]
       }

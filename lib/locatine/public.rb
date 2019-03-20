@@ -32,7 +32,8 @@ module Locatine
                    learn: ENV['LEARN'].nil? ? false : true,
                    stability_limit: 10,
                    scope: 'Default',
-                   tolerance: 33)
+                   tolerance: 33,
+                   visual_search: false)
       import_browser browser
       import_file(json)
       @depth = depth
@@ -40,6 +41,7 @@ module Locatine
       @stability_limit = stability_limit
       @scope = scope
       @tolerance = tolerance
+      @visual_search = visual_search
     end
 
     ##

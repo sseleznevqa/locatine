@@ -1,56 +1,62 @@
 module Locatine
   ##
-  # Generating locatine json info from element itself
+  # Collecting data of element and making it dynamic
   module DataGenerate
     private
-
-    def get_dynamic_attributes(element, vars)
-      attrs = []
-      get_attributes(element).each do |hash|
-        if vars[hash['name'].to_sym]
-          hash['value'].gsub!(vars[hash['name'].to_sym], "\#{#{hash['name']}}")
-        end
-        attrs.push hash
-      end
-      attrs
-    end
-
-    def get_dynamic_tag(element, vars)
-      tag = element.tag_name
-      tag = "\#{tag}" if vars[:tag] == tag
-      { 'name' => 'tag', 'value' => tag, 'type' => 'tag' }
-    end
 
     def real_text_of(element)
       element.text == element.inner_html ? element.text : ''
     end
 
+    def mesure(element)
+      xy = element.location
+      wh = element.size
+      return xy.x, xy.y, wh.width, wh.height
+    end
+
+    def get_dynamic_tag(element, vars)
+      tag = element.tag_name
+      tag = "\#{tag}" if vars[:tag] == tag
+      push_hash('tag', tag, 'tag')
+    end
+
     def get_dynamic_text(element, vars)
       attrs = []
-      real_text_of(element).split(' ').each do |word|
-        final_word = if !vars[:text].to_s.strip.empty?
-                       word.gsub(vars[:text].to_s, "\#{text}")
-                     else
-                       word
-                     end
-        attrs.push('name' => 'text', 'value' => final_word, 'type' => 'text')
+      real_text_of(element).split(/['" ]/).each do |word|
+        final = if !vars[:text].to_s.strip.empty?
+                  word.gsub(vars[:text].to_s, "\#{text}")
+                else
+                  word
+                end
+        attrs.push push_hash('text', final, 'text') unless final.empty?
       end
       attrs
     end
 
-    ##
-    # Generating array of hashes representing data of the element
-    def get_element_info(element, vars, depth)
-      attrs = get_dynamic_attributes(element, vars)
-      attrs.push get_dynamic_tag(element, vars)
-      attrs += get_dynamic_text(element, vars)
-      attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
-      attrs
+    def process_dimension(name, value, vars)
+      s_name = name.to_s
+      value = value.to_s.gsub(vars[name], "\#{#{s_name}}") if vars[name]
+      value
+    end
+
+    def processed_dimensions(element, vars)
+      x, y, width, height = mesure(element)
+      x = process_dimension(:x, x, vars)
+      y = process_dimension(:y, y, vars)
+      width = process_dimension(:width, width, vars)
+      height = process_dimension(:height, height, vars)
+      return x, y, width, height
+    end
+
+    def get_dimensions(element, vars)
+      resolution = window_size
+      x, y, w, h = processed_dimensions(element, vars)
+      push_hash(resolution, "#{x}*#{y}*#{w}*#{h}", 'dimensions')
     end
 
     def hash_by_style(style, value, vars)
       value.gsub!(vars[style.to_sym], "\#{#{style}}") if vars[style.to_sym]
-      { 'name' => style, 'value' => value, 'type' => 'css' }
+      push_hash(style, value, 'css')
     end
 
     def get_raw_css(element)
@@ -74,30 +80,6 @@ module Locatine
     end
 
     ##
-    # Generating data for group of elements
-    def generate_data(result, vars)
-      family = {}
-      result.each do |item|
-        family = get_commons(get_family_info(item, vars), family)
-      end
-      family
-    end
-
-    ##
-    # Getting element\\parents information
-    def get_family_info(element, vars)
-      i = 0
-      attributes = {}
-      while i != @depth
-        attributes[i.to_s] = get_element_info(element, vars, i)
-        i += 1
-        element = element.parent
-        i = @depth unless element.exists?
-      end
-      attributes
-    end
-
-    ##
     # Collecting attributes of the element
     def get_attributes(element)
       attributes = element.attributes
@@ -105,9 +87,9 @@ module Locatine
       attributes.each_pair do |name, value|
         next if name.to_s == 'locatineclass'
 
-        value.split(' ').uniq.each do |part|
+        value.split(/['" ]/).uniq.each do |part|
           array.push('name' => name.to_s, 'type' => 'attribute',
-                     'value' => part)
+                     'value' => part) unless part.empty?
         end
       end
       array
