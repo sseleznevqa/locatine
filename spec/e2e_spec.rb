@@ -15,7 +15,7 @@ describe 'E2E basic user story' do
   end
   it "Defining elements" do
     @s.browser.quit
-    @s = Locatine::Search.new learn: true, browser: Watir::Browser.new
+    @s = Locatine::Search.new learn: true, browser: Watir::Browser.new, visual_search: true
     @s.browser.goto @path1
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
@@ -70,10 +70,15 @@ describe 'E2E basic user story' do
     expect{@s.collect(name: "lis")}.to raise_error(RuntimeError, 'Unable to find element lis in Default')
     expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Unable to find element similar to element in Default')
   end
+  it "Fails when visual is turned off but search is very css related" do
+    @s.browser.goto @path3
+    expect{@s.find("h4 css")}.to raise_error(RuntimeError, 'Unable to find element similar to h4 css in Default')
+  end
   it "Finding lost elements" do
     @s.browser.goto @path3
     expect(@s.collect(name: "lis").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
+    @s.visual_search = true
     expect(@s.find("h4 css").text).to be == "found anyway"
     o = @s.find("by coordinates", vars: {"x":"8", "y":"36"})
     expect(o.text).to be == "O"

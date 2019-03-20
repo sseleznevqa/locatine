@@ -38,8 +38,8 @@ module Locatine
           all += one_option_array(hash, vars, depth).to_a
         end
       end
-      all += full_find_by_css(data, vars)
-      all += find_by_dimensions(data, vars)
+      all += full_find_by_css(data, vars) if visual?
+      all += find_by_dimensions(data, vars) if visual?
       all
     end
 

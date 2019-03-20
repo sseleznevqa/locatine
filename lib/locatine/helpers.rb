@@ -35,6 +35,10 @@ module Locatine
       "#{b_w}x#{b_h}"
     end
 
+    def visual?
+      @visual_search
+    end
+
     def right_browser
       Watir::Browser.new(:chrome, switches: ["--load-extension=#{HOME}/app"])
     end

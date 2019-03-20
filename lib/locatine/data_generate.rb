@@ -22,13 +22,13 @@ module Locatine
 
     def get_dynamic_text(element, vars)
       attrs = []
-      real_text_of(element).split(' ').each do |word|
-        final_word = if !vars[:text].to_s.strip.empty?
-                       word.gsub(vars[:text].to_s, "\#{text}")
-                     else
-                       word
-                     end
-        attrs.push push_hash('text', final_word, 'text')
+      real_text_of(element).split(/['" ]/).each do |word|
+        final = if !vars[:text].to_s.strip.empty?
+                  word.gsub(vars[:text].to_s, "\#{text}")
+                else
+                  word
+                end
+        attrs.push push_hash('text', final, 'text') unless final.empty?
       end
       attrs
     end
@@ -87,9 +87,9 @@ module Locatine
       attributes.each_pair do |name, value|
         next if name.to_s == 'locatineclass'
 
-        value.split(' ').uniq.each do |part|
+        value.split(/['" ]/).uniq.each do |part|
           array.push('name' => name.to_s, 'type' => 'attribute',
-                     'value' => part)
+                     'value' => part) unless part.empty?
         end
       end
       array

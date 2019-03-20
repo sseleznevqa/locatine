@@ -67,4 +67,6 @@ First release. Locatine can
 - Searching for element now is slower but now we are using css values too
 
 # Version 0.01439
-- Now we are storing x,y and size
+- Now we are storing x,y and size and using it in search (well, not often)
+- Fixed bug with quatation marks in attribute and text
+- Fixed bug with page reloading with devtools opened in the learn mode

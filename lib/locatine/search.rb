@@ -47,7 +47,8 @@ module Locatine
                   :learn,
                   :stability_limit,
                   :scope,
-                  :tolerance
+                  :tolerance,
+                  :visual_search
     attr_reader   :json,
                   :browser
   end

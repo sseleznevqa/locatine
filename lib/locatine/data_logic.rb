@@ -21,8 +21,8 @@ module Locatine
       attrs = get_dynamic_attributes(element, vars)
       attrs.push get_dynamic_tag(element, vars)
       attrs += get_dynamic_text(element, vars)
-      attrs += get_dynamic_css(element, vars) if depth.to_i.zero?
-      attrs.push get_dimensions(element, vars) if depth.to_i.zero?
+      attrs += get_dynamic_css(element, vars) if depth.to_i.zero? && visual?
+      attrs.push get_dimensions(element, vars) if depth.to_i.zero? && visual?
       attrs
     end
 
