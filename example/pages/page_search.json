@@ -7,139 +7,13 @@
             "name": "class",
             "type": "attribute",
             "value": "LC20lb",
-            "stability": "3"
+            "stability": "4"
           },
           {
             "name": "tag",
             "value": "h3",
             "type": "tag",
-            "stability": "3"
-          },
-          {
-            "name": "border-bottom-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "border-left-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "border-right-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "border-top-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "cursor",
-            "value": "pointer",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "display",
-            "value": "inline-block",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "font-family",
-            "value": "arial, sans-serif",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "font-size",
-            "value": "18px",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "height",
-            "value": "23px",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "line-height",
-            "value": "23.94px",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "outline-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "text-align",
-            "value": "left",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "text-decoration",
-            "value": "none solid rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "text-decoration-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "column-rule-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "-webkit-locale",
-            "value": "\"fr-CY\"",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "-webkit-text-emphasis-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "-webkit-text-fill-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "-webkit-text-stroke-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
-          },
-          {
-            "name": "caret-color",
-            "value": "rgb(26, 13, 171)",
-            "type": "css",
-            "stability": "2"
+            "stability": "4"
           }
         ],
         "1": [
@@ -147,7 +21,7 @@
             "name": "tag",
             "value": "a",
             "type": "tag",
-            "stability": "3"
+            "stability": "4"
           }
         ],
         "2": [
@@ -155,13 +29,13 @@
             "name": "class",
             "type": "attribute",
             "value": "r",
-            "stability": "3"
+            "stability": "4"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "3"
+            "stability": "4"
           }
         ]
       }
