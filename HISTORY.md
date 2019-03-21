@@ -71,3 +71,8 @@ First release. Locatine can
 - Fixed bug with quotation marks in attribute and text
 - Fixed bug with page reloading with devtools opened in the learn mode
 - visual_search option is added in order to turn off css and position search by default (since css seems to be much less stable than html)
+
+# Version 0.01454
+- Tests are improved
+- Fixed bug with look_in
+- Deleted error raising which is already raised by Watir
