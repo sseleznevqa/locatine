@@ -13,11 +13,13 @@
         <li class="some li" id="one">ONE</li>
         <li class="other li" id="two">TWO</li>
         <li class="third li">THREE</li>
+        <sub id="strange collection">1</sub>
       </ul>
     </div>
     <div id="small" class="some div" other="1 2 3 4 5 6 7">
       <p>
         <label id="Label" attribute="important a b c d e f">Element</label>
+        <sub id="strange collection">1</sub>
       </p>
     </div>
     <div>
@@ -58,18 +60,18 @@
   };
   setTimeout(function() {magicDiv.setAttribute("locatinecollection", "true")}, 1000);
   setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 2000);
-  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "1 elements were selected as lis in Default. If it is correct - confirm the selection.")
+  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "1 elements were selected as lis fox in Default. If it is correct - confirm the selection.")
                            {
                              element.innerText = "There was no correct title!"
                            }}, 3000);
   setTimeout(function() {locatineTestSelect("", "", "declined")}, 4000);
-  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "Nothing is selected as lis in Default")
+  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "Nothing is selected as lis fox in Default")
                            {
                              element.innerText = "There was no correct title!"
                            }}, 5000);
   setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 6000);
   setTimeout(function() {locatineTestSelect("1", "li", "selected")}, 7000);
-  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "3 elements were selected as lis in Default. If it is correct - confirm the selection.")
+  setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "3 elements were selected as lis fox in Default. If it is correct - confirm the selection.")
                            {
                              element.innerText = "There was no correct title!"
                            }}, 8000);
@@ -92,4 +94,6 @@
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 24000);
   setTimeout(function() {locatineTestSelect("", "", false)}, 25000);
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 26000);
+  setTimeout(function() {locatineTestSelect("", "", true)}, 27000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 35000);
 </script>

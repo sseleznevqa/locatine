@@ -79,6 +79,11 @@ describe "We can create Locatine::Search class" do
       @s.json = @path
       expect(@s.data["A"]["B"]). to be == "c"
     end
+    it "switches to a new browser" do
+      b = Watir::Browser.new
+      @s.browser = b
+      expect(@s.browser).to be == b
+    end
     after(:all) do
       File.delete(@path2) if File.exist?(@path2)
       FileUtils.remove_dir(@dir) if File.directory?(@dir)
