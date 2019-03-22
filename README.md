@@ -14,6 +14,10 @@ If your element will be lost (due to id change for example) locatine will locate
 
 That's it.
 
+## Stage of development:
+
+Version of Locatine is **0.01546** only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -65,24 +69,38 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      tolerance: 33,
                      visual_search: false)
 ```
-**json** the file where data collected about elements will be stored
 
-**depth** shows how many info will be stored about each element
+### json
+
+the file where data collected about elements will be stored
+
+### depth
+
+shows how many info will be stored about each element
+
 - 0 = everything about the element
 - 1 = everything about the element and the parent of it
 - 2 = everything about the element and the parent of it + one more parent
 
-**browser** if not provided new Watir::Browser will be started. Do not provide browser if you are going to use learn mode
+### browser
 
-**learn** mode is used to train locatine to search your elements. By default is false. But if you are starting your test like:
+if not provided new Watir::Browser will be started. Do not provide browser if you are going to use learn mode
+
+### learn
+
+mode is used to train locatine to search your elements. By default is false. But if you are starting your test like:
 
     $ LEARN=true ruby path_to_your_test.rb
 
 it will turn learn to true by default.
 
-**scope** is setting that is representing default scope (group) where elements will be stored by default
+### scope
 
-**stability_limit** shows how much times attribute should be present to be considered a trusted one
+is a setting that is representing default scope (group) where elements will be stored by default
+
+### stability_limit
+
+shows how much times attribute should be present to be considered a trusted one
 
 You can get or set these values on fly. Like:
 ```ruby
@@ -91,9 +109,13 @@ s.learn #=> true
 s.learn = false
 ```
 
-**tolerance** If stored metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 - at least something is found - it goes. Default if 33.
+### tolerance
 
-**visual_search** locatine will count css values and position of element only if true. In that case locatine will not only read html code (attributes, tags, texts) but it will get css stylesheet for element, its position and size. In the most common case locatine is using attributes+tag+text to find the element. It is starting to use css styles of element and position only if element is lost in order to provide a better result and to mesure the similarity of the lost element and one that is found.
+If stored metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 - at least something is found - it goes. Default if 33.
+
+### visual_search
+
+locatine will count css values and position of element only if true. In that case locatine will not only read html code (attributes, tags, texts) but it will get css stylesheet for element, its position and size. In the most common case locatine is using attributes+tag+text to find the element. It is starting to use css styles of element and position only if element is lost in order to provide a better result and to mesure the similarity of the lost element and one that is found.
 
 Position and size for element will be stored for the current resolution only. Start with new browser resolution will lead to deletion of all previous location\\size data.
 
@@ -113,33 +135,51 @@ s.find(name: "some name",
        collection: false,
        tolerance: nil)
 ```
-**name** should be always provided. Name of element to look for. Must be uniq one per scope. Ideally name should be made of 2-4 words separated by spaces describing its nature ("pay bill button", "search input", etc.) It will help Locatine to find them.
+### name
 
-**scope** group of elements. Must be uniq per file. This is to help to store elements with same names from different pages in one file
+should be always provided. Name of element to look for. Must be uniq one per scope. Ideally name should be made of 2-4 words separated by spaces describing its nature ("pay bill button", "search input", etc.) It will help Locatine to find them.
 
-**exact** unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want to assert that your element is not present. In that case locatine will return nil if nothing was found.
+### scope
 
-**locator** you may provide your own locator to use. Same syntax as in Watir:
+group of elements. Must be uniq per file. This is to help to store elements with same names from different pages in one file
+
+### exact
+
+unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want to assert that your element is not present. In that case locatine will return nil if nothing was found.
+
+### locator
+
+you may provide your own locator to use. Same syntax as in Watir:
+
 ```ruby
 find(name: "element with custom locator", locator: {xpath: "//custom"})
 ```
 
-**vars** are used to pass dynamic attributes.
+### vars
+
+are used to pass dynamic attributes.
+
 For example you have created an account on your site with
+
 ```ruby
 name == "stablePart_qljcrt24jh"
 ```
+
 where
+
 ```ruby
 random_string == "qljcrt24jh"
 ```
+
 was generated by random. Now you need to find the element with this part on the page. You can do
+
 ```ruby
 random_string #=> "qljcrt24jh"
 find(name: "account name", vars: {text: random_string})
 ```
 
 Next time when your test will generate another random_string it will use new value.
+
 ```ruby
 vars = {text: random_substring} # If you want the text of element to be dynamic
 vars = {tag: random_tag} # The tag
@@ -148,30 +188,45 @@ vars = {attribute_name: random_attr} # If attribute is dynamic (use name of the 
 vars = {css_option: random_value} # If your css is dynamic
 vars = {x: random_x} # x, y, width, height for element size and position
 ```
+
 And if you do not like it you can do:
+
 ```ruby
 random_string #=> "qljcrt24jh"
 find(name: "account name", locator:{text: "stablePart_#{random_string}")
 ```
 
-**look_in** is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode. If your look_in setting and real element are from different types. Locatine will be unable to find it.
+### look_in
 
-**iframe** that is in order to find element inside of an iframe
+is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode. If your look_in setting and real element are from different types. Locatine will be unable to find it.
 
-**return_locator** true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
+### iframe
 
-**collection** if true array of elements will be returned. If false only the one element will be returned.
+that is in order to find element inside of an iframe
 
-**tolerance** You can state custom tolerance for the element.
+### return_locator
+
+true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
+
+### collection
+
+if true array of elements will be returned. If false only the one element (the first one found) will be returned.
+
+### tolerance
+
+You can state custom tolerance for the element.
 
 ## Other ways to use find
 
 If the scope is set and you do not want to provide any additional options you can do:
+
 ```ruby
 s = Locatine.Search.new
 s.find("just name of element")
 ```
+
 Also you can do:
+
 ```ruby
 s = Locatine.Search.new
 s.browser.button(s.lctr("name of the button"))
@@ -180,15 +235,12 @@ s.browser.button(s.lctr(name: "name of the button", scope: "Some form"))
 # or
 s.browser.button(s.lctr("name of the button", scope: "Some form"))
 ```
+
 That may be helpful in case of migration from plain watir to watir + locatine
 
 If you want to find collection of elements you can use:
+
 ```ruby
 s = Locatine.Search.new
 s.collect("group of elements") # Will return an array
 ```
-
-
-## What else?
-
-Version of Locatine is 0.01546 only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
