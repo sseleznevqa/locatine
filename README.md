@@ -64,7 +64,7 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      depth: 3,
                      browser: nil,
                      learn: ENV['LEARN'].nil? ? false : true,
-                     stability_limit: 10,
+                     stability_limit: 1000,
                      scope: "Default",
                      tolerance: 33,
                      visual_search: false)
@@ -100,18 +100,11 @@ is a setting that is representing default scope (group) where elements will be s
 
 ### stability_limit
 
-shows how much times attribute should be present to be considered a trusted one
-
-You can get or set these values on fly. Like:
-```ruby
-s = Locatine.Search.new(learn: true)
-s.learn #=> true
-s.learn = false
-```
+shows how much times attribute should be present to be considered a trusted one. The extremely large value means that locatine will hardly trust your code. Extremely low means that locatine will always believe that nothing in the code gonna be changed.
 
 ### tolerance
 
-If stored metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how resembling in per cent new element should be to old one. If 100 - locatine will find nothing. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 0 - at least something is found - it goes. Default if 33.
+If stored metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how different in per cent new element may be to the old one. If 0 (zero tolerance) - locatine will find nothing if element lost. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 100 - at least something is found - it goes. Default if 67 (means only 33% of element should stay in element to be found and returned).
 
 ### visual_search
 
@@ -120,6 +113,16 @@ locatine will count css values and position of element only if true. In that cas
 Position and size for element will be stored for the current resolution only. Start with new browser resolution will lead to deletion of all previous location\\size data.
 
 Be careful! Set true only if appearance of your page is pretty stable.
+
+## Changing options on fly
+
+You can get or set these values on fly. Like:
+
+```ruby
+s = Locatine.Search.new(learn: true)
+s.learn #=> true
+s.learn = false
+```
 
 ## Locatine::Search find options
 
@@ -145,7 +148,23 @@ group of elements. Must be uniq per file. This is to help to store elements with
 
 ### exact
 
-unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want to assert that your element is not present. In that case locatine will return nil if nothing was found.
+unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want element to be lost in case of any significant change. If it is impossible to find element when exact: true locatine will return nil.
+
+Be carefull: exact is working only when element is stable (has at least one parameter persistent for stability_limit times == well known by locatine). If element is not stable yet locatine will search for it anyway and may be it will find something. So if you want to ensure that element does not exist you should use locator and exact at the same time. You may also set zero tolerance. Check it:
+
+```ruby
+# Will return nil if there is no element id = 'not welcome'
+s.find(name: "unexpected element", locator:{id: "not welcome"}, exact: true)
+
+# Will return nil if there is no well known element "unexpected element"
+# Will try to find and return at least something if "unexpected element" is not stable
+# If there is nothing similar to "unexpected element" returns nil
+s.find(name: "unexpected something", exact: true)
+
+# Will return element only if the same element is present
+# Changing of any attribute which is trusted by locatine will produce nil
+s.find(name: "unexpected something", exact: true, tolerance: 0)
+```
 
 ### locator
 
@@ -243,4 +262,6 @@ If you want to find collection of elements you can use:
 ```ruby
 s = Locatine.Search.new
 s.collect("group of elements") # Will return an array
+# or
+s.collect(name: "group of elements")
 ```

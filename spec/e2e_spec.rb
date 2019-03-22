@@ -84,8 +84,13 @@ describe 'E2E basic user story' do
 
   it "Fails on exact when elements are lost" do
     @s.browser.goto @path3
+    expect(@s.collect(name: "lis fox", exact: true, locator: {id: "not welcome"})).to be == nil
+    expect(@s.collect(name: "lis fox", exact: true, tolerance: 0)).to be == nil
+    @s.stability_limit = 7
     expect(@s.collect(name: "lis fox", exact: true)).to be == nil
+    @s.stability_limit = 4
     expect(@s.find(name: "element", exact: true)).to be == nil
+    @s.stability_limit = 2
     expect(@s.find(name: "span for guess", exact: true)).to be == nil
   end
 
@@ -131,7 +136,7 @@ describe 'E2E basic user story' do
     expect(@s.collect(name: "lis fox").length).to be == 3
     expect(@s.find(name: "element").text).to be == "Element"
   end
-  
+
   after(:all) do
     File.delete(@file) if File.exist?(@file)
     FileUtils.remove_dir(@dir) if File.directory?(@dir)
