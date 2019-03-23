@@ -22,7 +22,7 @@ module Locatine
       results = engine.send(method, locator)
       return correct_method_detected(results) if collection?(results.class)
 
-      return acceptable_method_detected(results, method, locator)
+      acceptable_method_detected(results, method, locator)
     end
 
     def correct_method_detected(results)

@@ -87,9 +87,9 @@ module Locatine
       attributes.each_pair do |name, value|
         next if name.to_s == 'locatineclass'
 
-        value.split(/['" ]/).uniq.each do |part|
+        value.split(/['" ]/).reject(&:empty?).uniq.each do |part|
           array.push('name' => name.to_s, 'type' => 'attribute',
-                     'value' => part) unless part.empty?
+                     'value' => part)
         end
       end
       array

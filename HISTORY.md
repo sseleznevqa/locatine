@@ -76,3 +76,11 @@ First release. Locatine can
 - Tests are improved
 - Fixed bug with look_in
 - Deleted error raising which is already raised by Watir
+
+# Version 0.01546
+- Fixed bug with tolerance in find
+- Changed logic of tolerance
+- Changed logic of exact
+- Changed logic of determining stability of the element
+- Readme slightly rewrited
+- Tests are added

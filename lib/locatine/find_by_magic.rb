@@ -6,29 +6,39 @@ module Locatine
 
     ##
     # Getting all the elements via black magic
-    def find_by_magic(name, scope, data, vars)
+    def find_by_magic(name, scope, data, vars, exact)
       warn "#{name} in #{scope} is lost. Looking for it."
       @cold_time = 0
       all = all_options(data, vars)
       @cold_time = nil
-      raise "Unable to find element #{name} in #{scope}" if all.empty?
+      raise "Unable to find element #{name} in #{scope}" if all.empty? && !exact
 
-      suggest_by_all(all, data, vars, name, scope)
+      suggest_by_all(all, data, vars, name, scope, exact)
     end
 
     def similar_enough(data, attributes)
-      (same_entries(data['0'], attributes, '0').length * 100 /
-      data['0'].length) >= @tolerance
+      same = same_entries(data['0'], attributes, '0').length
+      all = data['0'].length
+      sameness = (same * 100) / all
+      sameness >= 100 - @current_t
     end
 
-    def suggest_by_all(all, data, vars, name, scope)
+    def best_of_all(all, vars)
       max = all.count(all.max_by { |i| all.count(i) })
-      suggestion = (all.select { |i| all.count(i) == max }).uniq
-      attributes = generate_data(suggestion, vars)
-      ok = similar_enough(data, attributes)
-      raise "Unable to find element similar to #{name} in #{scope}" unless ok
+      suggest = (all.select { |i| all.count(i) == max }).uniq unless max.zero?
+      attributes = generate_data(suggest, vars) unless suggest.nil?
+      return suggest, attributes
+    end
 
-      return suggestion, attributes
+    def suggest_by_all(all, data, vars, name, scope, exact)
+      suggest, attributes = best_of_all(all, vars)
+      ok = similar_enough(data, attributes) unless suggest.nil?
+      spawn = !ok && !exact
+      raise "Unable to find element similar to #{name} in #{scope}" if spawn
+
+      return suggest, attributes if ok
+
+      return nil, nil
     end
 
     def all_options(data, vars)
@@ -44,8 +54,8 @@ module Locatine
     end
 
     def min_max_by_size(middle, size)
-      min = middle - (size.to_i * (100 + @tolerance)) / 200
-      max = middle + (size.to_i * (100 + @tolerance)) / 200
+      min = middle - (size.to_i * (200 - @current_t)) / 200
+      max = middle + (size.to_i * (200 - @current_t)) / 200
       return min, max
     end
 

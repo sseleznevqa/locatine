@@ -16,7 +16,7 @@ module Locatine
       attributes.each_pair do |_depth, array|
         s.push array.max_by { |item| item['stability'].to_i }['stability'].to_i
       end
-      s.max > 1
+      s.max >= @stability_limit
     end
 
     def data_search(name, scope, vars, exact)
@@ -24,7 +24,7 @@ module Locatine
       attributes = generate_data(result, vars) if result
       if !result && (!exact || !stable?(@data[scope][name]))
         result, attributes = find_by_magic(name, scope,
-                                           @data[scope][name], vars)
+                                           @data[scope][name], vars, exact)
       end
       return result, attributes
     end
@@ -37,12 +37,18 @@ module Locatine
     end
 
     def full_search(name, scope, vars, locator, exact)
-      result, attributes = locator_search(locator, vars)
-      result, attributes = core_search(name, scope, vars, exact) unless result
-      result, attributes = ask(scope, name, result, vars) if @learn
+      result, attributes = search_steps(name, scope, vars, locator, exact)
       raise "Nothing was found for #{scope} #{name}" if !result && !exact
 
       store(attributes, scope, name) if result
+      return result, attributes
+    end
+
+    def search_steps(name, scope, vars, locator, exact)
+      result, attributes = locator_search(locator, vars)
+      ok = result || ((locator != {}) && exact)
+      result, attributes = core_search(name, scope, vars, exact) unless ok
+      result, attributes = ask(scope, name, result, vars) if @learn
       return result, attributes
     end
 

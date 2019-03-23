@@ -30,9 +30,9 @@ module Locatine
                    depth: 3,
                    browser: nil,
                    learn: ENV['LEARN'].nil? ? false : true,
-                   stability_limit: 10,
+                   stability_limit: 1000,
                    scope: 'Default',
-                   tolerance: 33,
+                   tolerance: 67,
                    visual_search: false)
       import_browser browser
       import_file(json)
@@ -85,9 +85,7 @@ module Locatine
              collection: false,
              tolerance: nil)
       name = set_name(simple_name, name)
-      @type = look_in
-      @iframe = iframe
-      @tolerance ||= tolerance
+      set_env_for_search(look_in, iframe, tolerance)
       scope ||= @scope.nil? ? 'Default' : @scope
       result, attributes = full_search(name, scope, vars, locator, exact)
       return { xpath: generate_xpath(attributes, vars) } if result &&

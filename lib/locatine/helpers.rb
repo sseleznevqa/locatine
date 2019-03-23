@@ -19,6 +19,12 @@ module Locatine
       (@iframe || @browser)
     end
 
+    def set_env_for_search(look_in, iframe, tolerance)
+      @type = look_in
+      @iframe = iframe
+      @current_t = tolerance || @tolerance
+    end
+
     def not_magic_div
       "[not(@id = 'locatine_magic_div')]"
     end
