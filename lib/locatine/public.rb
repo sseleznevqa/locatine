@@ -44,7 +44,6 @@ module Locatine
       @visual_search = visual_search
     end
 
-
     ##
     # Looking for the element
     #
@@ -86,9 +85,7 @@ module Locatine
              collection: false,
              tolerance: nil)
       name = set_name(simple_name, name)
-      @type = look_in
-      @iframe = iframe
-      @current_t = tolerance || @tolerance
+      set_env_for_search(look_in, iframe, tolerance)
       scope ||= @scope.nil? ? 'Default' : @scope
       result, attributes = full_search(name, scope, vars, locator, exact)
       return { xpath: generate_xpath(attributes, vars) } if result &&

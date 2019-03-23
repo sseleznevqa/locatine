@@ -37,13 +37,18 @@ module Locatine
     end
 
     def full_search(name, scope, vars, locator, exact)
+      result, attributes = search_steps(name, scope, vars, locator, exact)
+      raise "Nothing was found for #{scope} #{name}" if !result && !exact
+
+      store(attributes, scope, name) if result
+      return result, attributes
+    end
+
+    def search_steps(name, scope, vars, locator, exact)
       result, attributes = locator_search(locator, vars)
       ok = result || ((locator != {}) && exact)
       result, attributes = core_search(name, scope, vars, exact) unless ok
       result, attributes = ask(scope, name, result, vars) if @learn
-      raise "Nothing was found for #{scope} #{name}" if !result && !exact
-
-      store(attributes, scope, name) if result
       return result, attributes
     end
 

@@ -23,10 +23,15 @@ module Locatine
       sameness >= 100 - @current_t
     end
 
-    def suggest_by_all(all, data, vars, name, scope, exact)
+    def best_of_all(all, vars)
       max = all.count(all.max_by { |i| all.count(i) })
       suggest = (all.select { |i| all.count(i) == max }).uniq unless max.zero?
       attributes = generate_data(suggest, vars) unless suggest.nil?
+      return suggest, attributes
+    end
+
+    def suggest_by_all(all, data, vars, name, scope, exact)
+      suggest, attributes = best_of_all(all, vars)
       ok = similar_enough(data, attributes) unless suggest.nil?
       spawn = !ok && !exact
       raise "Unable to find element similar to #{name} in #{scope}" if spawn
