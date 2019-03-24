@@ -1,0 +1,18 @@
+<html>
+  <body>
+    <div><div><span>Here we are</span></div></div>
+    <div id="locatine_magic_div"></div>
+  </body>
+</html>
+<script>
+  const magicDiv = document.getElementById("locatine_magic_div");
+  const element = document.getElementById("Label");
+  function locatineTestSelect(index, tag, confirm){
+    magicDiv.setAttribute("INDEX", index);
+    magicDiv.setAttribute("TAG", tag);
+    magicDiv.setAttribute("locatineconfirmed", confirm);
+  };
+  setTimeout(function() {locatineTestSelect("", "", true)}, 1000);
+  setTimeout(function() {locatineTestSelect("0", "span", "selected")}, 2000);
+  setTimeout(function() {locatineTestSelect("0", "span", "true")}, 3000);
+</script>

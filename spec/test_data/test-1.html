@@ -53,11 +53,6 @@
     magicDiv.setAttribute("TAG", tag);
     magicDiv.setAttribute("locatineconfirmed", confirm);
   };
-  async function set_value(name, value){
-    let temp = {};
-    temp[name] = value;
-    await chrome.storage.sync.set(temp, function() {});
-  };
   setTimeout(function() {magicDiv.setAttribute("locatinecollection", "true")}, 1000);
   setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 2000);
   setTimeout(function() {if (magicDiv.getAttribute("locatinetitle") != "1 elements were selected as lis fox in Default. If it is correct - confirm the selection.")

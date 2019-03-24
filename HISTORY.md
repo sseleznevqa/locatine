@@ -84,3 +84,8 @@ First release. Locatine can
 - Changed logic of determining stability of the element
 - Readme slightly rewrited
 - Tests are added
+
+# Version 0.01659
+- Little more sense for JS code
+- Some new tests
+- Fixed bug with confirm when nothing selected
