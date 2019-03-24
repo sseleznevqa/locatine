@@ -7,12 +7,21 @@ describe 'E2E basic user story' do
     @path4 = "file://#{Dir.pwd}/spec/test_data/test-4.html"
     @path5 = "file://#{Dir.pwd}/spec/test_data/test-5.html"
     @path6 = "file://#{Dir.pwd}/spec/test_data/test-6.html"
+    @path7 = "file://#{Dir.pwd}/spec/test_data/test-7.html"
     @dir = './Locatine_files/'
     @file = './Locatine_files/default.json'
     Watir.default_timeout = 3
   end
   before(:each) do
     @s = Locatine::Search.new
+  end
+
+  it "works fine on empty selection" do
+    @s.browser.quit
+    @s.learn = true
+    @s.browser = Watir::Browser.new
+    @s.browser.goto @path7
+    expect(@s.find("span").text).to be == "Here we are"
   end
 
   it "Defining elements" do

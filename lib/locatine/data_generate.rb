@@ -85,7 +85,7 @@ module Locatine
       attributes = element.attributes
       array = []
       attributes.each_pair do |name, value|
-        next if name.to_s == 'locatineclass'
+        next if name.to_s == 'locatineclass' # Should never happen
 
         value.split(/['" ]/).reject(&:empty?).uniq.each do |part|
           array.push('name' => name.to_s, 'type' => 'attribute',

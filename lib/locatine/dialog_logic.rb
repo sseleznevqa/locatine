@@ -82,17 +82,25 @@ module Locatine
       return nil, {}
     end
 
+    def user_selection(els, attrs, vars, name, scope)
+      case get_from_app('locatineconfirmed')
+      when 'selected'
+        els, attrs = what_was_selected(els, attrs, vars, name, scope)
+      when 'declined'
+        els, attrs = decline(els, name, scope)
+      end
+      return els, attrs
+    end
+
     def listening(els, attrs, vars, name, scope)
       until get_from_app('locatineconfirmed') == 'true'
         sleep(0.1)
-        case get_from_app('locatineconfirmed')
-        when 'selected'
-          els, attrs = what_was_selected(els, attrs, vars, name, scope)
-        when 'declined'
-          els, attrs = decline(els, name, scope)
-        end
+        els, attrs = user_selection(els, attrs, vars, name, scope)
       end
-      return els, attrs
+      return els, attrs if els
+
+      decline(els, name, scope)
+      listening(els, attrs, vars, name, scope)
     end
 
     ##
