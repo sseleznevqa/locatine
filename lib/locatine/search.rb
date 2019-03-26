@@ -4,21 +4,22 @@ require 'fileutils'
 require 'chromedriver-helper'
 
 # Internal requires
-require 'locatine/merge'
-require 'locatine/public'
-require 'locatine/helpers'
-require 'locatine/file_work'
-require 'locatine/highlight'
-require 'locatine/data_logic'
-require 'locatine/find_logic'
-require 'locatine/find_by_css'
-require 'locatine/dialog_logic'
-require 'locatine/find_by_magic'
-require 'locatine/find_by_guess'
-require 'locatine/data_generate'
-require 'locatine/dialog_actions'
-require 'locatine/xpath_generator'
-require 'locatine/find_by_locator'
+require 'locatine/for_search/merge'
+require 'locatine/for_search/public'
+require 'locatine/for_search/saying'
+require 'locatine/for_search/helpers'
+require 'locatine/for_search/file_work'
+require 'locatine/for_search/highlight'
+require 'locatine/for_search/data_logic'
+require 'locatine/for_search/find_logic'
+require 'locatine/for_search/find_by_css'
+require 'locatine/for_search/dialog_logic'
+require 'locatine/for_search/find_by_magic'
+require 'locatine/for_search/find_by_guess'
+require 'locatine/for_search/data_generate'
+require 'locatine/for_search/listening'
+require 'locatine/for_search/xpath_generator'
+require 'locatine/for_search/find_by_locator'
 
 module Locatine
   ##
@@ -26,21 +27,22 @@ module Locatine
   #
   # Locatine can search.
   class Search
-    include Locatine::Merge
-    include Locatine::Public
-    include Locatine::Helpers
-    include Locatine::FileWork
-    include Locatine::DataLogic
-    include Locatine::FindLogic
-    include Locatine::Highlight
-    include Locatine::FindByCss
-    include Locatine::FindByMagic
-    include Locatine::DialogLogic
-    include Locatine::FindByGuess
-    include Locatine::DataGenerate
-    include Locatine::FindByLocator
-    include Locatine::DialogActions
-    include Locatine::XpathGenerator
+    include Locatine::ForSearch::Merge
+    include Locatine::ForSearch::Public
+    include Locatine::ForSearch::Saying
+    include Locatine::ForSearch::Helpers
+    include Locatine::ForSearch::FileWork
+    include Locatine::ForSearch::DataLogic
+    include Locatine::ForSearch::Listening
+    include Locatine::ForSearch::FindLogic
+    include Locatine::ForSearch::Highlight
+    include Locatine::ForSearch::FindByCss
+    include Locatine::ForSearch::FindByMagic
+    include Locatine::ForSearch::DialogLogic
+    include Locatine::ForSearch::FindByGuess
+    include Locatine::ForSearch::DataGenerate
+    include Locatine::ForSearch::FindByLocator
+    include Locatine::ForSearch::XpathGenerator
 
     attr_accessor :data,
                   :depth,
