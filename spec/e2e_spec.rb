@@ -105,13 +105,13 @@ describe 'E2E basic user story' do
 
   it "Fails when elements are lost and there is nothing similar" do
     @s.browser.goto @path4
-    expect{@s.collect(name: "lis fox")}.to raise_error(RuntimeError, 'Unable to find element lis fox in Default')
-    expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Unable to find element similar to element in Default')
+    expect{@s.collect(name: "lis fox")}.to raise_error(RuntimeError, 'Locatine cannot find element lis fox in Default')
+    expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Locatine cannot find element similar to element in Default')
   end
 
   it "Fails when visual is turned off but search is very css related" do
     @s.browser.goto @path3
-    expect{@s.find("h4 css")}.to raise_error(RuntimeError, 'Unable to find element similar to h4 css in Default')
+    expect{@s.find("h4 css")}.to raise_error(RuntimeError, 'Locatine cannot find element similar to h4 css in Default')
   end
 
   it "Finding lost elements" do

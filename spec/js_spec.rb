@@ -2,7 +2,7 @@ require 'spec_helper'
 
 def set_attr(element, name, value)
   @b.execute_script("arguments[0].setAttribute(arguments[1], arguments[2])", element, name, value)
-  sleep 0.2
+  sleep 0.5
 end
 describe 'Testing js via ruby' do
   context 'content.js' do

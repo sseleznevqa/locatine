@@ -89,3 +89,8 @@ First release. Locatine can
 - Little more sense for JS code
 - Some new tests
 - Fixed bug with confirm when nothing selected
+
+# Version 0.01811
+- Changed structure of the project
+- Better logs
+- Little dictionary module Saying is here
