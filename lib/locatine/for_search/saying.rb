@@ -85,6 +85,14 @@ module Locatine
           'Locatine is waiting for new find request')
       end
 
+      def send_same_entry(length, name, scope, found)
+        push_title "#{length} #{verb(length)} selected as #{name} in #{scope}."\
+        " But it was already defined #{found.length} times."
+        example = found.sample
+        send_to_app('locatinehint', "For example like #{example[:name]} in"\
+        " #{example[:scope]}")
+      end
+
       def warn_dropping(tag, index)
         send_warn('For some reason locatine cannot proceed with'\
           " //#{tag}[#{index}] element. You've selected. Maybe element was"\
