@@ -94,3 +94,6 @@ First release. Locatine can
 - Changed structure of the project
 - Better logs
 - Little dictionary module Saying is here
+
+# Version 0.01822
+- Locatine will warn if you will try to add element that was already added with other name
