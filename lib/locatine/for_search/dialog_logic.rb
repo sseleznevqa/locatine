@@ -68,10 +68,38 @@ module Locatine
         mass_highlight_turn(element, false) if element
         element, attributes = working_on_selected(tag, index, vars, attributes)
         if element
+          found = find_in_data(attributes)
           mass_highlight_turn(element)
-          send_selected(element.length, name, scope)
+          send_selected(element.length, name, scope) unless found
+          send_same_entry(element.length, name, scope, found) if found
         end
         return element, attributes
+      end
+
+      def send_same_entry(length, name, scope, found)
+        push_title "#{length} #{verb(length)} selected as #{name} in #{scope}."\
+        " But it was already defined #{found.length} times."
+        example = found.sample
+        send_to_app('locatinehint', "For example like #{example[:name]} in"\
+        " #{example[:scope]}")
+      end
+
+      # TODO More todo
+      def find_in_data(attributes)
+        found = []
+        @data.each_pair do |scope, elements|
+          elements.each_pair do |element, hash|
+            good = true
+            hash.each_pair do |depth, array|
+              trusted = get_trusted(array).map do |i|
+                i.reject { |k| k == 'stability' }
+              end
+              good = good && (trusted - attributes[depth] == [])
+            end
+            found.push(scope: scope, name: element) if good
+          end
+        end
+        found.empty? ? nil : found
       end
 
       def decline(element, name, scope)

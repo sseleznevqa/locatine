@@ -47,6 +47,7 @@ describe 'E2E basic user story' do
     @s.browser.goto @path6
     expect(@s.collect(name: "lis fox").length).to be == 3
     expect(@s.collect(name: "lis fox").length).to be == 3
+    expect(@s.collect(name: "dogs")[0].text).to be == "ONE"
   end
 
   it "Not finding elements when vars are not provided" do
