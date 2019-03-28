@@ -67,11 +67,15 @@ module Locatine
         send_to_app('locatineconfirmed', 'ok')
         mass_highlight_turn(element, false) if element
         element, attributes = working_on_selected(tag, index, vars, attributes)
-        if element
-          mass_highlight_turn(element)
-          send_selected(element.length, name, scope)
-        end
+        show_element(element, attributes, name, scope) if element
         return element, attributes
+      end
+
+      def show_element(element, attributes, name, scope)
+        found = find_in_data(attributes)
+        mass_highlight_turn(element)
+        send_selected(element.length, name, scope) unless found
+        send_same_entry(element.length, name, scope, found) if found
       end
 
       def decline(element, name, scope)

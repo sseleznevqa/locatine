@@ -36,6 +36,28 @@ module Locatine
         family
       end
 
+      def equal_elements?(one, another)
+        good = true
+        one.each_pair do |depth, array|
+          trusted = get_trusted(array).map do |i|
+            i.reject { |k| k == 'stability' }
+          end
+          good &&= (trusted - another[depth] == [])
+        end
+        good
+      end
+
+      def find_in_data(attributes)
+        found = []
+        @data.each_pair do |scope, elements|
+          elements.each_pair do |element, hash|
+            good = equal_elements?(hash, attributes)
+            found.push(scope: scope, name: element) if good
+          end
+        end
+        found.empty? ? nil : found
+      end
+
       ##
       # Getting element\\parents information
       def get_family_info(element, vars)

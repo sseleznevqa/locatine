@@ -47,7 +47,7 @@
 </html>
 <script>
   const magicDiv = document.getElementById("locatine_magic_div");
-  const element = document.getElementById("Label");
+  const element = document.getElementById("one");
   function locatineTestSelect(index, tag, confirm){
     magicDiv.setAttribute("INDEX", index);
     magicDiv.setAttribute("TAG", tag);
@@ -57,6 +57,13 @@
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 2000);
   setTimeout(function() {locatineTestSelect("10", "br", "selected")}, 3000);
   setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 4000);
+  setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 5000);
+  setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 6000);
+  setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("1 element was selected as dogs in Default. But it was already defined 1 times"))
+                           {
+                             element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle")
+                           }}, 7000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 8000);
 
 
 
