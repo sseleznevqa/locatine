@@ -97,3 +97,9 @@ First release. Locatine can
 
 # Version 0.01822
 - Locatine will warn if you will try to add element that was already added with other name
+
+# Version 0.01839
+- Fixed bug with guessing when elements are not stale
+- Fixed little typo
+- Scope introduced
+- Name suggestion raw draft added

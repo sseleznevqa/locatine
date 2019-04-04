@@ -60,6 +60,7 @@ module Locatine
       end
 
       def send_clear(name, scope)
+        name = 'some element' if name.to_s.empty?
         push_title "Now nothing is selected as #{name} in #{scope}"
       end
 
@@ -72,6 +73,7 @@ module Locatine
       end
 
       def send_selecting(name, scope)
+        name = 'some element' if name.to_s.empty?
         push_title "You are selecting #{name} in #{scope}"
         send_to_app('locatinehint', 'Toggle single//collection mode button if '\
           'you need. If you want to do some actions on the page toggle'\

@@ -33,7 +33,7 @@ module Locatine
         rescue StandardError
           nil
         end
-        results.each { |item| all.push item if item.present? }
+        results.each { |item| all.push item if !item.stale? && item.present? }
         return all unless all.empty?
         return nil if all.empty?
       end

@@ -48,7 +48,7 @@ module Locatine
       end
 
       def return_old_selection(attrs, vars)
-        return find_by_data(attrs, vars).to_a, attrss.to_h if attrs.to_h != {}
+        return find_by_data(attrs, vars).to_a, attrs.to_h if attrs.to_h != {}
 
         return nil, {}
       end
@@ -89,10 +89,28 @@ module Locatine
         case get_from_app('locatineconfirmed')
         when 'selected'
           els, attrs = what_was_selected(els, attrs, vars, name, scope)
+          suggest_name(attrs, vars) if name.to_s.empty?
         when 'declined'
           els, attrs = decline(els, name, scope)
         end
         return els, attrs
+      end
+
+      def suggest_name(attrs, vars)
+        main = attrs['0']
+        interesting = ['name', 'title', 'id', 'role', 'text']
+        tmp = main.select { |i| interesting.any? { |k| i['name'].include?(k) } }
+        all = main.select { |i| i['type'] == 'attribute' }
+        words = tmp.map { |i| process_string(i['value'], vars)}
+        words.uniq!
+        tag = process_string((main.select { |i| i['type'] == 'tag' })[0]['value'], vars)
+        words = all.map { |i| process_string(i['value'], vars)} if words.empty?
+        ss = "qwrtpsdfghjklzxcvbnm".split('')
+        sa = "eyuioa".split('')
+        id = ss.sample + sa.sample + ss.sample + sa.sample + ss.sample + sa.sample
+        words = ["undescribed #{id}"] if words.empty?
+        suggest = "#{words.sample} #{tag}"
+        puts suggest
       end
 
       def listening(els, attrs, vars, name, scope)
@@ -114,8 +132,9 @@ module Locatine
         @cold_time = 0
         element, attributes = listening(element, attributes, vars, name, scope)
         @cold_time = nil
+        name = get_from_app('locatine_element_name') if name.to_s.empty?
         response_action(element)
-        return element, attributes
+        return {element: element, attributes: attributes, name: name}
       end
     end
   end

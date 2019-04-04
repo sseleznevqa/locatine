@@ -47,7 +47,11 @@ module Locatine
         result, attributes = locator_search(locator, vars)
         ok = result || ((locator != {}) && exact)
         result, attributes = core_search(name, scope, vars, exact) unless ok
-        result, attributes = ask(scope, name, result, vars) if @learn
+        if @learn
+          answer = ask(scope, name, result, vars)
+          result = answer[:element]
+          attributes = answer[:attributes]
+        end
         return result, attributes
       end
 
