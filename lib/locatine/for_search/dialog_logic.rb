@@ -67,7 +67,6 @@ module Locatine
         send_to_app('locatineconfirmed', 'ok')
         mass_highlight_turn(element, false) if element
         element, attributes = working_on_selected(tag, index, vars, attributes)
-        show_element(element, attributes, name, scope) if element
         return element, attributes
       end
 
@@ -89,28 +88,35 @@ module Locatine
         case get_from_app('locatineconfirmed')
         when 'selected'
           els, attrs = what_was_selected(els, attrs, vars, name, scope)
-          suggest_name(attrs, vars) if name.to_s.empty?
+          name = suggest_name(name, attrs, vars)
+          show_element(els, attrs, name, scope) if els
         when 'declined'
           els, attrs = decline(els, name, scope)
         end
         return els, attrs
       end
 
-      def suggest_name(attrs, vars)
-        main = attrs['0']
-        interesting = ['name', 'title', 'id', 'role', 'text']
-        tmp = main.select { |i| interesting.any? { |k| i['name'].include?(k) } }
-        all = main.select { |i| i['type'] == 'attribute' }
-        words = tmp.map { |i| process_string(i['value'], vars)}
-        words.uniq!
-        tag = process_string((main.select { |i| i['type'] == 'tag' })[0]['value'], vars)
-        words = all.map { |i| process_string(i['value'], vars)} if words.empty?
-        ss = "qwrtpsdfghjklzxcvbnm".split('')
-        sa = "eyuioa".split('')
-        id = ss.sample + sa.sample + ss.sample + sa.sample + ss.sample + sa.sample
-        words = ["undescribed #{id}"] if words.empty?
-        suggest = "#{words.sample} #{tag}"
-        puts suggest
+      def suggest_name(name, attrs, vars)
+        if name.to_s.empty?
+          main = attrs['0']
+          interesting = ['name', 'title', 'id', 'role', 'text']
+          tmp = main.select { |i| interesting.any? { |k| i['name'].include?(k) } }
+          all = main.select { |i| i['type'] == 'attribute' }
+          words = tmp.map { |i| process_string(i['value'], vars)}
+          words.uniq!
+          tag = process_string((main.select { |i| i['type'] == 'tag' })[0]['value'], vars)
+          words = all.map { |i| process_string(i['value'], vars)} if words.empty?
+          ss = "qwrtpsdfghjklzxcvbnm".split('')
+          sa = "eyuioa".split('')
+          id = ss.sample + sa.sample + ss.sample + sa.sample + ss.sample + sa.sample
+          words = ["undescribed #{id}"] if words.empty?
+          suggest = "#{words.sample} #{tag}"
+        else
+          suggest = name
+        end
+        send_to_app("locatine_name", suggest)
+        send_to_app("locatine_name_mark", "true")
+        suggest
       end
 
       def listening(els, attrs, vars, name, scope)
@@ -132,7 +138,8 @@ module Locatine
         @cold_time = 0
         element, attributes = listening(element, attributes, vars, name, scope)
         @cold_time = nil
-        name = get_from_app('locatine_element_name') if name.to_s.empty?
+        name_from_app = get_from_app('locatine_name')
+        name = name_from_app unless name_from_app.to_s.empty?
         response_action(element)
         return {element: element, attributes: attributes, name: name}
       end

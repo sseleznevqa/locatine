@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
   s.email       = 's_seleznev_qa@hotmail.com'
-  s.files       = ["lib/locatine.rb"] +
+  s.files       = ["lib/locatine.rb", "README.md"] +
                   Dir.glob("lib/locatine/*.rb") +
                   Dir.glob("lib/locatine/app/*.*") +
                   Dir.glob("lib/locatine/large_scripts/*.*") +
