@@ -37,12 +37,12 @@ module Locatine
       end
 
       def equal_elements?(one, another)
-        good = true
+        good = true unless one == {}
         one.each_pair do |depth, array|
           trusted = get_trusted(array).map do |i|
             i.reject { |k| k == 'stability' }
           end
-          good &&= (trusted - another[depth] == [])
+          good &&= ((trusted - another[depth] == []) && !trusted.empty?)
         end
         good
       end

@@ -120,13 +120,16 @@ module Locatine
       end
 
       def listening(els, attrs, vars, name, scope)
-        until get_from_app('locatineconfirmed') == 'true'
+        until ['true', 'abort'].include?(get_from_app('locatineconfirmed'))
           sleep(0.1)
           els, attrs = user_selection(els, attrs, vars, name, scope)
         end
-        return els, attrs if els
+        result = get_from_app('locatineconfirmed')
+        return els, attrs if els && result != 'abort'
 
-        decline(els, name, scope)
+        els, attrs = decline(els, name, scope)
+        return els, attrs if result == 'abort'
+
         listening(els, attrs, vars, name, scope)
       end
 
