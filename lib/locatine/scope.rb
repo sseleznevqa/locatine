@@ -11,10 +11,10 @@ module Locatine
 
     def define(vars = {})
       item = @search.send(:ask, @scope, '', nil, vars)
-      unless item[:element].nil?
-        @search.send(:store, item[:attributes], @scope, item[:name])
-        define(vars)
-      end
+      return if item[:element].nil?
+
+      @search.send(:store, item[:attributes], @scope, item[:name])
+      define(vars)
     end
   end
 end

@@ -109,3 +109,4 @@ First release. Locatine can
 - Fixed a bug with message 'element was already defined' appearing without a reason
 - Abort button added. It will stop the element selection forcedly.
 - Fixed bug with loosing element on the page when it has no content
+- We will not highlight more than 50 elements. That's too long

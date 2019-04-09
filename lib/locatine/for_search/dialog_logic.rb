@@ -96,28 +96,8 @@ module Locatine
         return els, attrs
       end
 
-      def suggest_name(name, attrs, vars)
-        if name.to_s.empty?
-          main = attrs['0']
-          interesting = ['name', 'title', 'id', 'role', 'text']
-          tmp = main.select { |i| interesting.any? { |k| i['name'].include?(k) } }
-          all = main.select { |i| i['type'] == 'attribute' }
-          words = tmp.map { |i| process_string(i['value'], vars)}
-          words.uniq!
-          tag = process_string((main.select { |i| i['type'] == 'tag' })[0]['value'], vars)
-          words = all.map { |i| process_string(i['value'], vars)} if words.empty?
-          words = ["undescribed #{generate_word}"] if words.empty?
-          suggest = "#{words.sample} #{tag}"
-        else
-          suggest = name
-        end
-        send_to_app("locatine_name", suggest)
-        send_to_app("locatine_name_mark", "true")
-        suggest
-      end
-
       def listening(els, attrs, vars, name, scope)
-        until ['true', 'abort'].include?(get_from_app('locatineconfirmed'))
+        until %w[true abort].include?(get_from_app('locatineconfirmed'))
           sleep(0.1)
           els, attrs = user_selection(els, attrs, vars, name, scope)
         end
@@ -141,7 +121,7 @@ module Locatine
         name_from_app = get_from_app('locatine_name')
         name = name_from_app unless name_from_app.to_s.empty?
         response_action(element)
-        return {element: element, attributes: attributes, name: name}
+        { element: element, attributes: attributes, name: name }
       end
     end
   end

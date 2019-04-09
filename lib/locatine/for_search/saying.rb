@@ -122,6 +122,10 @@ module Locatine
         send_warn "Something was found as #{data} but we cannot highlight it"
       end
 
+      def warn_much_highlight(size)
+        send_warn "Only the first 50 elements of #{size} were highlighted."
+      end
+
       def warn_lost_found(name, scope)
         send_warn "Something was found as #{name} in #{scope}."
       end
