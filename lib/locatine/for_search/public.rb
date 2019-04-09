@@ -117,6 +117,12 @@ module Locatine
       def browser=(value)
         import_browser(value)
       end
+
+      def get_scope(name = 'Default')
+        answer = Scope.new(name, self)
+        answer.define if @learn
+        answer
+      end
     end
   end
 end

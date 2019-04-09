@@ -95,6 +95,16 @@ module Locatine
         raise_no_var(thevar) unless value
         process_string(str.gsub('#{' + thevar + '}', value.to_s), vars)
       end
+
+      def generate_word(pairs = 3)
+        ss = 'qwrtpsdfghjklzxcvbnm'.split('')
+        sa = 'eyuioa'.split('')
+        str = ''
+        pairs.times do
+          str += ss.sample + sa.sample
+        end
+        str
+      end
     end
   end
 end

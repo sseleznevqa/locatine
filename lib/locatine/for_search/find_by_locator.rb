@@ -29,11 +29,11 @@ module Locatine
       def correct_method_detected(results)
         all = []
         begin
-          results[0].wait_until(timeout: @cold_time, &:present?)
+          results[0].wait_until(timeout: @cold_time, &:exists?)
         rescue StandardError
           nil
         end
-        results.each { |item| all.push item if !item.stale? && item.present? }
+        results.each { |item| all.push item if !item.stale? && item.exists? }
         return all unless all.empty?
         return nil if all.empty?
       end

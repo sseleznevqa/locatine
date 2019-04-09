@@ -62,7 +62,7 @@ module Locatine
         return element, new_attributes
       end
 
-      def what_was_selected(element, attributes, vars, name, scope)
+      def what_was_selected(element, attributes, vars)
         tag, index = tag_index
         send_to_app('locatineconfirmed', 'ok')
         mass_highlight_turn(element, false) if element
@@ -87,7 +87,7 @@ module Locatine
       def user_selection(els, attrs, vars, name, scope)
         case get_from_app('locatineconfirmed')
         when 'selected'
-          els, attrs = what_was_selected(els, attrs, vars, name, scope)
+          els, attrs = what_was_selected(els, attrs, vars)
           name = suggest_name(name, attrs, vars)
           show_element(els, attrs, name, scope) if els
         when 'declined'
@@ -106,10 +106,7 @@ module Locatine
           words.uniq!
           tag = process_string((main.select { |i| i['type'] == 'tag' })[0]['value'], vars)
           words = all.map { |i| process_string(i['value'], vars)} if words.empty?
-          ss = "qwrtpsdfghjklzxcvbnm".split('')
-          sa = "eyuioa".split('')
-          id = ss.sample + sa.sample + ss.sample + sa.sample + ss.sample + sa.sample
-          words = ["undescribed #{id}"] if words.empty?
+          words = ["undescribed #{generate_word}"] if words.empty?
           suggest = "#{words.sample} #{tag}"
         else
           suggest = name
