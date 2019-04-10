@@ -286,7 +286,7 @@ search.get_scope(name: "Name of scope", vars: vars) # Will ask you...
 # Finally when scope is defined
 search.find(scope: "Name of scope",
             name: "Name of element in scope",
-            vars: vars # Necessary if elements was defined with vars)
+            vars: vars # Necessary if elements were defined with vars)
 ```
 
 Scope itself is not very useful now. But we are looking forward.
