@@ -104,10 +104,12 @@ First release. Locatine can
 - Scope introduced
 - In some conditions element can have no predefined name now
 - If there is no name provided Locatine will suggest some
-- User can change the name of element while defining&
+- User can change the name of element while defining.
 - Fixed an invisible bug with decline
 - Fixed a bug with message 'element was already defined' appearing without a reason
 - Abort button added. It will stop the element selection forcedly.
 - Fixed bug with loosing element on the page when it has no content
 - We will not highlight more than 50 elements. That's too long
 - README is updated
+
+# Version 0.01971
