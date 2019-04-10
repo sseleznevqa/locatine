@@ -20,6 +20,11 @@ module Locatine
       # Getting all the elements matching a locator
       def find_by_locator(locator)
         method = @type.nil? ? :elements : @type
+        begin
+          engine.element(locator).wait_until(timeout: @cold_time, &:exists?)
+        rescue StandardError
+          return nil
+        end
         results = engine.send(method, locator)
         return correct_method_detected(results) if collection?(results.class)
 
@@ -27,15 +32,12 @@ module Locatine
       end
 
       def correct_method_detected(results)
-        all = []
-        begin
-          results[0].wait_until(timeout: @cold_time, &:present?)
-        rescue StandardError
-          nil
-        end
-        results.each { |item| all.push item if item.present? }
+        return nil if results.empty?
+
+        all = results.reject(&:stale?)
         return all unless all.empty?
-        return nil if all.empty?
+
+        nil
       end
 
       def acceptable_method_detected(results, method, locator)

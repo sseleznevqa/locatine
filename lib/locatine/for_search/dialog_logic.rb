@@ -48,7 +48,7 @@ module Locatine
       end
 
       def return_old_selection(attrs, vars)
-        return find_by_data(attrs, vars).to_a, attrss.to_h if attrs.to_h != {}
+        return find_by_data(attrs, vars).to_a, attrs.to_h if attrs.to_h != {}
 
         return nil, {}
       end
@@ -62,12 +62,11 @@ module Locatine
         return element, new_attributes
       end
 
-      def what_was_selected(element, attributes, vars, name, scope)
+      def what_was_selected(element, attributes, vars)
         tag, index = tag_index
         send_to_app('locatineconfirmed', 'ok')
         mass_highlight_turn(element, false) if element
         element, attributes = working_on_selected(tag, index, vars, attributes)
-        show_element(element, attributes, name, scope) if element
         return element, attributes
       end
 
@@ -88,7 +87,9 @@ module Locatine
       def user_selection(els, attrs, vars, name, scope)
         case get_from_app('locatineconfirmed')
         when 'selected'
-          els, attrs = what_was_selected(els, attrs, vars, name, scope)
+          els, attrs = what_was_selected(els, attrs, vars)
+          name = suggest_name(name, attrs, vars)
+          show_element(els, attrs, name, scope) if els
         when 'declined'
           els, attrs = decline(els, name, scope)
         end
@@ -96,13 +97,16 @@ module Locatine
       end
 
       def listening(els, attrs, vars, name, scope)
-        until get_from_app('locatineconfirmed') == 'true'
+        until %w[true abort].include?(get_from_app('locatineconfirmed'))
           sleep(0.1)
           els, attrs = user_selection(els, attrs, vars, name, scope)
         end
-        return els, attrs if els
+        result = get_from_app('locatineconfirmed')
+        return els, attrs if els && result != 'abort'
 
-        decline(els, name, scope)
+        els, attrs = decline(els, name, scope)
+        return els, attrs if result == 'abort'
+
         listening(els, attrs, vars, name, scope)
       end
 
@@ -114,8 +118,10 @@ module Locatine
         @cold_time = 0
         element, attributes = listening(element, attributes, vars, name, scope)
         @cold_time = nil
+        name_from_app = get_from_app('locatine_name')
+        name = name_from_app unless name_from_app.to_s.empty?
         response_action(element)
-        return element, attributes
+        { element: element, attributes: attributes, name: name }
       end
     end
   end

@@ -7,6 +7,7 @@ module Locatine
       # Creates a new instance of Search
       #
       # Params:
+      #
       # +json+ is the name of file to store//read data. Default =>
       # "./Locatine_files/default.json"
       #
@@ -24,7 +25,7 @@ module Locatine
       # +scope+ will be used in search (if not provided) defaulkt is "Default"
       #
       # +tolerance+ Shows how similar must be an element found as alternative
-      # to the lost one. Default is 33 which means that if less than 33% of
+      # to the lost one. Default is 67 which means that if less than 33% of
       # metrics of alternative elements are the same as of the lost element
       # will not be returned
       def initialize(json: './Locatine_files/default.json',
@@ -74,6 +75,9 @@ module Locatine
       #
       # +collection+ when true an array will be returned. When false - a
       # single element
+      #
+      # +tolerance+ It is possible to set a custom tolerance for every find. See
+      # examples in README
       def find(simple_name = nil,
                name: nil,
                scope: nil,
@@ -112,6 +116,12 @@ module Locatine
 
       def browser=(value)
         import_browser(value)
+      end
+
+      def get_scope(name: 'Default', vars: {})
+        answer = Scope.new(name, self)
+        answer.define(vars) if @learn
+        answer
       end
     end
   end

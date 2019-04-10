@@ -9,15 +9,16 @@ require 'locatine/for_search/public'
 require 'locatine/for_search/saying'
 require 'locatine/for_search/helpers'
 require 'locatine/for_search/file_work'
+require 'locatine/for_search/listening'
 require 'locatine/for_search/highlight'
 require 'locatine/for_search/data_logic'
 require 'locatine/for_search/find_logic'
 require 'locatine/for_search/find_by_css'
+require 'locatine/for_search/name_helper'
 require 'locatine/for_search/dialog_logic'
 require 'locatine/for_search/find_by_magic'
 require 'locatine/for_search/find_by_guess'
 require 'locatine/for_search/data_generate'
-require 'locatine/for_search/listening'
 require 'locatine/for_search/xpath_generator'
 require 'locatine/for_search/find_by_locator'
 
@@ -37,6 +38,7 @@ module Locatine
     include Locatine::ForSearch::FindLogic
     include Locatine::ForSearch::Highlight
     include Locatine::ForSearch::FindByCss
+    include Locatine::ForSearch::NameHelper
     include Locatine::ForSearch::FindByMagic
     include Locatine::ForSearch::DialogLogic
     include Locatine::ForSearch::FindByGuess

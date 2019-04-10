@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = "locatine"
-  s.version     = "0.01822"
+  s.version     = "0.01839"
   s.summary     = "Element locating tool based on watir"
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
   s.email       = 's_seleznev_qa@hotmail.com'
-  s.files       = ["lib/locatine.rb"] +
+  s.files       = ["lib/locatine.rb", "README.md", "readme/567.png"] +
                   Dir.glob("lib/locatine/*.rb") +
                   Dir.glob("lib/locatine/app/*.*") +
                   Dir.glob("lib/locatine/large_scripts/*.*") +

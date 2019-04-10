@@ -60,6 +60,7 @@ module Locatine
       end
 
       def send_clear(name, scope)
+        name = 'some element' if name.to_s.empty?
         push_title "Now nothing is selected as #{name} in #{scope}"
       end
 
@@ -72,6 +73,7 @@ module Locatine
       end
 
       def send_selecting(name, scope)
+        name = 'some element' if name.to_s.empty?
         push_title "You are selecting #{name} in #{scope}"
         send_to_app('locatinehint', 'Toggle single//collection mode button if '\
           'you need. If you want to do some actions on the page toggle'\
@@ -118,6 +120,10 @@ module Locatine
 
       def warn_cannot_highlight(data)
         send_warn "Something was found as #{data} but we cannot highlight it"
+      end
+
+      def warn_much_highlight(size)
+        send_warn "Only the first 50 elements of #{size} were highlighted."
       end
 
       def warn_lost_found(name, scope)

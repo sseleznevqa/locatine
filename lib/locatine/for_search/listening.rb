@@ -37,7 +37,7 @@ module Locatine
       def response_action(element)
         send_to_app('locatineconfirmed', 'ok')
         send_has_response
-        mass_highlight_turn(element, false)
+        mass_highlight_turn(element, false) if element
         send_to_app('locatinestyle', 'set_false')
         send_to_app('locatinestyle', 'ok', @browser) if @iframe
         sleep 1
