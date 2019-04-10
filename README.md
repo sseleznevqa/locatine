@@ -275,7 +275,7 @@ scope.define
 
 You will be able to select all the elements and collections for scope one by one. When it is finished click "Abort Selection" button to exit the loop.
 
-ruby```
+```ruby
 # You can force use dynamic variables on define where is possible (same rules as for find)
 vars = {text: "dynamic text",
         tag: "span",
