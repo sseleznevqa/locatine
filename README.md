@@ -57,6 +57,32 @@ s.find(name: "element", scope: "Main").click
 
 8. Now you can run the test without LEARN parameter and it will work.
 
+## Locatine app window
+
+### Element name
+
+You can ask the app to save element with any name. This name should be used for element finding later.
+
+### Waiting for click
+
+If you need to do some actions on page for debug purposes before defining the element you can turn off waiting for click. If Locatine is waiting for click every click is gonna be counted as element selection.
+
+### Single\\Collection mode
+
+If you need to find a collection of elements. Turn collection mode on. And click two elements of the kind. Locatine will automatically select all the elements that are similar to selected
+
+### Clear selection
+
+Click it to start element selection process from the very beginning.
+
+### Abort selection
+
+Will forcedly stop the selection process. Use with care since ruby methods will return nils and errors since element is not selected properly. Use it when you finish to define a scope.
+
+### Confirm selection
+
+When you've selected a correct element - confirm it in order to save.
+
 ## Locatine::Search options
 
 ```ruby
@@ -119,7 +145,7 @@ Be careful! Set true only if appearance of your page is pretty stable.
 You can get or set these values on fly. Like:
 
 ```ruby
-s = Locatine.Search.new(learn: true)
+s = Locatine::Search.new(learn: true)
 s.learn #=> true
 s.learn = false
 ```
@@ -235,19 +261,49 @@ if true array of elements will be returned. If false only the one element (the f
 
 You can state custom tolerance for the element.
 
+## Scope
+
+If you want to define a whole bunch of elements at once you can do:
+
+```ruby
+search = Locatine::Search.new(learn: true)
+search.get_scope(name: "Name of scope") # Will ask you about all the elements in scope
+# or
+scope = Locatine::Scope.new('Name of scope', search)
+scope.define
+```
+
+You will be able to select all the elements and collections for scope one by one. When it is finished click "Abort Selection" button to exit the loop.
+
+ruby```
+# You can force use dynamic variables on define where is possible (same rules as for find)
+vars = {text: "dynamic text",
+        tag: "span",
+        attrName: "part of dynamic attr-value"}
+scope.define(vars) # Will ask you about all the elements in scope
+# Same
+search.get_scope(name: "Name of scope", vars: vars) # Will ask you...
+# Finally when scope is defined
+search.find(scope: "Name of scope",
+            name: "Name of element in scope",
+            vars: vars # Necessary if elements was defined with vars)
+```
+
+Scope itself is not very useful now. But we are looking forward.
+
 ## Other ways to use find
 
 If the scope is set and you do not want to provide any additional options you can do:
 
 ```ruby
-s = Locatine.Search.new
+s = Locatine::Search.new
 s.find("just name of element")
 ```
 
 Also you can do:
 
 ```ruby
-s = Locatine.Search.new
+s = Locatine::Search.new
 s.browser.button(s.lctr("name of the button"))
 # or
 s.browser.button(s.lctr(name: "name of the button", scope: "Some form"))
@@ -260,7 +316,7 @@ That may be helpful in case of migration from plain watir to watir + locatine
 If you want to find collection of elements you can use:
 
 ```ruby
-s = Locatine.Search.new
+s = Locatine::Search.new
 s.collect("group of elements") # Will return an array
 # or
 s.collect(name: "group of elements")

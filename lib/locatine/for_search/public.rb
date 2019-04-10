@@ -118,9 +118,9 @@ module Locatine
         import_browser(value)
       end
 
-      def get_scope(name = 'Default')
+      def get_scope(name: 'Default', vars: {})
         answer = Scope.new(name, self)
-        answer.define if @learn
+        answer.define(vars) if @learn
         answer
       end
     end

@@ -7,12 +7,12 @@
     <h2 class="header" id="mainTitle">Right now you are defining nothing. So no button will work</h2>
     <h3 class="hint" id="hint">But you can click it anyway :)</h3>
     <div class="block">
-      <input class="usual field" id="nameHandler" type="text" placeholder="Element name" value=""/>
-      <input class="blue button" id="watchSwitch" type="button" value="Do not watch"/>
-      <input class="blue button" id="mode" type="button" value="Adding mode is enabled"/>
-      <input class="red button" id="clearMark" type="button" value="Clear selection"/>
-      <input class="red button" id="abort" type="button" value="Abort selection"/>
-      <input class="green button" id="confirm" type="button" value="Confirm selection"/>
+      <input title="You can set your own element name here. Do not forget to use it in your code!" class="usual field" id="nameHandler" type="text" placeholder="Element name" value=""/>
+      <input title="If you need to do some actions on page for debug purposes before defining the element you can turn off waiting for click. If Locatine is waiting for click every click is gonna be counted as element selection." class="blue button" id="watchSwitch" type="button" value="Do not watch"/>
+      <input title="If you need to find a collection of elements. Turn collection mode on. And click two elements of the kind. Locatine will automatically select all the elements that are similar to selected" class="blue button" id="mode" type="button" value="Adding mode is enabled"/>
+      <input title="Click it to start element selection process from the very beginning." class="red button" id="clearMark" type="button" value="Clear selection"/>
+      <input title="Will forcedly stop the selection process. Use with care since ruby methods will return nils and errors since element is not selected properly. Use it when you finish to define a scope." class="red button" id="abort" type="button" value="Abort selection"/>
+      <input title="When you've selected a correct element - confirm it in order to save." class="green button" id="confirm" type="button" value="Confirm selection"/>
     </div>
     <script src="popup.js"></script>
   </body>

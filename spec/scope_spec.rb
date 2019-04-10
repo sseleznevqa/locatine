@@ -15,7 +15,7 @@ describe 'Scope basic user story' do
     @s.browser = Watir::Browser.new
     @s.learn = true
     @s.browser.goto @path8
-    @s.get_scope("test")
+    @s.get_scope(name: "test")
     @s.learn = false
     @s.scope = 'test'
     expect(@s.find("one span").exists?).to be == true

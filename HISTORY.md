@@ -110,3 +110,4 @@ First release. Locatine can
 - Abort button added. It will stop the element selection forcedly.
 - Fixed bug with loosing element on the page when it has no content
 - We will not highlight more than 50 elements. That's too long
+- README is updated
