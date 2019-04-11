@@ -292,7 +292,26 @@ search.find(scope: "Name of scope",
             vars: vars # Necessary if elements were defined with vars)
 ```
 
-Scope itself is not very useful now. But we are looking forward.
+### Methods of scope
+
+If you want to get a hash with all elements that are defined in scope:
+
+```ruby
+# Lost elements will be found if possible!
+search.get_scope(name: "Name of scope").all
+# => {"element name": {
+#      elements: Array of Watir::Element,
+#      locator: valid xpath locator
+#      }...
+#    }
+```
+
+If you want to check presence of all elements:
+
+```ruby
+# Will raise an error if something lost!
+search.get_scope(name: "Name of scope").check
+```
 
 ## Other ways to use find
 

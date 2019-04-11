@@ -113,3 +113,4 @@ First release. Locatine can
 - README is updated
 
 # Version 0.01971
+- Couple of Scope methods are introduced. Now scope is useful.
