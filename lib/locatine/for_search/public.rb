@@ -101,13 +101,13 @@ module Locatine
       ##
       # Find alias with return_locator option enforced
       def lctr(*args)
-        enforce(:return_locator, true, *args)
+        enforce({ return_locator: true }, *args)
       end
 
       ##
       # Find alias with collection option enforced
       def collect(*args)
-        enforce(:collection, true, *args)
+        enforce({ collection: true }, *args)
       end
 
       def json=(value)

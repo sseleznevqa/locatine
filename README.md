@@ -51,8 +51,8 @@ s.find(name: "element", scope: "Main").click
     $ LEARN=1 ruby path_to_your_test.rb
 
 4. It will open the browser and transfer you to the yourpage.com.com
-5. Select element to represent *element* in the *Main* scope (you can click on it or select it in devtools)
-6. Click Locatine application icon at the browser panel
+5. Click Locatine application icon at the browser panel
+6. Select element to represent *element* in the *Main* scope (you can click on it or select it in devtools)
 7. And confirm the selection
 
 ![U can see an image here. On github)](readme/567.png)

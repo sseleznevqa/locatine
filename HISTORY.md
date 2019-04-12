@@ -114,3 +114,7 @@ First release. Locatine can
 
 # Version 0.01971
 - Couple of Scope methods are introduced. Now scope is useful.
+
+# Version 0.02007
+- Micro refactoring
+- You can confirm element selection with ENTER now
