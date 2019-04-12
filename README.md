@@ -16,7 +16,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.01839** only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
+Version of Locatine is **0.01971** only. It means so far this is an early alfa. You can use it in a real project if you are really risky person.
 
 ## Installation
 
@@ -38,12 +38,14 @@ Or install it yourself as:
 
 1. Be sure that you have [Chrome browser](https://www.google.com/chrome/browser/desktop/) installed. It should work with any browser but something you can do in Chrome only
 2. Write the code
+
 ```ruby
 require 'locatine'
 s = Locatine::Search.new
 s.browser.goto("yourpage.com.com")
 s.find(name: "element", scope: "Main").click
 ```
+
 3. Run it in terminal with parameter LEARN=1 approximately like:
 
     $ LEARN=1 ruby path_to_your_test.rb
@@ -53,7 +55,7 @@ s.find(name: "element", scope: "Main").click
 6. Click Locatine application icon at the browser panel
 7. And confirm the selection
 
-![Steps 4-5-6](readme/567.png)
+![U can see an image here. On github)](readme/567.png)
 
 8. Now you can run the test without LEARN parameter and it will work.
 
@@ -275,8 +277,9 @@ scope.define
 
 You will be able to select all the elements and collections for scope one by one. When it is finished click "Abort Selection" button to exit the loop.
 
+You can force use dynamic variables on define where is possible (same rules as for find):
+
 ```ruby
-# You can force use dynamic variables on define where is possible (same rules as for find)
 vars = {text: "dynamic text",
         tag: "span",
         attrName: "part of dynamic attr-value"}
@@ -289,7 +292,26 @@ search.find(scope: "Name of scope",
             vars: vars # Necessary if elements were defined with vars)
 ```
 
-Scope itself is not very useful now. But we are looking forward.
+### Methods of scope
+
+If you want to get a hash with all elements that are defined in scope:
+
+```ruby
+# Lost elements will be found if possible!
+search.get_scope(name: "Name of scope").all
+# => {"element name": {
+#      elements: Array of Watir::Element,
+#      locator: valid xpath locator
+#      }...
+#    }
+```
+
+If you want to check presence of all elements:
+
+```ruby
+# Will raise an error if something lost!
+search.get_scope(name: "Name of scope").check
+```
 
 ## Other ways to use find
 

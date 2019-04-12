@@ -118,6 +118,16 @@ module Locatine
         import_browser(value)
       end
 
+      ##
+      # Returns an instance of the Scope class. Starts define if learn == true
+      #
+      # Params:
+      #
+      # +name+ is a parameter that stores name of the scope.
+      # Default is "Default"
+      #
+      # +vars+ is a hash which will be used to generate dynamic attributes.
+      # See readme for explanation.
       def get_scope(name: 'Default', vars: {})
         answer = Scope.new(name, self)
         answer.define(vars) if @learn

@@ -1,0 +1,49 @@
+<html>
+<body>
+  <div>
+    <div>
+      <span id="one"></span>
+      <span name="two"></span>
+      <span title="3"></span>
+      <span my-role="4"></span>
+      <span>five</span>
+      <span></span>
+      <span>seven</span>
+    </div>
+  </div>
+  <div id="locatine_magic_div"></div>
+  </body>
+</html>
+<script>
+  const magicDiv = document.getElementById("locatine_magic_div");
+  const element = document.getElementById("Label");
+  function locatineTestSelect(index, tag, confirm){
+    magicDiv.setAttribute("INDEX", index);
+    magicDiv.setAttribute("TAG", tag);
+    magicDiv.setAttribute("locatineconfirmed", confirm);
+  };
+
+  setTimeout(function() {if (!magicDiv.getAttribute('locatinetitle').includes('1 element was found as one span in test using previously saved information')){
+    document.getElementById('one').innerHTML = magicDiv.getAttribute('locatinetitle');
+  }}, 1000)
+  setTimeout(function() {locatineTestSelect("0", "span", "selected")}, 2000);
+  setTimeout(function() {locatineTestSelect("0", "span", "true")}, 3000);
+
+  setTimeout(function() {locatineTestSelect("1", "span", "selected")}, 4000);
+  setTimeout(function() {locatineTestSelect("1", "span", "true")}, 5000);
+
+  setTimeout(function() {locatineTestSelect("2", "span", "selected")}, 6000);
+  setTimeout(function() {locatineTestSelect("2", "span", "true")}, 7000);
+
+  setTimeout(function() {locatineTestSelect("3", "span", "selected")}, 8000);
+  setTimeout(function() {locatineTestSelect("3", "span", "true")}, 9000);
+
+  setTimeout(function() {locatineTestSelect("4", "span", "selected")}, 10000);
+  setTimeout(function() {locatineTestSelect("4", "span", "true")}, 11000);
+
+  setTimeout(function() {locatineTestSelect("5", "span", "selected")}, 12000);
+  setTimeout(function() {locatineTestSelect("5", "span", "true")}, 13000);
+
+  setTimeout(function() {locatineTestSelect("6", "span", "selected")}, 14000);
+  setTimeout(function() {locatineTestSelect("6", "span", "abort")}, 16000);
+</script>
