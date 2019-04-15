@@ -6,7 +6,7 @@ module Locatine
       private
 
       def enforce(inject, *args)
-        inject = args.merge(inject) if args.last.class == Hash
+        inject = args.last.merge(inject) if args.last.class == Hash
         ok = (args.first.class == String) && inject[:name].nil?
         inject[:name] = args.first if ok
         find(inject)

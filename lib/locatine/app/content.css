@@ -14,11 +14,15 @@ div[locatinestyle=true] {
   top:0;
   left:0;
   opacity: 0;
-  background: black;
+  background-color:rgba(0, 0, 0, 0.5);
   height: 100%;
   width: 100%;
   display: block;
   z-index: 2147483646;
+  color: #FF99AA;
+  font-size: 45px;
+  text-align: center;
+  cursor: default;
 }
 
 div[locatinestyle=false] {
