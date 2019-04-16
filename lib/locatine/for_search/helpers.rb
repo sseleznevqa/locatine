@@ -5,15 +5,11 @@ module Locatine
     module Helpers
       private
 
-      def enforce(what, value, *args)
-        if args.last.class == Hash
-          args.last[what] = value
-        else
-          temp = {}
-          temp[what] = value
-          args.push(temp)
-        end
-        find(*args)
+      def enforce(inject, *args)
+        inject = args.last.merge(inject) if args.last.class == Hash
+        ok = (args.first.class == String) && inject[:name].nil?
+        inject[:name] = args.first if ok
+        find(inject)
       end
 
       def engine
