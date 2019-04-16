@@ -133,6 +133,30 @@ module Locatine
         answer.define(vars) if @learn
         answer
       end
+
+      ##
+      # Find alias with zero tolerance option enforced
+      def check(*args)
+        enforce({ tolerance: 0 }, *args)
+      end
+
+      ##
+      # Collection alias with zero tolerance option enforced
+      def check_collection(*args)
+        enforce({ tolerance: 0, collection: true }, *args)
+      end
+
+      ##
+      # Collection alias with exact option on
+      def exact_collection(*args)
+        enforce({ exact: 0, collection: true }, *args)
+      end
+
+      ##
+      # Find alias with exact option on
+      def exact(*args)
+        enforce({ exact: 0 }, *args)
+      end
     end
   end
 end
