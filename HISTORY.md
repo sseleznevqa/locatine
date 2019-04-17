@@ -119,3 +119,7 @@ First release. Locatine can
 - Micro refactoring
 - You can confirm element selection with ENTER now (Well it may confirm also a form... so...)
 - Titles now flashing on the main selecting screen. So you may not really look into app control panel, sometimes
+
+# Version 0.02058
+- More shortcuts for find
+- exact is splitted into two separate flags - (no_fail, and exact) 

@@ -42,7 +42,7 @@ module Locatine
       success = []
       result = find_all(vars, true)
       result.each_pair do |name, hash|
-        success.push name if hash[:elements].nil?
+        success.push name if hash[:elements].empty?
       end
       raise "Check of #{@scope} failed! Lost: #{success}" unless success.empty?
 
@@ -58,7 +58,9 @@ module Locatine
     def find_one(name, hash, vars, strict)
       locator = { xpath: @search.send(:generate_xpath, hash, vars) } if strict
       elements = @search.collect(scope: @scope, name: name,
-                                 locator: locator, exact: strict)
+                                 locator: locator,
+                                 exact: strict,
+                                 no_fail: strict)
       locator = { xpath: @search.send(:generate_xpath, hash, vars) }
       { elements: elements, locator: locator }
     end

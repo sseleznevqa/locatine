@@ -11,20 +11,12 @@ module Locatine
         name
       end
 
-      def stable?(attributes)
-        s = []
-        attributes.each_pair do |_depth, array|
-          s.push array.max_by { |i| i['stability'].to_i }['stability'].to_i
-        end
-        s.max >= @stability_limit
-      end
-
       def data_search(name, scope, vars, exact)
         result = find_by_data(@data[scope][name], vars)
         attributes = generate_data(result, vars) if result
-        if !result && (!exact || !stable?(@data[scope][name]))
+        if !result && !exact
           result, attributes = find_by_magic(name, scope,
-                                             @data[scope][name], vars, exact)
+                                             @data[scope][name], vars)
         end
         return result, attributes
       end
@@ -38,7 +30,7 @@ module Locatine
 
       def full_search(name, scope, vars, locator, exact)
         result, attributes = search_steps(name, scope, vars, locator, exact)
-        raise_not_found(name, scope) if !result && !exact
+        raise_not_found(name, scope) if !result && !@current_no_f
         store(attributes, scope, name) if result
         return result, attributes
       end
@@ -69,11 +61,13 @@ module Locatine
       #
       # +collection+ nil, true or false
       def to_subtype(result, collection)
+        result = result.to_a
+        to_return = result.map {|i| i.to_subtype}
         case collection
         when true
-          result
+          to_return
         when false
-          result.first.to_subtype
+          to_return.first
         end
       end
     end
