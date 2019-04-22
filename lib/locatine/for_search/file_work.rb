@@ -54,6 +54,7 @@ module Locatine
       ##
       # Saving json
       def store(attributes, scope, name)
+        @data[scope][name] = {} if @learn
         @data[scope][name] = set_stability(attributes, @data[scope][name])
         to_write = { 'data' => @data }
         File.open(@json, 'w') do |f|

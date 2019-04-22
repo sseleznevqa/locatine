@@ -91,8 +91,12 @@ module Locatine
         push_title "#{length} #{verb(length)} selected as #{name} in #{scope}."\
         " But it was already defined #{found.length} times."
         example = found.sample
+        same = found.select{ |i| (i[:name] == name) && (i[:scope] == scope) }
         send_to_app('locatinehint', "For example like #{example[:name]} in"\
-        " #{example[:scope]}")
+        " #{example[:scope]}") if same.empty?
+        send_to_app('locatinehint', 'And it was defined with the same name and'\
+        ' in the same scope. So saving your selection will cause deleting of '\
+        'all previously stored data about the element') unless same.empty?
       end
 
       def warn_dropping(tag, index)
