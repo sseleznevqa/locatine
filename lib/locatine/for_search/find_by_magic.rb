@@ -7,13 +7,13 @@ module Locatine
 
       ##
       # Getting all the elements via black magic
-      def find_by_magic(name, scope, data, vars, exact)
+      def find_by_magic(name, scope, data, vars)
         warn_element_lost(name, scope)
         @cold_time = 0
         all = all_options(data, vars)
         @cold_time = nil
-        raise_not_found(name, scope) if all.empty? && !exact
-        suggest_by_all(all, data, vars, name, scope, exact)
+        raise_not_found(name, scope) if all.empty? && !@current_no_f
+        suggest_by_all(all, data, vars, name, scope)
       end
 
       def similar_enough(data, attributes)
@@ -30,11 +30,10 @@ module Locatine
         return suggest, attributes
       end
 
-      def suggest_by_all(all, data, vars, name, scope, exact)
+      def suggest_by_all(all, data, vars, name, scope)
         suggest, attributes = best_of_all(all, vars)
         ok = similar_enough(data, attributes) unless suggest.nil?
-        spawn = !ok && !exact
-        raise_not_similar(name, scope) if spawn
+        raise_not_similar(name, scope) if !ok && !@current_no_f
         if ok
           warn_lost_found(name, scope)
           return suggest, attributes

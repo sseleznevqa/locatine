@@ -16,7 +16,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02007** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
+Version of Locatine is **0.02058** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
 
 ## Installation
 
@@ -95,7 +95,8 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      stability_limit: 1000,
                      scope: "Default",
                      tolerance: 33,
-                     visual_search: false)
+                     visual_search: false,
+                     no_fail: false)
 ```
 
 ### json
@@ -142,6 +143,10 @@ Position and size for element will be stored for the current resolution only. St
 
 Be careful! Set true only if appearance of your page is pretty stable.
 
+### no_fail
+
+When element is lost and no_fail is true you will get nil for single element and [] for collection. If no_fail is false (which is default) and locatine cannot find something you will face an error.
+
 ## Changing options on fly
 
 You can get or set these values on fly. Like:
@@ -164,7 +169,8 @@ s.find(name: "some name",
        iframe: nil,
        return_locator: false,
        collection: false,
-       tolerance: nil)
+       tolerance: nil,
+       no_fail: nil)
 ```
 ### name
 
@@ -173,26 +179,6 @@ should be always provided. Name of element to look for. Must be uniq one per sco
 ### scope
 
 group of elements. Must be uniq per file. This is to help to store elements with same names from different pages in one file
-
-### exact
-
-unless it is true locatine will always try to find lost element using all the power it has. Use exact: true if you want element to be lost in case of any significant change. If it is impossible to find element when exact: true locatine will return nil.
-
-Be carefull: exact is working only when element is stable (has at least one parameter persistent for stability_limit times == well known by locatine). If element is not stable yet locatine will search for it anyway and maybe it will find something. So if you want to ensure that element does not exist you should use locator and exact at the same time. You may also set zero tolerance. Check it:
-
-```ruby
-# Will return nil if there is no element id = 'not welcome'
-s.find(name: "unexpected element", locator:{id: "not welcome"}, exact: true)
-
-# Will return nil if well known element "unexpected element" is not present
-# Will try to find and return at least something if "unexpected element" is not stable (well known)
-# If there is nothing similar to "unexpected element" returns nil
-s.find(name: "unexpected something", exact: true)
-
-# Will return element only if the same element is present
-# Changing of any attribute which is trusted by locatine will produce nil
-s.find(name: "unexpected something", exact: true, tolerance: 0)
-```
 
 ### locator
 
@@ -263,6 +249,14 @@ if true array of elements will be returned. If false only the one element (the f
 
 You can state custom tolerance for the element.
 
+### exact
+
+It is disabling attempts to find element by advanced algorithms. If locator is provided find method will use only locator. If there is no locator only the basic search will be performed.
+
+### no_fail
+
+no_fail option that will work for that search only.
+
 ## Scope
 
 If you want to define a whole bunch of elements at once you can do:
@@ -302,7 +296,8 @@ search.get_scope(name: "Name of scope").all
 # => {"element name": {
 #      elements: Array of Watir::Element,
 #      locator: valid xpath locator
-#      }...
+#      },
+#     "next element name":...
 #    }
 ```
 
@@ -342,4 +337,13 @@ s = Locatine::Search.new
 s.collect("group of elements") # Will return an array
 # or
 s.collect(name: "group of elements")
+```
+
+Also:
+
+```ruby
+s.exact_collection(name: "something") == s.collect(exact: true, name: "something")
+s.exact(name: "something") == s.find(name: "something", exact: true)
+s.check(name: "something") == s.find(name: "something", tolerance: 0)
+s.check_collection(name: "something") == s.collect(name: "something", tolerance: 0)
 ```

@@ -52,7 +52,8 @@ module Locatine
                   :stability_limit,
                   :scope,
                   :tolerance,
-                  :visual_search
+                  :visual_search,
+                  :no_fail
     attr_reader   :json,
                   :browser
   end
