@@ -98,7 +98,8 @@ module Locatine
         result, attributes = full_search(name, scope, vars, locator, exact)
         return { xpath: generate_xpath(attributes, vars) } if result &&
                                                               return_locator
-        return to_subtype(result, collection)
+
+        to_subtype(result, collection)
       end
 
       ##

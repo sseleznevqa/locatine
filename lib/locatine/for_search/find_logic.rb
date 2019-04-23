@@ -62,7 +62,7 @@ module Locatine
       # +collection+ nil, true or false
       def to_subtype(result, collection)
         result = result.to_a
-        to_return = result.map {|i| i.to_subtype}
+        to_return = result.map(&:to_subtype)
         case collection
         when true
           to_return
