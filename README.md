@@ -296,7 +296,8 @@ search.get_scope(name: "Name of scope").all
 # => {"element name": {
 #      elements: Array of Watir::Element,
 #      locator: valid xpath locator
-#      }...
+#      },
+#     "next element name":...
 #    }
 ```
 
@@ -336,4 +337,13 @@ s = Locatine::Search.new
 s.collect("group of elements") # Will return an array
 # or
 s.collect(name: "group of elements")
+```
+
+Also:
+
+```ruby
+s.exact_collection(name: "something") == s.collect(exact: true, name: "something")
+s.exact(name: "something") == s.find(name: "something", exact: true)
+s.check(name: "something") == s.find(name: "something", tolerance: 0)
+s.check_collection(name: "something") == s.collect(name: "something", tolerance: 0)
 ```
