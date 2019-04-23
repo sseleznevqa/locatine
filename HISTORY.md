@@ -122,4 +122,5 @@ First release. Locatine can
 
 # Version 0.02058
 - More shortcuts for find
-- exact is splitted into two separate flags - (no_fail, and exact) 
+- exact is splitted into two separate flags - (no_fail, and exact)
+- Now in the learn mode redefining is causing dropping of all the previously stored data.
