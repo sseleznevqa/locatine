@@ -83,7 +83,7 @@ describe 'E2E basic user story' do
 
   it "Fails when there is no exact" do
     @s.browser.goto @path2
-    expect{@s.find(name: "span for guess", exact: true)}.to raise_error(RuntimeError, 'Locatine cannot find element span for guess in Default')
+    expect{@s.check(name: "span for guess", exact: true)}.to raise_error(RuntimeError, 'Locatine cannot find element span for guess in Default')
   end
 
   it "Finding exacts" do
@@ -95,9 +95,9 @@ describe 'E2E basic user story' do
   it "Fails on exact when elements are lost" do
     @s.browser.goto @path3
     expect(@s.collect(name: "lis fox", exact: true, no_fail: true, locator: {id: "not welcome"})).to be == []
-    expect(@s.collect(name: "lis fox", exact: true, no_fail: true, tolerance: 0)).to be == []
-    expect(@s.collect(name: "lis fox", no_fail: true, exact: true)).to be == []
-    expect(@s.find(name: "element", no_fail: true, exact: true)).to be == nil
+    expect(@s.check_collection(name: "lis fox", exact: true, no_fail: true)).to be == []
+    expect(@s.exact_collection(name: "lis fox", no_fail: true)).to be == []
+    expect(@s.exact(name: "element", no_fail: true)).to be == nil
     expect(@s.find(name: "span for guess", no_fail: true, exact: true)).to be == nil
   end
 

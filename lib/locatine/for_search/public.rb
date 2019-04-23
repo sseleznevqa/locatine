@@ -152,13 +152,13 @@ module Locatine
       ##
       # Collection alias with exact option on
       def exact_collection(*args)
-        enforce({ exact: 0, collection: true }, *args)
+        enforce({ exact: true, collection: true }, *args)
       end
 
       ##
       # Find alias with exact option on
       def exact(*args)
-        enforce({ exact: 0 }, *args)
+        enforce({ exact: true }, *args)
       end
     end
   end

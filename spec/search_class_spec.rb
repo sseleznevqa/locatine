@@ -36,12 +36,18 @@ describe "We can create Locatine::Search class" do
       @learn = true
       @stability_limit = 9
       @scope = "Unknown"
+      @tolerance = 99
+      @visual_search = true
+      @no_fail = true
       @s = Locatine::Search.new(json: @path,
                                 depth: @depth,
                                 browser: @browser,
                                 learn: @learn,
                                 stability_limit: @stability_limit,
-                                scope: @scope)
+                                scope: @scope,
+                                tolerance: @tolerance,
+                                visual_search: @visual_search,
+                                no_fail: @no_fail)
     end
     it "creates a file" do
       expect(File.exist?(@path)).to be true
@@ -53,6 +59,9 @@ describe "We can create Locatine::Search class" do
       expect(@s.stability_limit).to be == @stability_limit
       expect(@s.scope).to be == @scope
       expect(@s.depth).to be == @depth
+      expect(@s.tolerance).to be == @tolerance
+      expect(@s.visual_search).to be == @visual_search
+      expect(@s.no_fail).to be == @no_fail
     end
     it "has empty data" do
       expect(@s.data).to be == {}
