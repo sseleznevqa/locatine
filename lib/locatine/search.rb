@@ -1,7 +1,7 @@
 require 'watir'
 require 'json'
 require 'fileutils'
-require 'chromedriver-helper'
+require 'webdrivers'
 
 # Internal requires
 require 'locatine/for_search/merge'
