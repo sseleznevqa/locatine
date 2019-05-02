@@ -26,9 +26,29 @@ module Locatine
         end
       end
 
+      # Similar elements bug\\feature draft
       def selected_element_attributes(tag, index, vars)
-        generate_data([engine.elements(tag_name: tag)[index]], vars).to_h
+        element = engine.elements(tag_name: tag)[index]
+        attrs = generate_data([element], vars).to_h
+        array = find_by_data(attrs, vars)
+        number = array.length
+        old_depth = @depth
+        while array.length > 1
+          attrs = get_family_info(element, vars).to_h
+          array = find_by_data(attrs, vars)
+          @depth += 1
+        end
+        warn_totally_same(@depth, number)
+        @depth = old_depth
+        attrs
       end
+
+      def warn_totally_same(how_deep, how_many)
+        send_warn("There are #{how_many} elements with totally similar"\
+          " attributes. Custom depth for element is set to #{how_deep}.")
+      end
+
+
 
       def selected_element(tag, index, vars, attributes)
         new_attributes = selected_element_attributes(tag, index, vars)
