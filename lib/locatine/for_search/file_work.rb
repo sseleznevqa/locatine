@@ -35,6 +35,7 @@ module Locatine
       # Setting stability
       def set_stability(first, second)
         second = first if second.to_h == {}
+        first = second.merge first
         final = Hash.new { |hash, key| hash[key] = [] }
         first.each_pair do |depth, array|
           final[depth] = same_entries(array, second, depth, true).uniq

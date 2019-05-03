@@ -146,7 +146,12 @@ module Locatine
       end
 
       def warn_not_found(name, scope)
-        "Locatine cannot find element #{name} in #{scope}"
+        send_warn "Locatine cannot find element #{name} in #{scope}"
+      end
+
+      def warn_totally_same(how_deep)
+        send_warn('There are more than one elements with totally similar'\
+          " attributes. Custom depth for element is set to #{how_deep}.")
       end
 
       def raise_not_found(name, scope)

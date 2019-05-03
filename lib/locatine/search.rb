@@ -21,6 +21,7 @@ require 'locatine/for_search/find_by_guess'
 require 'locatine/for_search/data_generate'
 require 'locatine/for_search/xpath_generator'
 require 'locatine/for_search/find_by_locator'
+require 'locatine/for_search/element_selection'
 
 module Locatine
   ##
@@ -45,6 +46,7 @@ module Locatine
     include Locatine::ForSearch::DataGenerate
     include Locatine::ForSearch::FindByLocator
     include Locatine::ForSearch::XpathGenerator
+    include Locatine::ForSearch::ElementSelection
 
     attr_accessor :data,
                   :depth,
