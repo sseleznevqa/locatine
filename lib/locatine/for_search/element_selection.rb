@@ -13,18 +13,34 @@ module Locatine
         end
       end
 
-      def selected_element_attributes(tag, index, vars)
+      def simple_attrs(tag, index, vars)
         element = engine.elements(tag_name: tag)[index]
         attrs = generate_data([element], vars).to_h
-        old_depth = @depth
-        while find_by_data(attrs, vars).length > 1
-          @depth += 1
-          attrs = get_family_info(element, vars).to_h
-          # scope spec is sad!!!
-          break if attrs.length < @depth
-        end
-        warn_totally_same(@depth) unless old_depth == @depth
+        return element, attrs
+      end
+
+      def negative_needed(element, vars, old_depth)
         @depth = old_depth
+        warn_no_negatives
+        generate_data([element], vars).to_h
+      end
+
+      def complex_attrs(element, vars, old_depth = @depth)
+        attrs = get_family_info(element, vars).to_h
+        return negative_needed(element, vars, old_depth) if attrs.length < @depth
+
+        if find_by_data(attrs, vars).length > 1
+          @depth +=1
+          return complex_attrs(element, vars, old_depth)
+        end
+        @depth = old_depth
+        attrs
+      end
+
+      def selected_element_attributes(tag, index, vars)
+        element, attrs = simple_attrs(tag, index, vars)
+        length = find_by_data(attrs, vars).length
+        attrs = complex_attrs(element, vars) if length > 1
         attrs
       end
 

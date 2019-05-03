@@ -154,6 +154,13 @@ module Locatine
           " attributes. Custom depth for element is set to #{how_deep}.")
       end
 
+      def warn_no_negatives
+        send_warn 'The only way to find the selected element is to use'\
+        " negative expression like //*[not(@id='something')]. Locatine does"\
+        ' not support it. So you must to provide for element a custom locator.'\
+        ' Or find it as a part of collection and than return it by index'
+      end
+
       def raise_not_found(name, scope)
         raise "Locatine cannot find element #{name} in #{scope}"
       end

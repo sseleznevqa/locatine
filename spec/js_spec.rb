@@ -38,7 +38,7 @@ describe 'Testing js via ruby' do
       set_attr(@magic_div, "locatinestyle", "set_true")
       sleep 1
       expect(@magic_div.attribute("locatinestyle")).to be == "true"
-      expect{@b.span.click}.to raise_error(Selenium::WebDriver::Error::UnknownError)
+      expect{@b.span.click}.to raise_error(Selenium::WebDriver::Error::WebDriverError)
     end
 
     it 'is turninng magic div off' do

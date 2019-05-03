@@ -127,3 +127,7 @@ First release. Locatine can
 
 # Version 0.02247
 - Showstopper bug is fixed. It was impossible to select more than 50 elements!
+- Now we can process twins elements properly
+- Warning about negative expressions is added.
+- Fixed bug with loosing additional element data
+- chromedriver-helper is switched to webdrivers. Ty and bye flavorjones. Hello titusfortner!
