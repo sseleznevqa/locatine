@@ -39,7 +39,7 @@ module Locatine
 
       def selected_element_attributes(tag, index, vars)
         element, attrs = simple_attrs(tag, index, vars)
-        length = find_by_data(attrs, vars).length
+        length = find_by_data(attrs, vars).to_a.length
         attrs = complex_attrs(element, vars) if length > 1
         attrs
       end
