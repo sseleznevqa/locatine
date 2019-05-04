@@ -16,7 +16,8 @@ module Locatine
       def same_entries(array, second, depth, stability_up = false)
         result = []
         array.each do |hash|
-          to_add = select_same(second[depth], hash)
+          item = second[depth]
+          to_add = item.nil? ? [] : select_same(second[depth], hash)
           to_add = stability_bump(to_add, hash) if stability_up
           result += to_add
         end
