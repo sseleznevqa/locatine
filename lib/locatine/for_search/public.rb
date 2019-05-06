@@ -36,7 +36,9 @@ module Locatine
                      scope: 'Default',
                      tolerance: 67,
                      visual_search: false,
-                     no_fail: false)
+                     no_fail: false,
+                     trusted: [],
+                     untrusted: [])
         import_browser browser
         import_file(json)
         @depth = depth
@@ -46,6 +48,8 @@ module Locatine
         @tolerance = tolerance
         @visual_search = visual_search
         @no_fail = no_fail
+        @trusted = trusted
+        @untrusted = untrusted
       end
 
       ##
@@ -91,9 +95,11 @@ module Locatine
                return_locator: false,
                collection: false,
                tolerance: nil,
-               no_fail: nil)
+               no_fail: nil,
+               trusted: nil,
+               untrusted: nil)
         name = set_name(simple_name, name)
-        set_env_for_search(look_in, iframe, tolerance, no_fail)
+        set_env_for_search(look_in, iframe, tolerance, no_fail, trusted, untrusted)
         scope ||= @scope.nil? ? 'Default' : @scope
         result, attributes = full_search(name, scope, vars, locator, exact)
         return { xpath: generate_xpath(attributes, vars) } if result &&
