@@ -27,7 +27,7 @@ module Locatine
       ##
       # We can highlight\unhighlight tons of elements at once
       def mass_highlight_turn(mass, turn_on = true)
-        warn_much_highlight if turn_on && mass.length > 50
+        warn_much_highlight(mass.length) if turn_on && mass.length > 50
         mass[0..49].each do |element|
           if turn_on
             highlight element

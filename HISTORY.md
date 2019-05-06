@@ -124,3 +124,10 @@ First release. Locatine can
 - More shortcuts for find
 - exact is splitted into two separate flags - (no_fail, and exact)
 - Now in the learn mode redefining is causing dropping of all the previously stored data.
+
+# Version 0.02247
+- Showstopper bug is fixed. It was impossible to select more than 50 elements!
+- Now we can process twins elements properly
+- Warning about negative expressions is added.
+- Fixed bug with loosing additional element data
+- chromedriver-helper is switched to webdrivers. Ty and bye flavorjones. Hello titusfortner!

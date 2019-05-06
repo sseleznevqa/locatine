@@ -18,50 +18,6 @@ module Locatine
         return element, attributes
       end
 
-      def add_selected_attributes(new_attributes, attributes)
-        if get_from_app('locatinecollection') == 'true'
-          get_commons(new_attributes, attributes.to_h)
-        else
-          new_attributes
-        end
-      end
-
-      def selected_element_attributes(tag, index, vars)
-        generate_data([engine.elements(tag_name: tag)[index]], vars).to_h
-      end
-
-      def selected_element(tag, index, vars, attributes)
-        new_attributes = selected_element_attributes(tag, index, vars)
-        new_attributes = add_selected_attributes(new_attributes, attributes)
-        element = find_by_data(new_attributes, vars)
-        return element, new_attributes
-      end
-
-      def working_on_selected(tag, index, vars, attributes)
-        send_working(tag, index)
-        element, new_attributes = selected_element(tag, index, vars, attributes)
-        warn_dropping(tag, index) unless element
-
-        warn_type(tag) if @type && !element
-
-        return_selected(element, attributes, new_attributes, vars)
-      end
-
-      def return_old_selection(attrs, vars)
-        return find_by_data(attrs, vars).to_a, attrs.to_h if attrs.to_h != {}
-
-        return nil, {}
-      end
-
-      def return_selected(element, attributes, new_attributes, vars)
-        if !element && new_attributes.to_h != {}
-          send_lost
-          return return_old_selection(attributes, vars)
-
-        end
-        return element, new_attributes
-      end
-
       def what_was_selected(element, attributes, vars)
         tag, index = tag_index
         send_to_app('locatineconfirmed', 'ok')
