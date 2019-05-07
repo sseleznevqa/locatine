@@ -7,8 +7,8 @@ module Locatine
 
       def get_trusted(array)
         if !array.empty?
-          max_stability = max_stability(array)
-          (array.select { |i| i['stability'].to_i == max_stability.to_i }).uniq
+          max = max_stability(array)
+          (array.select { |i| i['stability'].to_i == max.to_i }).uniq
         else
           []
         end

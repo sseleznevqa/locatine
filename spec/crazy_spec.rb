@@ -28,8 +28,8 @@ describe 'Crazy cases' do
   end
 
   after(:all) do
-    #File.delete(@file) if File.exist?(@file)
-    #FileUtils.remove_dir(@dir) if File.directory?(@dir)
+    File.delete(@file) if File.exist?(@file)
+    FileUtils.remove_dir(@dir) if File.directory?(@dir)
   end
   after(:each) do
     @s.browser.quit

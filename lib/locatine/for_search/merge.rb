@@ -15,10 +15,10 @@ module Locatine
 
       def same_entries(array, second, depth, stability_up = false)
         result = []
-        max = max_stability(array) + 1
         array.each do |hash|
           item = second[depth]
           to_add = item.nil? ? [] : select_same(second[depth], hash)
+          max = max_stability(second[depth]).to_i + 1
           to_add = stability_bump(to_add, hash, max) if stability_up
           result += to_add
         end

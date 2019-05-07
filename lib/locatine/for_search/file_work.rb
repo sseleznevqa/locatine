@@ -46,7 +46,7 @@ module Locatine
       def stability_bump(to_add, hash, max)
         if to_add.empty? # new ones
           hash['stability'] = @trust_now.include?(hash['name']) ? "#{max}" : '1'
-          hash['stability'] = @untrust_now.include?(hash['name']) ? '0' : '1'
+          hash['stability'] = '0' if @untrust_now.include?(hash['name'])
         elsif to_add[0]['stability'].to_i < @stability_limit # old ones
           to_add[0]['stability'] = (to_add[0]['stability'].to_i + 1).to_s
           to_add[0]['stability'] = "#{max}" if @trust_now.include?(to_add[0]['name'])
