@@ -55,7 +55,9 @@ module Locatine
                   :scope,
                   :tolerance,
                   :visual_search,
-                  :no_fail
+                  :no_fail,
+                  :trusted,
+                  :untrusted
     attr_reader   :json,
                   :browser
   end
