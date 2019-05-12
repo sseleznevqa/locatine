@@ -80,6 +80,7 @@ module Locatine
       item = @search.send(:ask, @scope, '', nil, vars)
       return find_all(vars) if item[:element].nil?
 
+      @search.send(:set_env_for_search, nil, nil, nil, nil, nil, nil)
       @search.send(:store, item[:attributes], @scope, item[:name])
       new_define(vars)
     end

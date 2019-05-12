@@ -99,7 +99,8 @@ module Locatine
                trusted: nil,
                untrusted: nil)
         name = set_name(simple_name, name)
-        set_env_for_search(look_in, iframe, tolerance, no_fail, trusted, untrusted)
+        set_env_for_search(look_in, iframe, tolerance,
+                           no_fail, trusted, untrusted)
         scope ||= @scope.nil? ? 'Default' : @scope
         result, attributes = full_search(name, scope, vars, locator, exact)
         return { xpath: generate_xpath(attributes, vars) } if result &&

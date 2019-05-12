@@ -26,7 +26,12 @@ module Locatine
         @iframe = @browser.iframe(@iframe.selector) if @iframe && @iframe.stale?
       end
 
-      def set_env_for_search(look_in, iframe, tolerance, no_fail, trusted, untrusted)
+      def set_env_for_search(look_in,
+                             iframe,
+                             tolerance,
+                             no_fail,
+                             trusted,
+                             untrusted)
         @type = look_in
         @iframe = iframe
         @current_t = tolerance || @tolerance
