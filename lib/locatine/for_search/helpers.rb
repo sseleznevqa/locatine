@@ -26,11 +26,18 @@ module Locatine
         @iframe = @browser.iframe(@iframe.selector) if @iframe && @iframe.stale?
       end
 
-      def set_env_for_search(look_in, iframe, tolerance, no_fail)
+      def set_env_for_search(look_in,
+                             iframe,
+                             tolerance,
+                             no_fail,
+                             trusted,
+                             untrusted)
         @type = look_in
         @iframe = iframe
         @current_t = tolerance || @tolerance
         @current_no_f = no_fail || @no_fail
+        @trust_now = trusted || @trusted
+        @untrust_now = untrusted || @untrusted
       end
 
       def not_magic_div

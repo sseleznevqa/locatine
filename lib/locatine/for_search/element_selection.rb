@@ -19,7 +19,7 @@ module Locatine
         return element, attrs
       end
 
-      def negative_needed(element, vars, old_depth)
+      def negative_need(element, vars, old_depth)
         @depth = old_depth
         warn_no_negatives
         generate_data([element], vars).to_h
@@ -27,10 +27,10 @@ module Locatine
 
       def complex_attrs(element, vars, old_depth = @depth)
         attrs = get_family_info(element, vars).to_h
-        return negative_needed(element, vars, old_depth) if attrs.length < @depth
+        return negative_need(element, vars, old_depth) if attrs.length < @depth
 
         if find_by_data(attrs, vars).length > 1
-          @depth +=1
+          @depth += 1
           return complex_attrs(element, vars, old_depth)
         end
         @depth = old_depth

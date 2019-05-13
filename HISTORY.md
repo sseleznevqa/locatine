@@ -131,3 +131,6 @@ First release. Locatine can
 - Warning about negative expressions is added.
 - Fixed bug with loosing additional element data
 - chromedriver-helper is switched to webdrivers. Ty and bye flavorjones. Hello titusfortner!
+
+# Version 0.02327
+- Trusted//untrusted feature added.

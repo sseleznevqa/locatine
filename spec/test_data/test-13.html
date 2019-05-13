@@ -1,0 +1,24 @@
+<html>
+  <body>
+    <span>
+      <span>
+        <div id='flaky' flaky='ohohoh'>untrust me</div>
+        <div id='lawful'>trust me</div
+      </span>
+    </span>
+    <div id="locatine_magic_div">
+    </div>
+  </body>
+</html>
+<script>
+  const magicDiv = document.getElementById("locatine_magic_div");
+  function locatineTestSelect(index, tag, confirm){
+    magicDiv.setAttribute("INDEX", index);
+    magicDiv.setAttribute("TAG", tag);
+    magicDiv.setAttribute("locatineconfirmed", confirm);
+  };
+  setTimeout(function() {locatineTestSelect("0", "div", "selected")}, 1000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 2000);
+  setTimeout(function() {locatineTestSelect("1", "div", "selected")}, 3000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 4000);
+</script>

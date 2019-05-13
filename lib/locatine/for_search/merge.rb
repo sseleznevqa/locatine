@@ -18,7 +18,8 @@ module Locatine
         array.each do |hash|
           item = second[depth]
           to_add = item.nil? ? [] : select_same(second[depth], hash)
-          to_add = stability_bump(to_add, hash) if stability_up
+          max = max_stability(second[depth]).to_i + 1
+          to_add = stability_bump(to_add, hash, max) if stability_up
           result += to_add
         end
         result

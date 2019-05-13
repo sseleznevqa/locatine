@@ -7,12 +7,18 @@ module Locatine
 
       def get_trusted(array)
         if !array.empty?
-          max_stability = (array
-                          .max_by { |i| i['stability'].to_i })['stability']
-          (array.select { |i| i['stability'].to_i == max_stability.to_i }).uniq
+          max = max_stability(array)
+          (array.select { |i| i['stability'].to_i == max.to_i }).uniq
         else
           []
         end
+      end
+
+      def max_stability(array)
+        max = (array.max_by { |i| i['stability'].to_i })
+        return max['stability'] if max
+
+        return 0
       end
 
       def generate_xpath(data, vars)
