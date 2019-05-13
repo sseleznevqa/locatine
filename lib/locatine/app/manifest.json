@@ -1,6 +1,6 @@
 {
   "name": "Locatine app",
-  "version": "0.02327",
+  "version": "0.02432",
   "description": "Messaging from browser to main app",
   "devtools_page": "devtools.html",
   "permissions": ["activeTab", "storage", "contextMenus", "tabs"],

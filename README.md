@@ -16,7 +16,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02327** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
+Version of Locatine is **0.02432** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
 
 ## Installation
 
