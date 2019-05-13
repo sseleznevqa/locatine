@@ -8,6 +8,7 @@ require 'locatine/for_search/merge'
 require 'locatine/for_search/public'
 require 'locatine/for_search/saying'
 require 'locatine/for_search/helpers'
+require 'locatine/for_search/defaults'
 require 'locatine/for_search/file_work'
 require 'locatine/for_search/listening'
 require 'locatine/for_search/highlight'
@@ -33,6 +34,7 @@ module Locatine
     include Locatine::ForSearch::Public
     include Locatine::ForSearch::Saying
     include Locatine::ForSearch::Helpers
+    include Locatine::ForSearch::Defaults
     include Locatine::ForSearch::FileWork
     include Locatine::ForSearch::DataLogic
     include Locatine::ForSearch::Listening

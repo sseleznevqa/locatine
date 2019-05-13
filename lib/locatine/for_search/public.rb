@@ -28,28 +28,21 @@ module Locatine
       # to the lost one. Default is 67 which means that if less than 33% of
       # metrics of alternative elements are the same as of the lost element
       # will not be returned
-      def initialize(json: './Locatine_files/default.json',
-                     depth: 3,
-                     browser: nil,
-                     learn: ENV['LEARN'].nil? ? false : true,
-                     stability_limit: 1000,
-                     scope: 'Default',
-                     tolerance: 67,
-                     visual_search: false,
-                     no_fail: false,
-                     trusted: [],
-                     untrusted: [])
-        import_browser browser
-        import_file(json)
-        @depth = depth
-        @learn = learn
-        @stability_limit = stability_limit
-        @scope = scope
-        @tolerance = tolerance
-        @visual_search = visual_search
-        @no_fail = no_fail
-        @trusted = trusted
-        @untrusted = untrusted
+      #
+      # +visual_search+ locatine will use position and style if true
+      #
+      # +no_fail+ if true locatine is not producing errors on element loss.
+      #
+      # +trusted+ array of names of attributes and element params to use
+      # in search always.
+      #
+      # +untrusted+ array of names of attributes and element params to use
+      # in search never.
+      def initialize(config = {})
+        init_config = default_init_config.merge(config)
+        import_browser init_config.delete :browser
+        import_file init_config.delete :json
+        import_config init_config
       end
 
       ##
@@ -84,6 +77,14 @@ module Locatine
       #
       # +tolerance+ It is possible to set a custom tolerance for every find. See
       # examples in README
+      #
+      # +no_fail+ if true locatine is not producing errors on element loss.
+      #
+      # +trusted+ array of names of attributes and element params to use
+      # in search always.
+      #
+      # +untrusted+ array of names of attributes and element params to use
+      # in search never.
       def find(simple_name = nil,
                name: nil,
                scope: nil,
