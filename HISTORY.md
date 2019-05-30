@@ -134,3 +134,6 @@ First release. Locatine can
 
 # Version 0.02327
 - Trusted//untrusted feature added.
+
+# Version 0.02432
+- Locatine Daemon is introduced!

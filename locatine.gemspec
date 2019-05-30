@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
   s.add_dependency "watir", '~> 6.16'
   s.add_dependency "json", '~> 2.0'
   s.add_dependency 'webdrivers', '~> 3.8', '>= 3.8.0'
+  s.add_dependency 'sinatra', '>= 2.0.5'
 end
