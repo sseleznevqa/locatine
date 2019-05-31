@@ -361,3 +361,81 @@ s.exact(name: "something") == s.find(name: "something", exact: true)
 s.check(name: "something") == s.find(name: "something", tolerance: 0)
 s.check_collection(name: "something") == s.collect(name: "something", tolerance: 0)
 ```
+
+## Using as a daemon
+
+Locatine daemon is a web server based on sinatra. You can run it from your code like:
+
+```ruby
+require 'locatine'
+Locatine::Daemon.set :port, 7733 #Your port goes here
+Locatine::Daemon.run!
+```
+
+Also you can do it with terminal:
+
+```bash
+locatine.rb -port=7733
+```
+
+### API
+
+#### GET call to /app
+
+returns path to locatine application in order to start chrome with it.
+
+Example of response:
+
+```
+{"app": "/some/path/to/app"}
+```
+
+#### GET call to /stop
+
+stops Locatine daemon.
+
+Returns:
+
+```
+{"result": "dead"}
+```
+
+#### POST call to /connect
+
+allows Locatine Daemon to connect existing browser instance
+
+POST data:
+
+```
+{'browser': 'chrome', 'session_id': session_id, 'url': 'http://urltoselenium:4444/wd/hub/whatever', 'proxy': 'optionally' }
+```
+
+Answer:
+
+```
+{"result": "true"}
+```
+
+#### POST call to /set
+
+is to control options of locatine search. Sending to set data ==
+
+```
+{"learn": "true"}
+```
+
+is the same as
+
+```ruby
+search.learn = true
+```
+
+#### POST call to /lctr
+
+is to find and return locator of an element found by locatine
+
+POST data just the same as for find or lctr method. It's like:
+
+```
+{"name": "some name", "scope": "Default", "exact": "false" ...}
+```

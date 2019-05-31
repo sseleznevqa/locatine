@@ -38,7 +38,7 @@ module Locatine
 
     post "/lctr" do
       data = params.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-      puts data
+      data.each { |k, v| data[k] = false if v == "false" } 
       {xpath: search.lctr(data)}.to_json
     end
 
@@ -51,13 +51,14 @@ module Locatine
         when 'browser'
           warn 'You cannot set browser like this. Use /connect'
         else
+          value = false if value == "false"
           search.instance_variable_set("@#{key}", value)
         end
       end
       {result: true}.to_json
     end
 
-    def search#We have some kosyak here!
+    def search
       return settings.search unless settings.search.nil?
 
       settings.search = Locatine::Search.new

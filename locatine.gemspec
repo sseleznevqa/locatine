@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.homepage    =
     'https://github.com/sseleznevqa/locatine'
   s.license       = 'MIT'
+  s.executables = "locatine-daemon.rb"
   s.add_development_dependency "bundler", '~> 0'
   s.add_development_dependency "rspec", '~> 0'
   s.add_development_dependency "simplecov", '~> 0'
