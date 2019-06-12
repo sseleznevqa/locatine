@@ -1,0 +1,158 @@
+{
+  "data": {
+    "Default": {
+      "search q": {
+        "0": [
+          {
+            "name": "aria_autocomplete",
+            "type": "attribute",
+            "value": "both",
+            "stability": "2"
+          },
+          {
+            "name": "aria_haspopup",
+            "type": "attribute",
+            "value": "false",
+            "stability": "2"
+          },
+          {
+            "name": "aria_label",
+            "type": "attribute",
+            "value": "Rech.",
+            "stability": "2"
+          },
+          {
+            "name": "autocapitalize",
+            "type": "attribute",
+            "value": "off",
+            "stability": "2"
+          },
+          {
+            "name": "autocomplete",
+            "type": "attribute",
+            "value": "off",
+            "stability": "2"
+          },
+          {
+            "name": "autocorrect",
+            "type": "attribute",
+            "value": "off",
+            "stability": "2"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "gLFyf",
+            "stability": "2"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "gsfi",
+            "stability": "2"
+          },
+          {
+            "name": "data_ved",
+            "type": "attribute",
+            "value": "0ahUKEwi237rA49TiAhVHx4UKHYMSCRMQ39UDCAQ",
+            "stability": "2"
+          },
+          {
+            "name": "jsaction",
+            "type": "attribute",
+            "value": "paste:puy29d",
+            "stability": "2"
+          },
+          {
+            "name": "maxlength",
+            "type": "attribute",
+            "value": "2048",
+            "stability": "2"
+          },
+          {
+            "name": "name",
+            "type": "attribute",
+            "value": "q",
+            "stability": "2"
+          },
+          {
+            "name": "role",
+            "type": "attribute",
+            "value": "combobox",
+            "stability": "2"
+          },
+          {
+            "name": "spellcheck",
+            "type": "attribute",
+            "value": "false",
+            "stability": "2"
+          },
+          {
+            "name": "title",
+            "type": "attribute",
+            "value": "Rechercher",
+            "stability": "2"
+          },
+          {
+            "name": "type",
+            "type": "attribute",
+            "value": "text",
+            "stability": "2"
+          },
+          {
+            "name": "tag",
+            "value": "input",
+            "type": "tag",
+            "stability": "2"
+          }
+        ],
+        "1": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "a4bIc",
+            "stability": "2"
+          },
+          {
+            "name": "jsaction",
+            "type": "attribute",
+            "value": "h5M12e;input:d3sQLd;focus:dFyQEf;blur:jI3wzf",
+            "stability": "2"
+          },
+          {
+            "name": "jscontroller",
+            "type": "attribute",
+            "value": "iDPoPb",
+            "stability": "2"
+          },
+          {
+            "name": "jsname",
+            "type": "attribute",
+            "value": "gLFyf",
+            "stability": "2"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "2"
+          }
+        ],
+        "2": [
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "SDkEP",
+            "stability": "2"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "2"
+          }
+        ]
+      }
+    }
+  }
+}

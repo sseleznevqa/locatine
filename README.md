@@ -375,7 +375,7 @@ Locatine::Daemon.run!
 Also you can do it with terminal:
 
 ```bash
-locatine.rb -port=7733
+locatine-daemon.rb -port=7733
 ```
 
 ### API
@@ -424,6 +424,12 @@ is to control options of locatine search. Sending to set data ==
 {"learn": "true"}
 ```
 
+Answer:
+
+```
+{"result": "true"}
+```
+
 is the same as
 
 ```ruby
@@ -438,4 +444,10 @@ POST data just the same as for find or lctr method. It's like:
 
 ```
 {"name": "some name", "scope": "Default", "exact": "false" ...}
+```
+
+Answer:
+
+```
+{"xpath": "//YOUR[@xpath='goes here']"}
 ```

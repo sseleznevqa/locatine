@@ -13,7 +13,7 @@ module Locatine
     end
 
     get "/" do
-      "Some README will be here"
+      redirect "https://github.com/sseleznevqa/locatine#using-as-a-daemon"
     end
 
     get "/stop" do
@@ -21,25 +21,53 @@ module Locatine
       {result: "dead"}.to_json
     end
 
+    post "/chromedriver" do
+      Webdrivers::Chromedriver.required_version = params['version']
+      {version: Webdrivers::Chromedriver.required_version}.to_json
+    end
+
+    get "/chromedriver" do
+      {path: Webdrivers::Chromedriver.update}.to_json
+    end
+
+    post "/geckodriver" do
+      Webdrivers::Geckodriver.required_version = params['version']
+      {version: Webdrivers::Geckodriver.required_version}.to_json
+    end
+
+    get "/geckodriver" do
+      {path: Webdrivers::Geckodriver.update}.to_json
+    end
+
+    post "iedriver" do
+      Webdrivers::IEdriver.required_version = params['version']
+      {version: Webdrivers::IEdriver.required_version}.to_json
+    end
+
+    get "/iedriver" do
+      {path: Webdrivers::IEdriver.update}.to_json
+    end
+
     post "/connect" do
       #Stealing browser
-      puts params
       search.browser = Watir::Browser.new(params['browser'].to_sym)
+
       search.browser.quit
+      search.browser.instance_variable_set("@closed", false)
+
       search.browser.wd.send(:bridge).instance_variable_set("@session_id", params['session_id'])
       parsed = URI.parse(params['url'])
       search.browser.wd.send(:bridge).send(:http).instance_variable_set("@server_url", parsed)
       net = Net::HTTP.new("#{parsed.host}#{(parsed.path== '/') ? '' : parsed.path}", parsed.port)
       search.browser.wd.send(:bridge).send(:http).instance_variable_set("@http", net)
       search.browser.wd.send(:bridge).send(:http).instance_variable_set("@proxy", params['proxy']) unless params['proxy'].to_s.empty?
-      search.browser.instance_variable_set("@closed", false)
       {result: true}.to_json
     end
 
     post "/lctr" do
       data = params.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-      data.each { |k, v| data[k] = false if v == "false" } 
-      {xpath: search.lctr(data)}.to_json
+      data.each { |k, v| data[k] = false if v == "false" }
+      search.lctr(data).to_json
     end
 
     post "/set" do
