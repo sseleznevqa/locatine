@@ -17,7 +17,10 @@ end
 describe 'Locatine daemon' do
   before(:all) do
     @path16 = "file://#{Dir.pwd}/spec/test_data/test-16.html"
+    @dir = './Locatine_files/'
+    @path = './Locatine_files/default.json'
   end
+
   before(:each) do
     @t = Thread.new do
       Locatine::Daemon.set :port, 7676
@@ -25,6 +28,17 @@ describe 'Locatine daemon' do
       Locatine::Daemon.run!
     end
     sleep 3
+  end
+
+  it 'downloads the geckodriver' do
+    make_request("http://localhost:7676/geckodriver", {"version" => "0.23.0"})
+    path = make_request("http://localhost:7676/geckodriver")["path"]
+    expect(`#{path} --version`).to include "geckodriver 0.23.0"
+  end
+
+  it 'downloads the chromedriver' do
+    path = make_request("http://localhost:7676/chromedriver")["path"]
+    expect(File.file?(path)).to be true
   end
 
   it 'knows where we can find an app' do
@@ -46,7 +60,8 @@ describe 'Locatine daemon' do
                                                    'session_id' => session_id,
                                                    'url' => url})
     b.goto @path16
-    make_request("http://localhost:7676/lctr", {'name' => 'element to find'})
+    xpath = make_request("http://localhost:7676/lctr", {'name' => 'element to find'})["xpath"]
+    expect(b.element(xpath: xpath).text).to eq "Hats off!"
   end
 
   it 'learns properly' do
@@ -58,11 +73,19 @@ describe 'Locatine daemon' do
                                                    'session_id' => session_id,
                                                    'url' => url})
     b.goto @path16
-    puts make_request("http://localhost:7676/lctr", {'name' => 'element to find'})
+    xpath = make_request("http://localhost:7676/lctr", {'name' => 'element to find'})["xpath"]
+    expect(b.element(xpath: xpath).text).to eq "Hats off!"
   end
+
+
   after(:each) do
     puts make_request("http://localhost:7676/stop")
     sleep 3
     @t.join
+  end
+
+  after(:all) do
+    File.delete(@path) if File.exist?(@path)
+    FileUtils.remove_dir(@dir) if File.directory?(@dir)
   end
 end

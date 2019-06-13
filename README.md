@@ -407,7 +407,7 @@ allows Locatine Daemon to connect existing browser instance
 POST data:
 
 ```
-{'browser': 'chrome', 'session_id': session_id, 'url': 'http://urltoselenium:4444/wd/hub/whatever', 'proxy': 'optionally' }
+{'browser': 'chrome', 'session_id': session_id, 'url': 'http://whatever_is_browser_ip:port_opened_by_browser_for_selenium', 'proxy': 'optionally' }
 ```
 
 Answer:
@@ -450,4 +450,30 @@ Answer:
 
 ```
 {"xpath": "//YOUR[@xpath='goes here']"}
+```
+
+### GET /chromedriver || /geckodriver || /iedriver
+
+returns path to the binary retrieved by locatine (using webdrivers gem)
+
+Answer:
+
+```
+{"path": "path/to/the/binary"}
+```
+
+### POST call to /chromedriver || /geckodriver || /iedriver
+
+is to force locatine to use your webdriver (for example for using old version of browser)
+
+POST data:
+
+```
+{"version": "2.46"}
+```
+
+Answer:
+
+```
+{"version": "2.46"}
 ```
