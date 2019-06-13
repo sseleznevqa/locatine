@@ -378,6 +378,18 @@ Also you can do it with terminal:
 locatine-daemon.rb -port=7733
 ```
 
+You can see a python3 example in the [example](https://github.com/sseleznevqa/locatine/tree/master/example) folder. Main idea is
+
+1. Run daemon
+2. Ask daemon for the app path
+3. Run your browser with the app as extension
+4. Turn on the learn
+5. Provide data to the daemon for connect (browser name, session_id, connect url, proxy)
+6. Use API calls to teach daemon how to find elements
+7. After that you can start browser without the app
+8. Provide data for connect
+9. Now you can ask daemon to find your element via API call. And it will answer with a valid xpath you can use.
+
 ### API
 
 #### GET call to /app
