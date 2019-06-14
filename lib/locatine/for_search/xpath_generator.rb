@@ -15,7 +15,7 @@ module Locatine
       end
 
       def max_stability(array)
-        max = (array.max_by { |i| i['stability'].to_i })
+        max = (array.max_by { |i| i['stability'].to_i }) if array
         return max['stability'] if max
 
         return 0

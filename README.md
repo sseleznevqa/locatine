@@ -16,7 +16,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02327** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
+Version of Locatine is **0.02432** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
 
 ## Installation
 
@@ -360,4 +360,132 @@ s.exact_collection(name: "something") == s.collect(exact: true, name: "something
 s.exact(name: "something") == s.find(name: "something", exact: true)
 s.check(name: "something") == s.find(name: "something", tolerance: 0)
 s.check_collection(name: "something") == s.collect(name: "something", tolerance: 0)
+```
+
+## Using as a daemon
+
+Locatine daemon is a web server based on sinatra. You can run it from your code like:
+
+```ruby
+require 'locatine'
+Locatine::Daemon.set :port, 7733 #Your port goes here
+Locatine::Daemon.run!
+```
+
+Also you can do it with terminal:
+
+```bash
+locatine-daemon.rb -port=7733
+```
+
+You can see a python3 example in the [example](https://github.com/sseleznevqa/locatine/tree/master/example) folder. Main idea is
+
+1. Run daemon
+2. Ask daemon for the app path
+3. Run your browser with the app as extension
+4. Turn on the learn
+5. Provide data to the daemon for connect (browser name, session_id, connect url, proxy)
+6. Use API calls to teach daemon how to find elements
+7. After that you can start browser without the app
+8. Provide data for connect
+9. Now you can ask daemon to find your element via API call. And it will answer with a valid xpath you can use.
+
+### API
+
+#### GET call to /app
+
+returns path to locatine application in order to start chrome with it.
+
+Example of response:
+
+```
+{"app": "/some/path/to/app"}
+```
+
+#### GET call to /stop
+
+stops Locatine daemon.
+
+Returns:
+
+```
+{"result": "dead"}
+```
+
+#### POST call to /connect
+
+allows Locatine Daemon to connect existing browser instance
+
+POST data:
+
+```
+{'browser': 'chrome', 'session_id': session_id, 'url': 'http://whatever_is_browser_ip:port_opened_by_browser_for_selenium', 'proxy': 'optionally' }
+```
+
+Answer:
+
+```
+{"result": "true"}
+```
+
+#### POST call to /set
+
+is to control options of locatine search. Sending to set data ==
+
+```
+{"learn": "true"}
+```
+
+Answer:
+
+```
+{"result": "true"}
+```
+
+is the same as
+
+```ruby
+search.learn = true
+```
+
+#### POST call to /lctr
+
+is to find and return locator of an element found by locatine
+
+POST data just the same as for find or lctr method. It's like:
+
+```
+{"name": "some name", "scope": "Default", "exact": "false" ...}
+```
+
+Answer:
+
+```
+{"xpath": "//YOUR[@xpath='goes here']"}
+```
+
+### GET /chromedriver || /geckodriver || /iedriver
+
+returns path to the binary retrieved by locatine (using webdrivers gem)
+
+Answer:
+
+```
+{"path": "path/to/the/binary"}
+```
+
+### POST call to /chromedriver || /geckodriver || /iedriver
+
+is to force locatine to use your webdriver (for example for using old version of browser)
+
+POST data:
+
+```
+{"version": "2.46"}
+```
+
+Answer:
+
+```
+{"version": "2.46"}
 ```

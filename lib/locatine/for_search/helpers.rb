@@ -64,15 +64,6 @@ module Locatine
         Watir::Browser.new(:chrome, switches: ["--load-extension=#{HOME}/app"])
       end
 
-      def import_browser(browser)
-        selenium = browser.class.superclass == Selenium::WebDriver::Driver
-        b = right_browser unless browser
-        b = browser if browser.class == Watir::Browser
-        b = Watir::Browser.new(browser) if selenium
-        @browser = b
-        @default_styles = default_styles.to_a
-      end
-
       def css_text_to_hash(text)
         almost_hash = []
         array = text[0..-2].split('; ')

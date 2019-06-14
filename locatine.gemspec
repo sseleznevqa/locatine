@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "locatine"
-  s.version     = "0.02327"
+  s.version     = "0.02432"
   s.summary     = "Element locating tool based on watir"
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
@@ -13,11 +13,13 @@ Gem::Specification.new do |s|
   s.homepage    =
     'https://github.com/sseleznevqa/locatine'
   s.license       = 'MIT'
+  s.executables = "locatine-daemon.rb"
   s.add_development_dependency "bundler", '~> 0'
   s.add_development_dependency "rspec", '~> 0'
   s.add_development_dependency "simplecov", '~> 0'
   s.add_development_dependency "pry", '~> 0'
   s.add_dependency "watir", '~> 6.16'
   s.add_dependency "json", '~> 2.0'
-  s.add_dependency 'webdrivers', '~> 3.8', '>= 3.8.0'
+  s.add_dependency 'webdrivers', '~> 4.0', '>= 4.0.1'
+  s.add_dependency 'sinatra', '>= 2.0.5'
 end
