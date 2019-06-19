@@ -19,8 +19,8 @@ module Locatine
       # +learn+ shows will locatine ask for assistance from user or will fail
       # on error. learn is true when LEARN parameter is set in environment.
       #
-      # +stability_limit+ shows max times attribute should be present to
-      # consider it trusted.
+      # +stability_limit+ shows max times attribute should be present and
+      # checked to consider it trusted.
       #
       # +scope+ will be used in search (if not provided) defaulkt is "Default"
       #
