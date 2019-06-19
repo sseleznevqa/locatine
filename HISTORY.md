@@ -140,3 +140,4 @@ First release. Locatine can
 
 # Version 0.02535
 - Fixed bug with installation
+- Autolearn (on\off) feature added
