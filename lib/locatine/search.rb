@@ -59,7 +59,8 @@ module Locatine
                   :visual_search,
                   :no_fail,
                   :trusted,
-                  :untrusted
+                  :untrusted,
+                  :autolearn
     attr_reader   :json,
                   :browser
   end

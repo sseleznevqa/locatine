@@ -38,6 +38,11 @@ module Locatine
       #
       # +untrusted+ array of names of attributes and element params to use
       # in search never.
+      #
+      # +autolearn+ determines will locatine study an element or not. true means
+      # locatine will always study it (slow). false means it won't study it
+      # unless it was lost and found. If not stated locatine will turn set it
+      # true if at least one element was lost.
       def initialize(config = {})
         init_config = default_init_config.merge(config)
         import_browser init_config.delete :browser

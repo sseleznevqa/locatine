@@ -9,7 +9,7 @@ describe 'Locatine trust sometimes' do
   end
 
   before(:each) do
-    @s = Locatine::Search.new
+    @s = Locatine::Search.new(autolearn: true)
   end
 
   it "learning to trust and untrust" do

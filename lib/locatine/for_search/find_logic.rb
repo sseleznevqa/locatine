@@ -15,6 +15,8 @@ module Locatine
         result = find_by_data(@data[scope][name], vars)
         attributes = generate_data(result, vars) if result
         if !result && !exact
+          @autolearn = true if @autolearn.nil?
+          @save = true
           result, attributes = find_by_magic(name, scope,
                                              @data[scope][name], vars)
         end
@@ -29,9 +31,10 @@ module Locatine
       end
 
       def full_search(name, scope, vars, locator, exact)
+        @save = @autolearn
         result, attributes = search_steps(name, scope, vars, locator, exact)
         raise_not_found(name, scope) if !result && !@current_no_f
-        store(attributes, scope, name) if result
+        store(attributes, scope, name) if result && (@save || @learn)
         return result, attributes
       end
 
