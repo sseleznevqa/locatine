@@ -1,6 +1,6 @@
 module Locatine
   # constants here...
-  VERSION = '0.02535'.freeze
+  VERSION = '0.02539'.freeze
   NAME = 'locatine'.freeze
   HOME = if File.readable?("#{Dir.pwd}/lib/#{Locatine::NAME}")
            "#{Dir.pwd}/lib/#{Locatine::NAME}"
