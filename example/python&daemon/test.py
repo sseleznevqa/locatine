@@ -1,5 +1,3 @@
-#TODO::::
-# We must to ensure that both sides using the same chromedriver. So locatine daemon should eat the path
 
 from selenium import webdriver
 import requests

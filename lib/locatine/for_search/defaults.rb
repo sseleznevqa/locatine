@@ -9,13 +9,14 @@ module Locatine
           depth: 3,
           browser: nil,
           learn: ENV['LEARN'].nil? ? false : true,
-          stability_limit: 1000,
+          stability_limit: 10,
           scope: 'Default',
           tolerance: 67,
           visual_search: false,
           no_fail: false,
           trusted: [],
-          untrusted: []
+          untrusted: [],
+          autolearn: nil
         }
       end
 

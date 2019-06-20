@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "locatine"
-  s.version     = "0.02432"
+  s.version     = "0.02535"
   s.summary     = "Element locating tool based on watir"
   s.description = "The main goal to write locators never"
   s.authors     = ["Sergei Seleznev"]
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "simplecov", '~> 0'
   s.add_development_dependency "pry", '~> 0'
   s.add_dependency "watir", '~> 6.16'
-  s.add_dependency "json", '~> 2.0'
   s.add_dependency 'webdrivers', '~> 4.0', '>= 4.0.1'
   s.add_dependency 'sinatra', '>= 2.0.5'
 end
