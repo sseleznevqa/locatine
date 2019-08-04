@@ -98,7 +98,8 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      visual_search: false,
                      no_fail: false,
                      trusted: [],
-                     untrusted: [])
+                     untrusted: [],
+                     autolearn: nil)
 ```
 
 ### json

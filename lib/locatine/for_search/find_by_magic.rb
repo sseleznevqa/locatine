@@ -10,7 +10,7 @@ module Locatine
       def find_by_magic(name, scope, data, vars)
         warn_element_lost(name, scope)
         @cold_time = 0
-        all = all_options(data, vars)
+        all = all_entries(data, vars)
         @cold_time = nil
         raise_not_found(name, scope) if all.empty? && !@current_no_f
         suggest_by_all(all, data, vars, name, scope)
@@ -42,17 +42,78 @@ module Locatine
         return nil, nil
       end
 
-      def all_options(data, vars)
+      def all_entries(data, vars)
+        page = copy_page
         all = []
         data.each_pair do |depth, array|
           get_trusted(array).each do |hash|
-            all += one_option_array(hash, vars, depth).to_a
+            all += one_option_array2(page, hash, vars, depth).to_a
           end
         end
         all += full_find_by_css(data, vars) if visual?
         all += find_by_dimensions(data, vars) if visual?
         all
+        # Everything is wrong if page is not current page (DOM is not stable)
+        # Do we need a check like that?
       end
+
+      def deep_element(array, depth)
+        result = []
+        return array if depth == 0
+        if depth > 0
+          array.each do |element|
+            new_array = engine.execute_script("return arguments[0].childNodes", element)
+            result += new_array.reject {|x| x.class == Array} if new_array
+          end
+          depth = depth -1
+        end
+        return result if depth == 0
+        deep_element(result, depth)
+      end
+
+      def one_option_array2(page, hash, vars, depth)
+        array = []
+        case hash['type']
+        when 'tag'
+          page.each do |element|
+            if element['tag'] == process_string(hash['value'], vars)
+              array += deep_element([element['element']], depth.to_i)
+            end
+          end
+        when 'text'
+          page.each do |element|
+            if element['text'] == process_string(hash['value'], vars)
+              array += deep_element([element['element']], depth.to_i)
+            end
+          end
+        when 'attribute'
+          page.each do |element|
+            element['attrs'].each do |attribute|
+              key = attribute.keys.first
+              if key == hash['name'] && attribute['key'] == process_string(hash['value'], vars)
+                array += deep_element([element['element']], depth.to_i)
+              end
+            end
+          end
+        end
+        array
+        # hash = hash with vars
+        # looking for elements with hash
+        # Most probably we do not need depth here since //*//* is almost //*
+      end
+
+
+      def copy_page
+        script = File.read("#{HOME}/large_scripts/page.js")
+        elements = engine.elements
+        taken = engine.execute_script(script)
+        taken.each do |one|
+          one['element'] = elements[one['index'].to_i]
+        end
+        taken
+      end
+
+
 
       def min_max_by_size(middle, size)
         min = middle - (size.to_i * (200 - @current_t)) / 200

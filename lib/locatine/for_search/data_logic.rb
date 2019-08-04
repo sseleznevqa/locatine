@@ -5,22 +5,39 @@ module Locatine
     module DataLogic
       private
 
-      def get_dynamic_attributes(element, vars)
+      def get_dynamic_attributes(data, vars)
         attrs = []
-        get_attributes(element).each do |hash|
-          value = vars[hash['name'].to_sym]
-          hash['value'].gsub!(value, "\#{#{hash['name']}}") if value
-          attrs.push hash
+        data.each do |hash|
+          hash.each_pair do |key, full_value|
+            full_value.split(' ').each do |value|
+              result = {}
+              if key != 'locatineclass'
+                replace = vars[key.to_sym]
+                result['value'] = replace ? value.gsub(replace, "\#{#{key}}") : value
+                result['name'] = key
+                result['type'] = 'attribute'
+                #push_hash here
+                attrs.push result
+              end
+            end
+          end
         end
         attrs
+      end
+
+      def get_element_raw(element)
+        element = element.wd.wd if element.tag_name == 'iframe'
+        script = File.read("#{HOME}/large_scripts/element.js")
+        engine.execute_script(script, element)
       end
 
       ##
       # Generating array of hashes representing data of the element
       def get_element_info(element, vars, depth)
-        attrs = get_dynamic_attributes(element, vars)
-        attrs.push get_dynamic_tag(element, vars)
-        attrs += get_dynamic_text(element, vars)
+        data = get_element_raw(element)
+        attrs = get_dynamic_attributes(data['attrs'], vars)
+        attrs.push get_dynamic_tag(data['tag'], vars)
+        attrs += get_dynamic_text(data['text'], vars)
         attrs += get_dynamic_css(element, vars) if depth.to_i.zero? && visual?
         attrs.push get_dimensions(element, vars) if depth.to_i.zero? && visual?
         attrs

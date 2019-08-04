@@ -15,15 +15,15 @@ module Locatine
         return xy.x, xy.y, wh.width, wh.height
       end
 
-      def get_dynamic_tag(element, vars)
-        tag = element.tag_name
-        tag = "\#{tag}" if vars[:tag] == tag
+      def get_dynamic_tag(tag, vars)
+        tag = "\#{tag}" if vars[:tag].to_s.upcase == tag.upcase
         push_hash('tag', tag, 'tag')
       end
 
-      def get_dynamic_text(element, vars)
+      def get_dynamic_text(text, vars)
+        text = text.to_s.gsub("\n", " ")
         attrs = []
-        real_text_of(element).split(/['" ]/).each do |word|
+        text.split(/['" ]/).each do |word|
           final = if !vars[:text].to_s.strip.empty?
                     word.gsub(vars[:text].to_s, "\#{text}")
                   else

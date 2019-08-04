@@ -37,7 +37,9 @@ describe 'E2E basic user story' do
     iframe = @s.find(name: "iframe")
     expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
     expect(@s.find("h4 css").text).to be == "h4 css"
+    @s.untrusted = ['class']
     expect(@s.find("by coordinates", vars: {"x":"8", "y":"36"}).present?).to be == true
+    @s.untrusted = []
     expect(@s.collect(name: "strange collection sub").length).to be == 2
   end
 
@@ -126,10 +128,10 @@ describe 'E2E basic user story' do
     expect(@s.find(name: "element").text).to be == "Element"
     @s.visual_search = true
     expect(@s.find("h4 css").text).to be == "found anyway"
-    o = @s.find("by coordinates", vars: {"x":"8", "y":"36"})
-    expect(o.text).to be == "O"
-    @s.browser.execute_script("arguments[0].class='karpu'", o)
-    expect(@s.find("by coordinates", vars: {"x":"160", "y":"15"}).text).to be == "A"
+    o = @s.find("by coordinates", vars: {"x":"8", "y":"360"})
+    expect(o.attribute('class')).to be == "zaitsu"
+    a = @s.find("by coordinates", vars: {"x":"160", "y":"150"})
+    expect(a.attribute('class')).to be == "korove"
     @s.browser.goto @path5
     expect(@s.collect(name: "lis fox").length).to be == 3
   end
