@@ -4,6 +4,7 @@ module Locatine
     # Default settings for search are living here
     module Defaults
       private
+
       def default_init_config
         { json: './Locatine_files/default.json',
           depth: 3,
@@ -16,8 +17,7 @@ module Locatine
           no_fail: false,
           trusted: [],
           untrusted: [],
-          autolearn: nil
-        }
+          autolearn: nil }
       end
 
       def import_browser(browser)

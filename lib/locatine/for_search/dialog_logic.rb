@@ -20,6 +20,7 @@ module Locatine
 
       def what_was_selected(element, attributes, vars)
         tag, index = tag_index
+        # TODO Element can be already lost here& We have a bug around this code
         send_to_app('locatineconfirmed', 'ok')
         mass_highlight_turn(element, false) if element
         element, attributes = working_on_selected(tag, index, vars, attributes)

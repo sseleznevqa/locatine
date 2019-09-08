@@ -9,11 +9,128 @@ module Locatine
       # Getting all the elements via black magic
       def find_by_magic(name, scope, data, vars)
         warn_element_lost(name, scope)
-        @cold_time = 0
-        all = all_entries(data, vars)
-        @cold_time = nil
+        page = take_dom
+        all = select_from_page(page, data, vars)
         raise_not_found(name, scope) if all.empty? && !@current_no_f
-        suggest_by_all(all, data, vars, name, scope)
+        suggested = []
+        most_common_of(all).each do |element|
+          suggested.push engine.elements(tag_name: element['tag'])[element['index'].to_i]
+        end
+
+        return suggest_by_all(suggested, data, vars, name, scope) if page == take_dom
+
+        find_by_magic(name, scope, data, vars)
+      end
+
+      def most_common_of(all)
+        max = all.count(all.max_by { |i| all.count(i) })
+        return (all.select { |i| all.count(i) == max }).uniq unless max.zero?
+
+        []
+      end
+
+      def take_dom
+        script = File.read("#{HOME}/large_scripts/page.js")
+        engine.execute_script(script)
+      end
+
+      def select_from_page(page, data, vars)
+        all = [] # No result is a valid result too
+        data.each_pair do |depth, array|
+          get_trusted(array).each do |hash|
+            all += catch(page, hash, vars, depth)
+          end
+        end
+        all
+      end
+
+      def catch(page, hash, vars, depth)
+        all = []
+        hash['value'] = process_string(hash['value'], vars)
+        page.each do |element|
+          all += take_match(element, depth, hash, vars)
+          all += catch(element['children'], hash, vars, depth)
+        end
+        all
+      end
+
+      def take_match(element, depth, hash, vars)
+        case hash['type']
+        when 'tag'
+          take_by_tag(hash, element, depth)
+        when 'text'
+          take_by_text(hash, element, depth)
+        when 'attribute'
+          take_by_attribute(hash, element, depth)
+        when 'dimensions'
+          take_by_dimensions(hash, element, depth, vars)
+        when 'css'
+          take_by_css(hash, element, depth)
+        end
+      end
+
+      def take_by_tag(hash, elt, depth)
+        return kids([elt], depth) if elt['tag'].downcase.include?(hash['value'])
+
+        []
+      end
+
+      def take_by_text(hash, elt, depth)
+        return kids([elt], depth) if elt['text'].include?(hash['value'])
+
+        []
+      end
+
+      def take_by_attribute(hash, elt, depth)
+        check = elt['attrs'][hash['name']].to_s
+        return kids([elt], depth) if check.include?(hash['value'])
+
+        []
+      end
+
+      def dimensions_for_search(hash, vars)
+        values = hash['value'].split('*').map { |item| item.to_i };
+        values[0] = vars[:x].to_i if vars[:x]
+        values[1] = vars[:y].to_i if vars[:y]
+        values
+      end
+
+      def take_by_dimensions(hash, elt, depth, vars)
+        return [] unless visual?
+
+        return [] unless hash['name'] == window_size
+
+        values = dimensions_for_search(hash, vars)
+        top = elt['coordinates']['top'].to_i
+        bottom = elt['coordinates']['bottom'].to_i
+        left = elt['coordinates']['left'].to_i
+        right = elt['coordinates']['right'].to_i
+        x_check = (values[0].to_i >= left) && (values[0] + values[2] <= right)
+        y_check = (values[1].to_i >= top) && (values[1] + values[3] <= bottom)
+        return kids([elt], depth) if (x_check && y_check)
+
+        []
+      end
+
+      def take_by_css(hash, elt, depth)
+        return [] unless visual?
+
+        string = "#{hash['name']}: #{hash['value']}"
+        return kids([elt], depth) if elt['style'].include?(string)
+
+        []
+      end
+
+      # If depth != 0 we should return all children subchildren.
+      def kids(array, depth)
+        answer = []
+        return array if depth.to_i == 0
+
+        array.each do |one|
+          answer += one['children']
+          answer += kids(one['children'], depth)
+        end
+        answer
       end
 
       def similar_enough(data, attributes)
@@ -23,16 +140,14 @@ module Locatine
         sameness >= 100 - @current_t
       end
 
-      def best_of_all(all, vars)
-        max = all.count(all.max_by { |i| all.count(i) })
-        suggest = (all.select { |i| all.count(i) == max }).uniq unless max.zero?
-        attributes = generate_data(suggest, vars) unless suggest.nil?
+      def best_of_all(suggest, vars)
+        attributes = generate_data(suggest, vars) unless suggest.empty?
         return suggest, attributes
       end
 
       def suggest_by_all(all, data, vars, name, scope)
         suggest, attributes = best_of_all(all, vars)
-        ok = similar_enough(data, attributes) unless suggest.nil?
+        ok = similar_enough(data, attributes) unless suggest.empty?
         raise_not_similar(name, scope) if !ok && !@current_no_f
         if ok
           warn_lost_found(name, scope)
@@ -40,137 +155,6 @@ module Locatine
         end
         warn_not_found(name, scope)
         return nil, nil
-      end
-
-      def all_entries(data, vars)
-        page = copy_page
-        all = []
-        data.each_pair do |depth, array|
-          get_trusted(array).each do |hash|
-            all += one_option_array2(page, hash, vars, depth).to_a
-          end
-        end
-        all += full_find_by_css(data, vars) if visual?
-        all += find_by_dimensions(data, vars) if visual?
-        all
-        # Everything is wrong if page is not current page (DOM is not stable)
-        # Do we need a check like that?
-      end
-
-      def deep_element(array, depth)
-        result = []
-        return array if depth == 0
-        if depth > 0
-          array.each do |element|
-            new_array = engine.execute_script("return arguments[0].childNodes", element)
-            result += new_array.reject {|x| x.class == Array} if new_array
-          end
-          depth = depth -1
-        end
-        return result if depth == 0
-        deep_element(result, depth)
-      end
-
-      def one_option_array2(page, hash, vars, depth)
-        array = []
-        case hash['type']
-        when 'tag'
-          page.each do |element|
-            if element['tag'] == process_string(hash['value'], vars)
-              array += deep_element([element['element']], depth.to_i)
-            end
-          end
-        when 'text'
-          page.each do |element|
-            if element['text'] == process_string(hash['value'], vars)
-              array += deep_element([element['element']], depth.to_i)
-            end
-          end
-        when 'attribute'
-          page.each do |element|
-            element['attrs'].each do |attribute|
-              key = attribute.keys.first
-              if key == hash['name'] && attribute['key'] == process_string(hash['value'], vars)
-                array += deep_element([element['element']], depth.to_i)
-              end
-            end
-          end
-        end
-        array
-        # hash = hash with vars
-        # looking for elements with hash
-        # Most probably we do not need depth here since //*//* is almost //*
-      end
-
-
-      def copy_page
-        script = File.read("#{HOME}/large_scripts/page.js")
-        elements = engine.elements
-        taken = engine.execute_script(script)
-        taken.each do |one|
-          one['element'] = elements[one['index'].to_i]
-        end
-        taken
-      end
-
-
-
-      def min_max_by_size(middle, size)
-        min = middle - (size.to_i * (200 - @current_t)) / 200
-        max = middle + (size.to_i * (200 - @current_t)) / 200
-        return min, max
-      end
-
-      def middle(sizes)
-        x = sizes[0].to_i + (sizes[2].to_i / 2)
-        y = sizes[1].to_i + (sizes[3].to_i / 2)
-        return x, y
-      end
-
-      def dimension_search_field(sizes)
-        x, y = middle(sizes)
-        x_min, x_max = min_max_by_size(x, sizes[2])
-        y_min, y_max = min_max_by_size(y, sizes[3])
-        return x_min, x_max, y_min, y_max
-      end
-
-      def retrieve_mesures(data)
-        size = window_size
-        dimensions = data['0'].map do |i|
-          i if (i['type'] == 'dimensions') && (i['name'] == size)
-        end
-        dimensions.compact
-      end
-
-      def sizez_from_dimensions(dimensions, vars)
-        result = []
-        dimensions.first['value'].split('*').each do |value|
-          result.push(process_string(value, vars))
-        end
-        result
-      end
-
-      def find_by_dimensions(data, vars)
-        dimensions = retrieve_mesures(data)
-        if !dimensions.empty?
-          sizes = sizez_from_dimensions(dimensions, vars)
-          xmi, xma, ymi, yma = dimension_search_field(sizes)
-          script = File.read("#{HOME}/large_scripts/dimensions.js")
-          engine.execute_script(script, xmi, xma, ymi, yma).compact
-        else
-          []
-        end
-      end
-
-      def one_option_array(hash, vars, depth)
-        case hash['type']
-        when 'tag'
-          find_by_tag(hash, vars, depth)
-        when 'text'
-          find_by_text(hash, vars, depth)
-        when 'attribute'
-          find_by_attribute(hash, vars, depth)
-        end
       end
     end
   end

@@ -5,10 +5,6 @@ module Locatine
     module DataGenerate
       private
 
-      def real_text_of(element)
-        element.text == element.inner_html ? element.text : ''
-      end
-
       def mesure(element)
         xy = element.location
         wh = element.size
@@ -16,42 +12,29 @@ module Locatine
       end
 
       def get_dynamic_tag(tag, vars)
-        tag = "\#{tag}" if vars[:tag].to_s.upcase == tag.upcase
+        tag = "\#{tag}" if vars[:tag].to_s.casecmp(tag).zero?
         push_hash('tag', tag, 'tag')
       end
 
+      def text_array(text)
+        text.to_s.tr("\n", ' ').split(/['" ]/)
+      end
+
       def get_dynamic_text(text, vars)
-        text = text.to_s.gsub("\n", " ")
-        attrs = []
-        text.split(/['" ]/).each do |word|
+        attrs = text_array(text).map do |word|
           final = if !vars[:text].to_s.strip.empty?
                     word.gsub(vars[:text].to_s, "\#{text}")
                   else
                     word
                   end
-          attrs.push push_hash('text', final, 'text') unless final.empty?
+          push_hash('text', final, 'text') unless final.empty?
         end
-        attrs
+        attrs.compact
       end
 
-      def process_dimension(name, value, vars)
-        s_name = name.to_s
-        value = value.to_s.gsub(vars[name], "\#{#{s_name}}") if vars[name]
-        value
-      end
-
-      def processed_dimensions(element, vars)
-        x, y, width, height = mesure(element)
-        x = process_dimension(:x, x, vars)
-        y = process_dimension(:y, y, vars)
-        width = process_dimension(:width, width, vars)
-        height = process_dimension(:height, height, vars)
-        return x, y, width, height
-      end
-
-      def get_dimensions(element, vars)
+      def get_dimensions(element)
         resolution = window_size
-        x, y, w, h = processed_dimensions(element, vars)
+        x, y, w, h = mesure(element)
         push_hash(resolution, "#{x}*#{y}*#{w}*#{h}", 'dimensions')
       end
 
@@ -78,22 +61,6 @@ module Locatine
           end
         end
         attrs
-      end
-
-      ##
-      # Collecting attributes of the element
-      def get_attributes(element)
-        attributes = element.attributes
-        array = []
-        attributes.each_pair do |name, value|
-          next if name.to_s == 'locatineclass' # Should never happen
-
-          value.split(/['" ]/).reject(&:empty?).uniq.each do |part|
-            array.push('name' => name.to_s, 'type' => 'attribute',
-                       'value' => part)
-          end
-        end
-        array
       end
     end
   end

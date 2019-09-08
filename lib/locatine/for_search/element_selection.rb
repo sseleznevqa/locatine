@@ -54,7 +54,7 @@ module Locatine
       def working_on_selected(tag, index, vars, attributes)
         send_working(tag, index)
         element, new_attributes = selected_element(tag, index, vars, attributes)
-        warn_dropping(tag, index) unless element
+        warn_dropping(tag, index) unless element[0].locate.located?
 
         warn_type(tag) if @type && !element
 
