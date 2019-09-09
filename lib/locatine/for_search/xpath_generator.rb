@@ -18,7 +18,7 @@ module Locatine
         max = (array.max_by { |i| i['stability'].to_i }) if array
         return max['stability'] if max
 
-        return 0
+        0
       end
 
       def generate_xpath(data, vars)

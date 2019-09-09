@@ -10,16 +10,20 @@ module Locatine
         data.each do |hash|
           hash.each_pair do |key, full_value|
             full_value.split(' ').each do |value|
-              next if key != 'locatineclass'
-              
-              replace = vars[key.to_sym]
-              attrs.push push_hash(key,
-                         replace ? value.gsub(replace, "\#{#{key}}") : value,
-                         'attribute')
+              next if key == 'locatineclass'
+
+              attrs.push some_attribute(value, key, vars)
             end
           end
         end
         attrs
+      end
+
+      def some_attribute(value, key, vars)
+        replace = vars[key.to_sym]
+        push_hash(key,
+                  replace ? value.gsub(replace, "\#{#{key}}") : value,
+                  'attribute')
       end
 
       def get_element_raw(element)
@@ -35,9 +39,13 @@ module Locatine
         attrs = get_dynamic_attributes(data['attrs'], vars)
         attrs.push get_dynamic_tag(data['tag'], vars)
         attrs += get_dynamic_text(data['text'], vars)
-        attrs += get_dynamic_css(element, vars) if depth.to_i.zero? && visual?
-        attrs.push get_dimensions(element) if depth.to_i.zero? && visual?
+        attrs += get_dynamic_css(element, vars) if looking?(depth)
+        attrs.push get_dimensions(element) if looking?(depth)
         attrs
+      end
+
+      def looking?(depth)
+        depth.to_i.zero? && visual?
       end
 
       ##

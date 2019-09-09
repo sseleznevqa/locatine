@@ -10,6 +10,7 @@ require 'locatine/for_search/saying'
 require 'locatine/for_search/helpers'
 require 'locatine/for_search/defaults'
 require 'locatine/for_search/file_work'
+require 'locatine/for_search/page_work'
 require 'locatine/for_search/listening'
 require 'locatine/for_search/highlight'
 require 'locatine/for_search/data_logic'
@@ -35,6 +36,7 @@ module Locatine
     include Locatine::ForSearch::Helpers
     include Locatine::ForSearch::Defaults
     include Locatine::ForSearch::FileWork
+    include Locatine::ForSearch::PageWork
     include Locatine::ForSearch::DataLogic
     include Locatine::ForSearch::Listening
     include Locatine::ForSearch::FindLogic
