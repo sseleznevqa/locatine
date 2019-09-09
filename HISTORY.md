@@ -143,3 +143,6 @@ First release. Locatine can
 - Autolearn (on\off) feature added
 
 # Version 0.02539
+- Refactoring
+- Simplified logic for searching by coordinates.
+- Changed the way of finding lost elements in order to speed it up.

@@ -137,6 +137,15 @@ module Locatine
         send_warn "Something was found as #{data} but we cannot highlight it"
       end
 
+      def warn_unstable
+        send_warn 'It seems that page is unstable. It may lead to problems '\
+                  'with resolving elements'
+      end
+
+      def warn_highly_unstable
+        send_warn 'It seems that page is HIGHLY unstable. No guaranties now.'
+      end
+
       def warn_much_highlight(size)
         send_warn "Only the first 50 elements of #{size} were highlighted."
       end

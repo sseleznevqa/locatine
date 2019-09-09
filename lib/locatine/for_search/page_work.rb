@@ -35,7 +35,7 @@ module Locatine
           all += take_match(element, depth, hash, vars)
           all += catch(element['children'], hash, vars, depth)
         end
-        all
+        all.uniq
       end
 
       def take_match(element, depth, hash, vars)

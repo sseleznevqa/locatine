@@ -4,132 +4,138 @@
       "search field": {
         "0": [
           {
-            "name": "aria_autocomplete",
-            "type": "attribute",
-            "value": "both",
-            "stability": "4"
-          },
-          {
-            "name": "aria_haspopup",
-            "type": "attribute",
-            "value": "false",
-            "stability": "4"
-          },
-          {
-            "name": "aria_label",
-            "type": "attribute",
-            "value": "Rech.",
-            "stability": "4"
-          },
-          {
-            "name": "autocapitalize",
-            "type": "attribute",
-            "value": "off",
-            "stability": "4"
-          },
-          {
-            "name": "autocomplete",
-            "type": "attribute",
-            "value": "off",
-            "stability": "4"
-          },
-          {
-            "name": "autocorrect",
-            "type": "attribute",
-            "value": "off",
-            "stability": "4"
-          },
-          {
             "name": "class",
             "type": "attribute",
             "value": "gLFyf",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "class",
             "type": "attribute",
             "value": "gsfi",
-            "stability": "4"
-          },
-          {
-            "name": "jsaction",
-            "type": "attribute",
-            "value": "paste:puy29d",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "maxlength",
             "type": "attribute",
             "value": "2048",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "name",
             "type": "attribute",
             "value": "q",
-            "stability": "4"
-          },
-          {
-            "name": "role",
-            "type": "attribute",
-            "value": "combobox",
-            "stability": "4"
-          },
-          {
-            "name": "spellcheck",
-            "type": "attribute",
-            "value": "false",
-            "stability": "4"
-          },
-          {
-            "name": "title",
-            "type": "attribute",
-            "value": "Rechercher",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "type",
             "type": "attribute",
             "value": "text",
-            "stability": "4"
+            "stability": "5"
+          },
+          {
+            "name": "jsaction",
+            "type": "attribute",
+            "value": "paste:puy29d",
+            "stability": "5"
+          },
+          {
+            "name": "aria-autocomplete",
+            "value": "both",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "aria-haspopup",
+            "value": "false",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "autocapitalize",
+            "type": "attribute",
+            "value": "off",
+            "stability": "5"
+          },
+          {
+            "name": "autocomplete",
+            "type": "attribute",
+            "value": "off",
+            "stability": "5"
+          },
+          {
+            "name": "autocorrect",
+            "type": "attribute",
+            "value": "off",
+            "stability": "5"
+          },
+          {
+            "name": "role",
+            "type": "attribute",
+            "value": "combobox",
+            "stability": "5"
+          },
+          {
+            "name": "spellcheck",
+            "type": "attribute",
+            "value": "false",
+            "stability": "5"
+          },
+          {
+            "name": "title",
+            "type": "attribute",
+            "value": "Rechercher",
+            "stability": "5"
+          },
+          {
+            "name": "aria-label",
+            "value": "Rech.",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "data-ved",
+            "value": "0ahUKEwiiucby8cPkAhVGTBoKHWHUAuoQ39UDCAQ",
+            "type": "attribute",
+            "stability": "1"
           },
           {
             "name": "tag",
             "value": "input",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "1": [
           {
-            "name": "class",
-            "type": "attribute",
-            "value": "a4bIc",
-            "stability": "4"
-          },
-          {
-            "name": "jsaction",
-            "type": "attribute",
-            "value": "dFyQEf;input:d3sQLd;focus:dFyQEf;blur:jI3wzf",
-            "stability": "4"
-          },
-          {
             "name": "jscontroller",
             "type": "attribute",
             "value": "iDPoPb",
-            "stability": "4"
+            "stability": "5"
+          },
+          {
+            "name": "class",
+            "type": "attribute",
+            "value": "a4bIc",
+            "stability": "5"
           },
           {
             "name": "jsname",
             "type": "attribute",
             "value": "gLFyf",
-            "stability": "4"
+            "stability": "5"
+          },
+          {
+            "name": "jsaction",
+            "value": "h5M12e;input:d3sQLd;focus:dFyQEf;blur:jI3wzf",
+            "type": "attribute",
+            "stability": "1"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "2": [
@@ -137,13 +143,13 @@
             "name": "class",
             "type": "attribute",
             "value": "SDkEP",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ]
       },
@@ -153,79 +159,91 @@
             "name": "alt",
             "type": "attribute",
             "value": "Google",
-            "stability": "4"
-          },
-          {
-            "name": "data_atf",
-            "type": "attribute",
-            "value": "1",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "height",
             "type": "attribute",
             "value": "92",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "id",
             "type": "attribute",
             "value": "hplogo",
-            "stability": "4"
-          },
-          {
-            "name": "onload",
-            "type": "attribute",
-            "value": "window.lol&&lol()",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "src",
             "type": "attribute",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "1x,",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "srcset",
             "type": "attribute",
             "value": "2x",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "style",
             "type": "attribute",
             "value": "padding-top:109px",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "width",
             "type": "attribute",
             "value": "272",
-            "stability": "4"
+            "stability": "5"
+          },
+          {
+            "name": "onload",
+            "value": "typeof",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "onload",
+            "value": "google==='object'&&google.aft&&google.aft(this)",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "data-atf",
+            "value": "1",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "data-iml",
+            "value": "1568037234184",
+            "type": "attribute",
+            "stability": "1"
           },
           {
             "name": "tag",
             "value": "img",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "1": [
@@ -233,19 +251,13 @@
             "name": "id",
             "type": "attribute",
             "value": "lga",
-            "stability": "4"
-          },
-          {
-            "name": "style",
-            "type": "attribute",
-            "value": "height:233px;margin-top:89px",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "2": [
@@ -253,53 +265,65 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ]
       },
       "search button": {
         "0": [
           {
-            "name": "aria_label",
+            "name": "class",
+            "value": "gNO89b",
             "type": "attribute",
-            "value": "Recherche",
-            "stability": "4"
+            "stability": "1"
           },
           {
-            "name": "aria_label",
+            "name": "value",
+            "type": "attribute",
+            "value": "Recherche",
+            "stability": "5"
+          },
+          {
+            "name": "value",
             "type": "attribute",
             "value": "Google",
-            "stability": "4"
+            "stability": "5"
+          },
+          {
+            "name": "aria-label",
+            "value": "Recherche",
+            "type": "attribute",
+            "stability": "1"
+          },
+          {
+            "name": "aria-label",
+            "value": "Google",
+            "type": "attribute",
+            "stability": "1"
           },
           {
             "name": "name",
             "type": "attribute",
             "value": "btnK",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "type",
             "type": "attribute",
             "value": "submit",
-            "stability": "4"
+            "stability": "5"
           },
           {
-            "name": "value",
+            "name": "data-ved",
+            "value": "0ahUKEwiiucby8cPkAhVGTBoKHWHUAuoQ4dUDCAk",
             "type": "attribute",
-            "value": "Recherche",
-            "stability": "4"
-          },
-          {
-            "name": "value",
-            "type": "attribute",
-            "value": "Google",
-            "stability": "4"
+            "stability": "1"
           },
           {
             "name": "tag",
             "value": "input",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "1": [
@@ -307,7 +331,7 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ],
         "2": [
@@ -315,19 +339,19 @@
             "name": "class",
             "type": "attribute",
             "value": "FPdoLc",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "class",
             "type": "attribute",
             "value": "VlcLAe",
-            "stability": "4"
+            "stability": "5"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "4"
+            "stability": "5"
           }
         ]
       }

@@ -7,16 +7,16 @@ module Locatine
 
       ##
       # Getting all the elements via black magic
-      def find_by_magic(name, scope, data, vars)
+      def find_by_magic(name, scope, data, vars, iteration = 0)
         page = take_dom
-        all = magic_elements(name, scope, data, vars, page)
-        # Here we are selecting most common of all little similar elements
-        # Magically usually this is one we are looking for.
-        suggested = most_common_of(all).map do |element|
-          engine.elements(tag_name: element['tag'])[element['index'].to_i]
+        html = engine.html
+        suggested = magic_elements(name, scope, data, vars, page)
+        warn_unstable if html != engine.html || page != take_dom
+        if html != engine.html and iteration < 5
+          return find_by_magic(name, scope, data, vars, iteration + 1)
         end
-        return find_by_magic(name, scope, data, vars) unless page == take_dom
 
+        warn_highly_unstable if iteration == 5
         suggest_by_all(suggested, data, vars, name, scope)
       end
 
@@ -27,7 +27,10 @@ module Locatine
         warn_element_lost(name, scope)
         all = select_from_page(page, data, vars)
         raise_not_found(name, scope) if all.empty? && !@current_no_f
-        all
+        suggested = most_common_of(all).map do |element|
+          engine.elements(tag_name: element['tag'])[element['index'].to_i]
+        end
+        suggested
       end
 
       def similar_enough(data, attributes)

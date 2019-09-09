@@ -242,7 +242,7 @@ vars = {tag: random_tag} # The tag
 vars = {attribute_name: random_attr} # If attribute is dynamic (use name of the attribute)
 # And two lines work with visual_search == true only
 vars = {css_option: random_value} # If your css is dynamic
-vars = {x: random_x} # x, y, width, height for element size and position
+vars = {x: random_x} # x, y for element position
 ```
 
 And if you do not like it you can do:
