@@ -68,8 +68,8 @@ module Locatine
         push_title "Locatine has no good guess for #{name} in #{scope}."
       end
 
-      def send_has_guess(length, name, scope)
-        push_title "#{length} #{verb(length)} guessed as #{name} in #{scope}."
+      def send_has_guess(name, scope)
+        push_title "Something is guessed as #{name} in #{scope}."
       end
 
       def send_selecting(name, scope)
@@ -135,6 +135,10 @@ module Locatine
 
       def warn_cannot_highlight(data)
         send_warn "Something was found as #{data} but we cannot highlight it"
+      end
+
+      def warn_broken_locator(locator)
+        send_warn "Can find nothing using #{locator}"
       end
 
       def warn_unstable

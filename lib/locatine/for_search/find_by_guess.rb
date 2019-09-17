@@ -8,57 +8,60 @@ module Locatine
     module FindByGuess
       private
 
-      def main_guess(name)
+      def all_similar(name, page, vars)
         all = []
-        name.split(' ').each do |part|
-          all += guess_by_part(part)
+        array = generate_hash_array(name)
+        array.each do |hash|
+          all += catch(page, hash, vars, 0)
         end
         all
       end
 
-      def guess_by_part(part)
-        all = []
-        tag_xpath = "//#{part}#{not_magic_div}"
-        text_xpath = "//*[contains(text(),'#{part}')]#{not_magic_div}"
-        attr_xpath = "//*[@*[contains(., '#{part}')]]#{not_magic_div}"
-        all += find_by_locator(xpath: tag_xpath).to_a
-        all += find_by_locator(xpath: text_xpath).to_a
-        all += find_by_locator(xpath: attr_xpath).to_a
-        all
-      end
-
-      def full_guess(all, vars, name)
-        max = all.count(all.max_by { |i| all.count(i) })
-        if max >= name.split(' ').length
-          guess = (all.select { |i| all.count(i) == max }).uniq
-          guess_data = generate_data(guess, vars)
-          found_by_data = find_by_data(guess_data, vars)
-        end
-        return found_by_data, guess_data.to_h
-      end
-
-      def check_guess(all, vars, name, scope)
-        guess, guess_data = full_guess(all, vars, name)
-        if guess.nil? || (engine.elements.length / guess.length <= 4)
-          send_no_guess(name, scope)
-          guess = nil
-          guess_data = {}
-        else
-          send_has_guess(guess.length, name, scope)
-        end
-        return guess, guess_data
-      end
-
-      def find_by_guess(scope, name, vars)
-        @cold_time = 0
-        all = main_guess(name)
+      def all_suggested(all, name, scope)
         if all.empty?
           send_no_guess(name, scope)
-        else
-          guess, guess_data = check_guess(all, vars, name, scope)
+          return nil
         end
-        @cold_time = nil
-        return guess, guess_data.to_h
+        suggested = most_common_of(all).map do |element|
+          engine.elements(tag_name: element['tag'])[element['index'].to_i]
+        end
+        send_no_guess(name, scope) if suggested.length > 1
+        suggested
+      end
+
+      def main_guess(name, scope, page, vars)
+        all = all_similar(name, page, vars)
+        all_suggested(all, name, scope)
+      end
+
+      def guessing(name, scope, page, vars)
+        suggested = main_guess(name, scope, page, vars)
+        suggest, attributes = final_of_all(suggested, vars) if suggested
+        return suggest, attributes
+      end
+
+      def find_by_guess(scope, name, vars, iteration = 0)
+        html = take_html
+        page = take_dom
+        suggest, attributes = guessing(name, scope, page, vars)
+        if html != take_html && iteration < 5
+          return find_by_guess(scope, name, vars, iteration + 1)
+        end
+
+        warn_highly_unstable if iteration == 5
+        send_has_guess(name, scope) if suggest
+        return suggest, attributes.to_h
+      end
+
+      def generate_hash_array(name)
+        array = []
+        name.split(' ').each do |part|
+          array.push push_hash(part, '', 'attribute')
+          array.push push_hash('', part, 'attribute')
+          array.push push_hash('text', part, 'text')
+          array.push push_hash('tag', part, 'tag')
+        end
+        array
       end
     end
   end

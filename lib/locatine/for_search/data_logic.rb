@@ -27,7 +27,7 @@ module Locatine
       end
 
       def get_element_raw(element)
-        element = element.wd.wd if element.tag_name == 'iframe'
+        element = element.to_subtype.wd.wd if element.tag_name == 'iframe'
         script = File.read("#{HOME}/large_scripts/element.js")
         engine.execute_script(script, element)
       end

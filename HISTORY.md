@@ -146,3 +146,4 @@ First release. Locatine can
 - Refactoring
 - Simplified logic for searching by coordinates.
 - Changed the way of finding lost elements in order to speed it up.
+- Changed the way of guessing element while learn (It is faster and more simple)

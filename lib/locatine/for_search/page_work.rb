@@ -58,9 +58,18 @@ module Locatine
         []
       end
 
+      def take_attribute_check(hash, elt)
+        if !hash['name'].to_s.empty? && !hash['value'].to_s.empty?
+          return elt['attrs'][hash['name']].to_s
+        end
+
+        elt['attrs'].to_s
+      end
+
       def take_by_attribute(hash, elt, depth)
-        check = elt['attrs'][hash['name']].to_s
-        return kids([elt], depth) if check.include?(hash['value'])
+        str = hash['value'].to_s.empty? ? hash['name'].to_s : hash['value'].to_s
+        ok = take_attribute_check(hash, elt).include?(str)
+        return kids([elt], depth) if ok
 
         []
       end

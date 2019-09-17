@@ -8,16 +8,20 @@ module Locatine
       ##
       # Getting all the elements via black magic
       def find_by_magic(name, scope, data, vars, iteration = 0)
+        html = take_html
         page = take_dom
-        html = engine.html
         suggested = magic_elements(name, scope, data, vars, page)
-        warn_unstable if html != engine.html || page != take_dom
-        if html != engine.html and iteration < 5
+        warn_unstable if page_changed?(page, html)
+        if html != take_html && iteration < 5
           return find_by_magic(name, scope, data, vars, iteration + 1)
         end
 
         warn_highly_unstable if iteration == 5
         suggest_by_all(suggested, data, vars, name, scope)
+      end
+
+      def page_changed?(page, html)
+        html != take_html || page != take_dom
       end
 
       ##

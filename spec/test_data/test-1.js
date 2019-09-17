@@ -7,20 +7,20 @@ function locatineTestSelect(index, tag, confirm){
 };
 setTimeout(function() {magicDiv.setAttribute("locatinecollection", "true")}, 1000);
 setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 2000);
-setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("1 element was selected as lis fox in Default. If it is correct - confirm the selection."))
+setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("1 element was selected as lisa foxa in Default. If it is correct - confirm the selection."))
                          {
                            element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle") + " expected = 1 element was selected as span in Default. If it is correct - confirm the selection."
                          }}, 3000);
 setTimeout(function() {locatineTestSelect("", "", "declined")}, 4000);
-setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("Now nothing is selected as lis fox in Default"))
+setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("Now nothing is selected as lisa foxa in Default"))
                          {
-                           element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle") + " expected = Now nothing is selected as lis fox in Default"
+                           element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle") + " expected = Now nothing is selected as lisa foxa in Default"
                          }}, 5000);
 setTimeout(function() {locatineTestSelect("0", "li", "selected")}, 6000);
 setTimeout(function() {locatineTestSelect("1", "li", "selected")}, 7000);
-setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("3 elements were selected as lis fox in Default. If it is correct - confirm the selection."))
+setTimeout(function() {if (!magicDiv.getAttribute("locatinetitle").includes("3 elements were selected as lisa foxa in Default. If it is correct - confirm the selection."))
                          {
-                           element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle")+ " expected = 3 elements were selected as lis fox in Default. If it is correct - confirm the selection."
+                           element.innerText = "Title was = " + magicDiv.getAttribute("locatinetitle")+ " expected = 3 elements were selected as lisa foxa in Default. If it is correct - confirm the selection."
                          }}, 8000);
 setTimeout(function() {locatineTestSelect("1", "li", "true")}, 9000);
 setTimeout(function() {magicDiv.setAttribute("locatinecollection", false)}, 10000);

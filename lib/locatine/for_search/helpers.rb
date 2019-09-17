@@ -16,6 +16,11 @@ module Locatine
         (@iframe || @browser)
       end
 
+      def take_html
+        engine.locate
+        engine.html
+      end
+
       def time
         t = Time.now
         "#{t.year}.#{t.month}.#{t.day}  #{t.hour.to_s.rjust(2, '0')}:"\

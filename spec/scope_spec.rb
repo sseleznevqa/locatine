@@ -6,7 +6,7 @@ describe 'Scope basic user story' do
     @path10 = "file://#{Dir.pwd}/spec/test_data/test-10.html"
     @dir = './Locatine_files/'
     @file = './Locatine_files/default.json'
-    @xpath = "//*[self::div]/*[self::div]/*[self::span][@*[contains(name(), 'name')][contains(., 'two')]][not(@id = 'locatine_magic_div')]"
+    @xpath = "//*[self::div]/*[self::div]/*[self::span][contains(@name, 'two')][not(@id = 'locatine_magic_div')]"
     Watir.default_timeout = 3
   end
   before(:each) do
