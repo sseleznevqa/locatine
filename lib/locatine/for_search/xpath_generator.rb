@@ -18,7 +18,7 @@ module Locatine
         max = (array.max_by { |i| i['stability'].to_i }) if array
         return max['stability'] if max
 
-        return 0
+        0
       end
 
       def generate_xpath(data, vars)
@@ -41,15 +41,8 @@ module Locatine
         when 'text'
           "[contains(text(), '#{value}')]"
         when 'attribute'
-          generate_xpath_part_from_attribute(hash, value)
+          "[contains(@#{hash['name']}, '#{value}')]"
         end
-      end
-
-      def generate_xpath_part_from_attribute(hash, value)
-        full = '[@*'
-        hash['name'].split('_')
-                    .each { |part| full += "[contains(name(), '#{part}')]" }
-        full + "[contains(., '#{value}')]]"
       end
     end
   end

@@ -141,3 +141,9 @@ First release. Locatine can
 # Version 0.02535
 - Fixed bug with installation
 - Autolearn (on\off) feature added
+
+# Version 0.02539
+- Refactoring
+- Simplified logic for searching by coordinates.
+- Changed the way of finding lost elements in order to speed it up.
+- Changed the way of guessing element while learn (It is faster and more simple)

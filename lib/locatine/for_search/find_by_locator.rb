@@ -50,36 +50,6 @@ module Locatine
       end
 
       ##
-      # Getting elements by tag
-      def find_by_tag(hash, vars, depth = 0)
-        correction = '//*' if depth.to_i > 0
-        xpath = "//*[self::#{process_string(hash['value'], vars)}]"
-        find_by_locator(xpath: "#{xpath}#{correction}#{not_magic_div}")
-      end
-
-      ##
-      # Getting elements by text
-      def find_by_text(hash, vars, depth = 0)
-        correction = '//*' if depth.to_i > 0
-        value = process_string(hash['value'], vars)
-        xpath = "//*[contains(text(), '#{value}')]"
-        find_by_locator(xpath: "#{xpath}#{correction}#{not_magic_div}")
-      end
-
-      ##
-      # Getting elements by attribute
-      def find_by_attribute(hash, vars, depth = 0)
-        correction = '//*' if depth.to_i > 0
-        full_part = '//*[@*'
-        hash['name'].split('_').each do |part|
-          full_part += "[contains(name(), '#{part}')]"
-        end
-        value = process_string(hash['value'], vars)
-        xpath = full_part + "[contains(., '#{value}')]]"
-        find_by_locator(xpath: "#{xpath}#{correction}#{not_magic_div}")
-      end
-
-      ##
       # Getting all the elements via stored information
       def find_by_data(data, vars)
         find_by_locator(xpath: generate_xpath(data, vars))

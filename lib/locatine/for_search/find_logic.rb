@@ -51,8 +51,9 @@ module Locatine
       end
 
       def locator_search(locator, vars)
-        result = find_by_locator(locator) if locator != {}
+        result = find_by_locator(locator) unless locator == {}
         attributes = generate_data(result, vars) if result
+        warn_broken_locator(locator) if locator.to_h != {} && !result
         return result, attributes
       end
 

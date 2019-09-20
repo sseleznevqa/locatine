@@ -16,6 +16,11 @@ module Locatine
         (@iframe || @browser)
       end
 
+      def take_html
+        engine.locate
+        engine.html
+      end
+
       def time
         t = Time.now
         "#{t.year}.#{t.month}.#{t.day}  #{t.hour.to_s.rjust(2, '0')}:"\
@@ -89,6 +94,13 @@ module Locatine
         value = vars[thevar.to_sym] || vars[thevar]
         raise_no_var(thevar) unless value
         process_string(str.gsub('#{' + thevar + '}', value.to_s), vars)
+      end
+
+      def most_common_of(all)
+        max = all.count(all.max_by { |i| all.count(i) })
+        return (all.select { |i| all.count(i) == max }).uniq unless max.zero?
+
+        []
       end
     end
   end

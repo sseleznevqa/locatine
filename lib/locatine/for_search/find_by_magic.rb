@@ -7,13 +7,34 @@ module Locatine
 
       ##
       # Getting all the elements via black magic
-      def find_by_magic(name, scope, data, vars)
+      def find_by_magic(name, scope, data, vars, iteration = 0)
+        html = take_html
+        page = take_dom
+        suggested = magic_elements(name, scope, data, vars, page)
+        warn_unstable if page_changed?(page, html)
+        if html != take_html && iteration < 5
+          return find_by_magic(name, scope, data, vars, iteration + 1)
+        end
+
+        warn_highly_unstable if iteration == 5
+        suggest_by_all(suggested, data, vars, name, scope)
+      end
+
+      def page_changed?(page, html)
+        html != take_html || page != take_dom
+      end
+
+      ##
+      # We are taking every element that look at least a bit similar to one we
+      # are looking for
+      def magic_elements(name, scope, data, vars, page)
         warn_element_lost(name, scope)
-        @cold_time = 0
-        all = all_options(data, vars)
-        @cold_time = nil
+        all = select_from_page(page, data, vars)
         raise_not_found(name, scope) if all.empty? && !@current_no_f
-        suggest_by_all(all, data, vars, name, scope)
+        suggested = most_common_of(all).map do |element|
+          engine.elements(tag_name: element['tag'])[element['index'].to_i]
+        end
+        suggested
       end
 
       def similar_enough(data, attributes)
@@ -23,16 +44,14 @@ module Locatine
         sameness >= 100 - @current_t
       end
 
-      def best_of_all(all, vars)
-        max = all.count(all.max_by { |i| all.count(i) })
-        suggest = (all.select { |i| all.count(i) == max }).uniq unless max.zero?
-        attributes = generate_data(suggest, vars) unless suggest.nil?
+      def final_of_all(suggest, vars)
+        attributes = generate_data(suggest, vars) unless suggest.empty?
         return suggest, attributes
       end
 
       def suggest_by_all(all, data, vars, name, scope)
-        suggest, attributes = best_of_all(all, vars)
-        ok = similar_enough(data, attributes) unless suggest.nil?
+        suggest, attributes = final_of_all(all, vars)
+        ok = similar_enough(data, attributes) unless suggest.empty?
         raise_not_similar(name, scope) if !ok && !@current_no_f
         if ok
           warn_lost_found(name, scope)
@@ -40,76 +59,6 @@ module Locatine
         end
         warn_not_found(name, scope)
         return nil, nil
-      end
-
-      def all_options(data, vars)
-        all = []
-        data.each_pair do |depth, array|
-          get_trusted(array).each do |hash|
-            all += one_option_array(hash, vars, depth).to_a
-          end
-        end
-        all += full_find_by_css(data, vars) if visual?
-        all += find_by_dimensions(data, vars) if visual?
-        all
-      end
-
-      def min_max_by_size(middle, size)
-        min = middle - (size.to_i * (200 - @current_t)) / 200
-        max = middle + (size.to_i * (200 - @current_t)) / 200
-        return min, max
-      end
-
-      def middle(sizes)
-        x = sizes[0].to_i + (sizes[2].to_i / 2)
-        y = sizes[1].to_i + (sizes[3].to_i / 2)
-        return x, y
-      end
-
-      def dimension_search_field(sizes)
-        x, y = middle(sizes)
-        x_min, x_max = min_max_by_size(x, sizes[2])
-        y_min, y_max = min_max_by_size(y, sizes[3])
-        return x_min, x_max, y_min, y_max
-      end
-
-      def retrieve_mesures(data)
-        size = window_size
-        dimensions = data['0'].map do |i|
-          i if (i['type'] == 'dimensions') && (i['name'] == size)
-        end
-        dimensions.compact
-      end
-
-      def sizez_from_dimensions(dimensions, vars)
-        result = []
-        dimensions.first['value'].split('*').each do |value|
-          result.push(process_string(value, vars))
-        end
-        result
-      end
-
-      def find_by_dimensions(data, vars)
-        dimensions = retrieve_mesures(data)
-        if !dimensions.empty?
-          sizes = sizez_from_dimensions(dimensions, vars)
-          xmi, xma, ymi, yma = dimension_search_field(sizes)
-          script = File.read("#{HOME}/large_scripts/dimensions.js")
-          engine.execute_script(script, xmi, xma, ymi, yma).compact
-        else
-          []
-        end
-      end
-
-      def one_option_array(hash, vars, depth)
-        case hash['type']
-        when 'tag'
-          find_by_tag(hash, vars, depth)
-        when 'text'
-          find_by_text(hash, vars, depth)
-        when 'attribute'
-          find_by_attribute(hash, vars, depth)
-        end
       end
     end
   end

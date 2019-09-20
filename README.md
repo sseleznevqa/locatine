@@ -16,7 +16,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02535** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
+Version of Locatine is **0.02539** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
 
 ## Installation
 
@@ -98,7 +98,8 @@ Locatine::Search.new(json: "./Locatine_files/default.json",
                      visual_search: false,
                      no_fail: false,
                      trusted: [],
-                     untrusted: [])
+                     untrusted: [],
+                     autolearn: nil)
 ```
 
 ### json
@@ -241,7 +242,7 @@ vars = {tag: random_tag} # The tag
 vars = {attribute_name: random_attr} # If attribute is dynamic (use name of the attribute)
 # And two lines work with visual_search == true only
 vars = {css_option: random_value} # If your css is dynamic
-vars = {x: random_x} # x, y, width, height for element size and position
+vars = {x: random_x} # x, y for element position
 ```
 
 And if you do not like it you can do:

@@ -4,20 +4,14 @@ module Locatine
     # Default settings for search are living here
     module Defaults
       private
+
       def default_init_config
-        { json: './Locatine_files/default.json',
-          depth: 3,
-          browser: nil,
-          learn: ENV['LEARN'].nil? ? false : true,
-          stability_limit: 10,
-          scope: 'Default',
-          tolerance: 67,
-          visual_search: false,
-          no_fail: false,
-          trusted: [],
-          untrusted: [],
-          autolearn: nil
-        }
+        { json: './Locatine_files/default.json', depth: 3,
+          browser: nil, learn: ENV['LEARN'].nil? ? false : true,
+          stability_limit: 10, scope: 'Default',
+          tolerance: 67, visual_search: false,
+          no_fail: false, trusted: [],
+          untrusted: [], autolearn: nil }
       end
 
       def import_browser(browser)
@@ -38,7 +32,7 @@ module Locatine
 
       def import_config(config)
         config.each_pair do |key, value|
-          self.instance_variable_set("@#{key.to_s}", value)
+          instance_variable_set("@#{key}", value)
         end
       end
     end
