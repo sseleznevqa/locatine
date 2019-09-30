@@ -53,18 +53,40 @@ module Locatine
         return els, attrs
       end
 
+      # get_from_app('locatineconfirmed') 'selected' or 'declined' or 'true'
+      # or 'abort' or 'new' or anything else (ok or false)
       def listening(els, attrs, vars, name, scope)
-        until %w[true abort].include?(get_from_app('locatineconfirmed'))
-          sleep(0.1)
-          els, attrs = user_selection(els, attrs, vars, name, scope)
+        sleep(0.1)
+        result = hearing
+        els, attrs = understanding(els, attrs, vars, name, scope, result)
+        if (!result[:done] || !els) && !result[:abort]
+          return listening(els, attrs, vars, name, scope)
         end
+
+        return els, attrs
+      end
+
+      def understanding(els, attrs, vars, name, scope, result)
+        if result[:selected]
+          els, attrs = user_selection(els, attrs, vars, name, scope)
+        else
+          start_listening(scope, name) if result[:new]
+          els, attrs = decline(els, name, scope) if result[:declined]
+        end
+        return els, attrs
+      end
+
+      def hearing
+        answer = {}
         result = get_from_app('locatineconfirmed')
-        return els, attrs if els && result != 'abort'
-
-        els, attrs = decline(els, name, scope)
-        return els, attrs if result == 'abort'
-
-        listening(els, attrs, vars, name, scope)
+        answer[:selected] = ((result == 'selected') || (result == 'true'))
+        answer[:new] = result == 'new'
+        answer[:done] = result == 'true'
+        answer[:abort] = result == 'abort'
+        answer[:declined] = ((result == 'new') ||
+                             (result == 'declined') ||
+                             (result == 'abort'))
+        answer
       end
 
       ##

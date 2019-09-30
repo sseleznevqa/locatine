@@ -25,7 +25,6 @@ module Locatine
         suggested = most_common_of(all).map do |element|
           engine.elements(tag_name: element['tag'])[element['index'].to_i]
         end
-        send_no_guess(name, scope) if suggested.length > 1
         suggested
       end
 
