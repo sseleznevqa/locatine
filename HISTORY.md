@@ -147,3 +147,8 @@ First release. Locatine can
 - Simplified logic for searching by coordinates.
 - Changed the way of finding lost elements in order to speed it up.
 - Changed the way of guessing element while learn (It is faster and more simple)
+
+# Version 0.02542
+- Fixed bug with app loosing context after page reloading or on an empty page.
+- Some lost debug is removed
+- Fixed bug with detecting unstable page
