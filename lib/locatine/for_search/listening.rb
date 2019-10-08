@@ -23,6 +23,7 @@ module Locatine
       def start_listening(scope, name)
         send_to_app('locatinestyle', 'blocked', @browser) if @iframe
         send_to_app('locatinestyle', 'set_true')
+        send_to_app('locatineconfirmed', 'ok')
         send_selecting(name, scope)
         sleep 0.5
       end

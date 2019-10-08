@@ -20,12 +20,6 @@
             "value": "Grace",
             "type": "text",
             "stability": "1"
-          },
-          {
-            "name": "text",
-            "value": "Hopper",
-            "type": "text",
-            "stability": "1"
           }
         ],
         "1": [

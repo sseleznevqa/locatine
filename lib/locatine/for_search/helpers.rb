@@ -18,13 +18,12 @@ module Locatine
 
       def take_html
         engine.locate
-        engine.html
+        engine.html.gsub(/<div.*id="locatine_magic_div".*>/, '')
       end
 
       def time
         t = Time.now
-        "#{t.year}.#{t.month}.#{t.day}  #{t.hour.to_s.rjust(2, '0')}:"\
-        "#{t.min.to_s.rjust(2, '0')}:#{t.sec.to_s.rjust(2, '0')}"
+        t.strftime('%F %T')
       end
 
       def fix_iframe
