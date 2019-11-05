@@ -152,3 +152,7 @@ First release. Locatine can
 - Fixed bug with app loosing context after page reloading or on an empty page.
 - Some lost debug is removed
 - Fixed bug with detecting unstable page
+
+# Version 0.02637
+- Fixed bug with unnecessary screen title appearing after defining of an element
+-

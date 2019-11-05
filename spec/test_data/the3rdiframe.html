@@ -1,0 +1,21 @@
+<html>
+<body>
+  <div>
+    <div>
+      <label id="finally">Gotcha!</label>
+    </div>
+  </div>
+  <div id="locatine_magic_div">
+  </div>
+</body>
+</html>
+<script>
+  const magicDiv = document.getElementById("locatine_magic_div");
+  function locatineTestSelect(index, tag, confirm){
+    magicDiv.setAttribute("INDEX", index);
+    magicDiv.setAttribute("TAG", tag);
+    magicDiv.setAttribute("locatineconfirmed", confirm);
+  };
+  setTimeout(function() {locatineTestSelect("", "", false)}, 10000);
+  setTimeout(function() {magicDiv.setAttribute("locatineconfirmed", "true")}, 12000);
+</script>
