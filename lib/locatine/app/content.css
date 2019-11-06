@@ -20,17 +20,12 @@ div[locatinestyle=true] {
   display: block;
   z-index: 2147483646;
   color: #FF99AA;
-  font-size: 45px;
+  font-size: 4vw;
   text-align: center;
   cursor: default;
 }
 
 div[locatinestyle=false] {
-  height: 0%;
-  width: 0%;
-}
-
-div[locatinestyle=blocked] {
   height: 0%;
   width: 0%;
 }

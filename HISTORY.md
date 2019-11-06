@@ -155,4 +155,5 @@ First release. Locatine can
 
 # Version 0.02637
 - Fixed bug with unnecessary screen title appearing after defining of an element
--
+- Iframe inside iframe case reviewed
+- Little CSS tweak

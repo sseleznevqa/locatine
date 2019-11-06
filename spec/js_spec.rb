@@ -29,7 +29,7 @@ describe 'Testing js via ruby' do
 
     it 'is creating magic div' do
       expect(@magic_div.exists?).to be true
-      expect(@magic_div.attribute("locatinestyle")).to be == "undefined"
+      expect(@magic_div.attribute("locatinestyle")).to be == "false"
       expect(@magic_div.attribute("locatinetitle")).to be == "ok"
       expect(@magic_div.attribute("locatinehint")).to be == "ok"
     end
