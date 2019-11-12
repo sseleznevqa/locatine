@@ -128,9 +128,10 @@ module Locatine
          ' :links, etc.)'
       end
 
-      def warn_element_lost(name, scope)
-        send_warn "#{name} in #{scope} is//are lost. Locatine is trying "\
-                  'to find it anyway.'
+      def warn_element_lost(name, scope, data, vars)
+        xpath = generate_xpath(data, vars)
+        send_warn "#{name} in #{scope} by xpath: ```#{xpath}``` is//are lost."\
+                  ' Locatine is trying to find it anyway.'
       end
 
       def warn_cannot_highlight(data)
@@ -154,8 +155,10 @@ module Locatine
         send_warn "Only the first 50 elements of #{size} were highlighted."
       end
 
-      def warn_lost_found(name, scope)
-        send_warn "Something was found as #{name} in #{scope}."
+      def warn_lost_found(name, scope, data, vars)
+        xpath = generate_xpath(data, vars)
+        send_warn "Something was found as #{name} in #{scope} by xpath:"\
+                  "```#{xpath}```"
       end
 
       def warn_not_found(name, scope)

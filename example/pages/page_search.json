@@ -5,43 +5,43 @@
         "0": [
           {
             "name": "class",
-            "value": "ellip",
-            "type": "attribute",
-            "stability": "1"
-          },
-          {
-            "name": "tag",
-            "value": "div",
-            "type": "tag",
-            "stability": "1"
-          },
-          {
-            "name": "text",
-            "value": "Grace",
-            "type": "text",
-            "stability": "1"
-          }
-        ],
-        "1": [
-          {
-            "name": "class",
             "value": "LC20lb",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "tag",
             "value": "h3",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
+          },
+          {
+            "name": "text",
+            "value": "Grace",
+            "type": "text",
+            "stability": "6"
           }
         ],
-        "2": [
+        "1": [
           {
             "name": "tag",
             "value": "a",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
+          }
+        ],
+        "2": [
+          {
+            "name": "class",
+            "value": "r",
+            "type": "attribute",
+            "stability": "6"
+          },
+          {
+            "name": "tag",
+            "value": "div",
+            "type": "tag",
+            "stability": "6"
           }
         ]
       }
