@@ -7,95 +7,95 @@
             "name": "class",
             "value": "gLFyf",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "class",
             "value": "gsfi",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "maxlength",
             "value": "2048",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "name",
             "value": "q",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "type",
             "value": "text",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsaction",
             "value": "paste:puy29d",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria-autocomplete",
             "value": "both",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria-haspopup",
             "value": "false",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocapitalize",
             "value": "off",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocomplete",
             "value": "off",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "autocorrect",
             "value": "off",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "role",
             "value": "combobox",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "spellcheck",
             "value": "false",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "title",
             "value": "Rechercher",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "aria-label",
             "value": "Rech.",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "data-ved",
-            "value": "0ahUKEwig_ubPoYzlAhUnAxAIHaOcBaMQ39UDCAQ",
+            "value": "0ahUKEwjsn7j4luTlAhUb6aYKHTxPA2EQ39UDCAQ",
             "type": "attribute",
             "stability": "1"
           },
@@ -103,7 +103,7 @@
             "name": "tag",
             "value": "input",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ],
         "1": [
@@ -111,31 +111,31 @@
             "name": "jscontroller",
             "value": "iDPoPb",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "class",
             "value": "a4bIc",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsname",
             "value": "gLFyf",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "jsaction",
             "value": "h5M12e;input:d3sQLd;focus:dFyQEf;blur:jI3wzf",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ],
         "2": [
@@ -143,13 +143,13 @@
             "name": "class",
             "value": "SDkEP",
             "type": "attribute",
-            "stability": "1"
+            "stability": "2"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "2"
           }
         ]
       },
@@ -159,83 +159,83 @@
             "name": "alt",
             "value": "Google",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "height",
             "value": "92",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "id",
             "value": "hplogo",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "src",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "srcset",
             "value": "/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "srcset",
             "value": "1x,",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "srcset",
             "value": "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "srcset",
             "value": "2x",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "style",
             "value": "padding-top:109px",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "width",
             "value": "272",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "onload",
             "value": "typeof",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "onload",
             "value": "google==='object'&&google.aft&&google.aft(this)",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "data-atf",
             "value": "1",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "data-iml",
-            "value": "1570523947758",
+            "value": "1573545505899",
             "type": "attribute",
             "stability": "1"
           },
@@ -243,7 +243,7 @@
             "name": "tag",
             "value": "img",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ],
         "1": [
@@ -251,13 +251,13 @@
             "name": "id",
             "value": "lga",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ],
         "2": [
@@ -265,7 +265,7 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ]
       },
@@ -275,47 +275,47 @@
             "name": "class",
             "value": "gNO89b",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "value",
             "value": "Recherche",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "value",
             "value": "Google",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "aria-label",
             "value": "Recherche",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "aria-label",
             "value": "Google",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "name",
             "value": "btnK",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "type",
             "value": "submit",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "data-ved",
-            "value": "0ahUKEwig_ubPoYzlAhUnAxAIHaOcBaMQ4dUDCAo",
+            "value": "0ahUKEwiwk4PnmeTlAhVL1qYKHXj-BWsQ4dUDCAo",
             "type": "attribute",
             "stability": "1"
           },
@@ -323,7 +323,7 @@
             "name": "tag",
             "value": "input",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ],
         "1": [
@@ -331,7 +331,7 @@
             "name": "tag",
             "value": "center",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ],
         "2": [
@@ -339,19 +339,19 @@
             "name": "class",
             "value": "FPdoLc",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "class",
             "value": "VlcLAe",
             "type": "attribute",
-            "stability": "1"
+            "stability": "6"
           },
           {
             "name": "tag",
             "value": "div",
             "type": "tag",
-            "stability": "1"
+            "stability": "6"
           }
         ]
       }

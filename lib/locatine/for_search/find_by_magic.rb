@@ -28,7 +28,7 @@ module Locatine
       # We are taking every element that look at least a bit similar to one we
       # are looking for
       def magic_elements(name, scope, data, vars, page)
-        warn_element_lost(name, scope)
+        warn_element_lost(name, scope, data, vars)
         all = select_from_page(page, data, vars)
         raise_not_found(name, scope) if all.empty? && !@current_no_f
         suggested = most_common_of(all).map do |element|
@@ -54,7 +54,7 @@ module Locatine
         ok = similar_enough(data, attributes) unless suggest.empty?
         raise_not_similar(name, scope) if !ok && !@current_no_f
         if ok
-          warn_lost_found(name, scope)
+          warn_lost_found(name, scope, attributes, vars)
           return suggest, attributes
         end
         warn_not_found(name, scope)
