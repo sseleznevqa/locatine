@@ -18,6 +18,10 @@ That's it.
 
 Version of Locatine is **0.02637** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
 
+## Attention
+
+Beginning with the next version locatine (especially locatine-daemon) will be refactored dramatically. It is highly possible that the next version will be not completable with that one.
+
 ## Installation
 
 Add this line to your application's Gemfile:

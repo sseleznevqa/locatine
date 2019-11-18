@@ -157,3 +157,5 @@ First release. Locatine can
 - Fixed bug with unnecessary screen title appearing after defining of an element
 - Iframe inside iframe case reviewed
 - Little CSS tweak
+- Fixed bug with quotes in attribute value causing element loss
+- Little improve for xpath creation algorithm

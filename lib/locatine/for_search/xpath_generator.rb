@@ -34,7 +34,15 @@ module Locatine
       end
 
       def generate_xpath_part(hash, vars)
-        value = process_string(hash['value'], vars)
+        result = ''
+        values = process_string(hash['value'], vars).split(/[,.-_ ;'\\"]/)
+        values.each do |value|
+          result += generate_real_xpath_part(hash, value) if !value.empty?
+        end
+        result
+      end
+
+      def generate_real_xpath_part(hash, value)
         case hash['type']
         when 'tag'
           "[self::#{value}]"
