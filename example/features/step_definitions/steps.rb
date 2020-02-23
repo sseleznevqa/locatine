@@ -1,4 +1,6 @@
-Given("I visit {string}") do |path|
+# frozen_string_literal: true
+
+Given('I visit {string}') do |path|
   @browser.goto @base_url + path
   set_page
 end
@@ -14,15 +16,15 @@ When(/^I (.*) the (.*) with "(.*)"$/) do |action, name, value|
 end
 
 Then(/^the (\d\S*).. element of (.*) collection should include "(.*)"$/) do |i, name, string|
-  expect(@search.collect(name: name)[i.to_i-1].text).to include(string)
+  expect(@search.collect(name: name)[i.to_i - 1].text).to include(string)
 end
 
-Then("I look into {string} component") do |component|
+Then('I look into {string} component') do |component|
   @component = component
   set_page
 end
 
-Then("I look on the page") do |component|
+Then('I look on the page') do |_component|
   @component = nil
   set_page
 end

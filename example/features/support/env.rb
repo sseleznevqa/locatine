@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'locatine'
 
 def set_page
@@ -6,9 +8,9 @@ def set_page
 end
 
 Before do
-  @search = Locatine::Search.new(json: "./pages/default.json")
+  @search = Locatine::Search.new(json: './pages/default.json')
   @browser = @search.browser
-  @base_url = "google.com"
+  @base_url = 'google.com'
   @component = nil
 end
 
