@@ -57,7 +57,7 @@ driver.quit
 6. Run your code
 7. Data of element will be stored to ./default.json file.
 8. Now if id of your element is changed on the page Locatine will show a warning and gonna try to retrieve it.
-9. See [example](https://github.com/sseleznevqa/locatine/tree/master/example) to see how it really works.
+9. See [example](https://github.com/sseleznevqa/locatine/tree/master/examples) to see how it really works.
 
 ## Session
 
@@ -114,7 +114,7 @@ Default is 3
 
 2 - means that two ancestors will be remembered.
 
-And so on and so far>
+And so on and so forth.
 
 The higher depth the more easily locatine-daemon will find the element including the case when the element is lost (attributes are changed).
 
@@ -198,7 +198,7 @@ Similarity will be only 40 which is less than 100-50. It means that no element w
 
 So default tolerance == 50 means that at least 50% of element data should be equal to stored data for element to be found.
 
-Only data of the element itself is counted here>
+Only data of the element itself is counted here.
 
 **NOTE! 0 (zero tolerance) means that locatine will not even try to find the lost element. 100 tolerance is too opportunistic**
 
@@ -219,12 +219,19 @@ Since default net timeout for most selenium implementations is 30 seconds, 25 is
 All the requests that are retrieving elements are wrapped by locatine-daemon.
 
 ```ruby
-caps = Selenium::WebDriver::Remote::Capabilities.chrome('locatine' => {'json' => "#{Dir.pwd}/elements.json"})
-driver = Selenium::WebDriver.for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: caps
-driver.navigate.to page 1 # Page that has <div id='element' class='1 2 3'>Text</div>
-element = driver.find_element(xpath: "//*[@id='element']") # Getting element for the first
-driver.execute_script("arguments[0].setAttribute('id', 'lost')", element) # We are changing id of the element
-expect(driver.find_element(xpath: "//*[@id='element']").text).to eq "Text" # Element is gonna be found. Even with locator that is broken
+caps = Selenium::WebDriver::Remote::Capabilities.chrome('locatine' =>
+                                         {'json' => "#{Dir.pwd}/elements.json"})
+driver = Selenium::WebDriver.for :remote,
+                                 url: "http://localhost:7733/wd/hub",
+                                 desired_capabilities: caps
+# Page that has <div id='element' class='1 2 3'>Text</div>
+driver.navigate.to page 1
+# Getting element for the first ешьу
+element = driver.find_element(xpath: "//*[@id='element']")
+# We are changing id of the element
+driver.execute_script("arguments[0].setAttribute('id', 'lost')", element)
+# Element is gonna be found. Even with locator that is broken
+expect(driver.find_element(xpath: "//*[@id='element']").text).to eq "Text"
 driver.quit
 ```
 
@@ -241,7 +248,7 @@ element = driver.find_element(xpath: "//*[@id='element']['test element']")
 element = driver.find_element(css: "#element/*test element*/")
 ```
 
-**NOTE! Those locators are valid. The 'test element' text will be treated like a comment that is not affecting locator. If you will switch to selenium-webdriver it will work normally**
+**NOTE! Those locators are valid.  If you will switch back to selenium-webdriver it will work normally. The 'test element' text will be treated like a comment that is not affecting the locator body.**
 
 Once defined with name it can be called without locator part at all:
 
@@ -269,7 +276,8 @@ element = driver.find_element(css: "##{account_id}/*test element*/")
 If you need to check that element exists or not most probably you do not want locatine to look for the similar one. You can set zero tolerance (return only 100% same element) by adding word 'exactly' to the name.
 
 ```ruby
-element = driver.find_element(xpath: "//*[@id='element']['exactly test element']")
+element = driver.
+              find_element(xpath: "//*[@id='element']['exactly test element']")
 element = driver.find_element(css: "#element/*exactly test element*/")
 ```
 
@@ -280,8 +288,11 @@ element = driver.find_element(css: "#element/*exactly test element*/")
 There is another way to pass data to locatine. You can provide a json string as a comment.
 
 ```ruby
-element = driver.find_element(xpath: "//*[@id='element']['{\"name\":\"test element\",\"tolerance\":0}']")
-element = driver.find_element(css: "#element/*{\"name\":\"test element\",\"tolerance\":0}*/")
+require 'json' # That is to make everything a little bit simpler
+params = {name: "test element", tolerance: 0}.to_json
+#=> {\"name\":\"test element\",\"tolerance\":0}
+element = driver.find_element(xpath: "//*[@id='element'][#{params}']")
+element = driver.find_element(css: "#element/*#{params}*/")
 ```
 
 **NOTE! Those requests will provide same results as previous because they have identical meaning**
@@ -290,15 +301,18 @@ Like that you can set for each search any custom options (except json)
 
 For more information about possible options read [here](https://github.com/sseleznevqa/locatine#session)
 
-Additionally you can provide a custom locator inside of the comment json string
+Additionally you can provide a custom locator inside of the comment json string.
+
+We are using 'json' library to make json string here.
 
 ```ruby
-element = driver.find_element(xpath: "['{\"name\":\"test element\",\"tolerance\":0, \"locator\":{\"using\":\"xpath\",\"value\":\"//*[@id=\'element\']\"}}']")
-element = driver.find_element(css: "/*{\"name\":\"test element\",\"tolerance\":0, \"locator\":{\"using\":\"css selector\",\"value\":\"#element\"}}}*/")
-# More readable
 require 'json'
-xpath_params = {name: "test element", tolerance: 0, locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
-css_params = {name: "test element", tolerance: 0, locator: {using: "css selector", value: "#element"}}.to_json
+xpath_params = {name: "test element",
+                tolerance: 0,
+                locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
+css_params = {name: "test element",
+              tolerance: 0,
+              locator: {using: "css selector", value: "#element"}}.to_json
 element = driver.find_element(xpath: "['#{xpath_params}']")
 element = driver.find_element(css: "/*#{css_params}*/")
 ```
@@ -315,8 +329,12 @@ When it's done you can use:
 
 ```ruby
 require 'json'
-xpath_params = {name: "test element", tolerance: 0, locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
-css_params = {name: "test element", tolerance: 0, locator: {using: "css selector", value: "#element"}}.to_json
+xpath_params = {name: "test element",
+                tolerance: 0,
+                locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
+css_params = {name: "test element",
+              tolerance: 0,
+              locator: {using: "css selector", value: "#element"}}.to_json
 element = driver.find_element(locatine: xpath_params)
 element = driver.find_element(locatine: css_params)
 # As well as
@@ -325,10 +343,23 @@ element = driver.find_element(locatine: "test element")
 element = driver.find_element(locatine: "exactly test element")
 ```
 
-### Guess system
+### Guessing element
 
-- TODO
+In some cases you can even forget about classic locators
 
+For example have element
+
+```html
+<input id="important" type="button" value="click me"></input>
+```
+
+Let's pretend that id == important is a uniq attribute for the page (it should be so). In that case you can do:
+
+```ruby
+element = driver.find_element(css: "/*important button*/")
+```
+
+When locatine has no locator it is trying to guess what you are looking for. If word in the name is equal to a uniq attribute of element the element desired is gonna be returned.
 
 ## Locatine daemon API
 
