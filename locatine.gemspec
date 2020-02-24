@@ -10,8 +10,9 @@ Gem::Specification.new do |s|
   s.files       = ['lib/locatine.rb', 'README.md'] +
                   Dir.glob('lib/locatine/*.rb') +
                   Dir.glob('lib/locatine/app/*.*') +
-                  Dir.glob('lib/locatine/large_scripts/*.*') +
-                  Dir.glob('lib/locatine/for_search/*.rb')
+                  Dir.glob('lib/locatine/scripts/*.*') +
+                  Dir.glob('lib/locatine/daemon_helpers/*.rb') +
+                  Dir.glob('lib/locatine/results_helpers/*.rb')
   s.homepage    =
     'https://github.com/sseleznevqa/locatine'
   s.license = 'MIT'
@@ -22,6 +23,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov', '~> 0'
   s.add_development_dependency 'watir', '~> 6.16'
   s.add_development_dependency 'webdrivers', '~> 4.0', '>= 4.0.1'
-  s.add_dependency 'sinatra', '>= 2.0.5'
-  s.add_dependency 'colorize', '>= 0.8.1'
+  s.add_dependency 'sinatra', '~> 2.0'
+  s.add_dependency 'colorize', '~> 0.8'
 end

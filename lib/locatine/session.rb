@@ -11,8 +11,8 @@ module Locatine
                   :elements, :timeout
 
     def defaults
-      { json: './locatine_files/default.json', depth: 3, trusted: [],
-        untrusted: [], tolerance: 75, stability: 10, timeout: 25 }
+      { json: "#{Dir.pwd}/locatine_files/default.json", depth: 3, trusted: [],
+        untrusted: [], tolerance: 50, stability: 10, timeout: 25 }
     end
 
     def initialize(selenium, session)
@@ -41,7 +41,9 @@ module Locatine
           f.write('{"elements" : {}}')
         end
       end
+      puts @json
       @elements = JSON.parse(File.read(@json))['elements']
+      puts @elements
     end
 
     def write

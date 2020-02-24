@@ -2,6 +2,6 @@
 
 source 'http://rubygems.org'
 
-gem 'cucumber'
-gem 'locatine'
+gem 'selenium-webdriver'
+gem 'webdrivers'
 gem 'rspec'

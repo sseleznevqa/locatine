@@ -16,7 +16,7 @@ describe 'session basically' do
     expect(@session.depth).to eq 3
     expect(@session.trusted).to eq []
     expect(@session.untrusted).to eq []
-    expect(@session.tolerance).to eq 75
+    expect(@session.tolerance).to eq 50
     expect(@session.stability).to eq 10
     expect(@session.timeout).to eq 25
   end

@@ -15,6 +15,7 @@ module Locatine
       end
 
       def known
+        puts @session.elements
         @session.elements[@name]
       end
 
