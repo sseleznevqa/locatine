@@ -343,7 +343,7 @@ element = driver.find_element(locatine: "test element")
 element = driver.find_element(locatine: "exactly test element")
 ```
 
-### Guessing element
+### Locatine locators
 
 In some cases you can even forget about classic locators
 
@@ -356,10 +356,16 @@ For example have element
 Let's pretend that id == important is a uniq attribute for the page (it should be so). In that case you can do:
 
 ```ruby
-element = driver.find_element(css: "/*important button*/")
+element = driver.find_element(css: "/*important input*/")
 ```
 
-When locatine has no locator it is trying to guess what you are looking for. If word in the name is equal to a uniq attribute of element the element desired is gonna be returned.
+Locatine will try to find it by those two words. If the id is really uniq it will return the desired element.
+
+**NOTE! Locatine locators case insensitive.**
+
+**NOTE! Locatine does not count text while looking for element.**
+
+**NOTE! Locatine tends to think that the last word of your locator is a tag**
 
 ## Locatine daemon API
 

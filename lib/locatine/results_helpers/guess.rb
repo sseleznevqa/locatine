@@ -16,14 +16,27 @@ module Locatine
         normalize_indexes(magic['out']) if empty? && (magic['out'].to_h != {})
       end
 
-      def guess_data
+      def main_guess_data
         answer = { '0' => [] }
-        @name.split(/[\s\'\\]/).each do |item|
+        parts = @name.split(/[\s\'\\]/)
+        parts.each do |item|
           next if item.to_s.empty?
 
           answer['0'].push('type' => '*',
                            'name' => '*',
                            'value' => item)
+        end
+        answer
+      end
+
+      def guess_data
+        answer = main_guess_data
+        # We expecting tag at the last position.
+        last = @name.split(/[\s\'\\]/).last.to_s
+        unless last.empty?
+          answer['0'].push('type' => 'tag',
+                           'name' => 'tag',
+                           'value' => last)
         end
         answer
       end

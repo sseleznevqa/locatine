@@ -34,14 +34,27 @@ module Locatine
         self
       end
 
-      def magic_find(data = known)
+      def magic_routine(data)
         Thread.current['out'] = {}
         page = @session.page
         data.each_pair do |depth, array|
           get_trusted(array).each do |hash|
+            Thread.current['temp'] = []
             catch(page, hash, depth)
+            temp_results_push
           end
         end
+      end
+
+      def temp_results_push
+        Thread.current['temp'].uniq.each do |index|
+          thread_out[index] ||= 0
+          thread_out[index] += 1
+        end
+      end
+
+      def magic_find(data = known)
+        magic_routine(data)
         normalize_indexes
       end
 
@@ -82,8 +95,7 @@ module Locatine
 
       def kids(array, depth)
         array.each do |element|
-          thread_out[element['index']] ||= 0
-          thread_out[element['index']] += 1
+          Thread.current['temp'].push element['index']
           if !element['children'].empty? && depth.to_i.positive?
             kids(element['children'], depth)
           end
@@ -95,8 +107,8 @@ module Locatine
         same = 0
         # Next is necessary for unknown reason (smthing thread related)
         raw = raw_info['0']
-        raw.each do |hash|
-          caught = (known['0'].select { |item| info_hash_eq(item, hash) }).first
+        get_trusted(known['0']).each do |hash|
+          caught = (raw.select { |item| info_hash_eq(item, hash) }).first
           all += 1
           same += 1 if caught
         end

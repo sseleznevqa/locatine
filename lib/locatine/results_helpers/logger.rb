@@ -38,6 +38,11 @@ module Locatine
         warn "Locatine found nothing for #{@name}"
       end
 
+      def warn_unstable_page
+        warn 'Some elements found by locatine are not attached to DOM anymore.'\
+             ' Page is unstable. Starting it once more'
+      end
+
       def log_found
         log "Locatine found something as #{@name}"
         log "XPATH == #{generate_xpath(raw_info)}"

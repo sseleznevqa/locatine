@@ -22,7 +22,7 @@ module Locatine
 
     def configure(session, locator, parent)
       @session = session
-      @locator = locator
+      @locator = locator.clone
       read_locator
       @parent = parent
     end

@@ -20,12 +20,17 @@ module Locatine
 
       def info_hash_eq(item, hash)
         # Return true
-        # If type is unknown
-        (((item['type'] == '*') || (hash['type'] == '*')) ||
+        # If type is unknown (but not a text)
+        unknown_no_text = ((item['type'] == '*') &&
+                          (hash['type'] != 'text')) ||
+                          ((item['type'] != 'text') &&
+                          (hash['type'] == '*'))
         # Or when type and name are similar
-        ((item['name'] == hash['name']) && (item['type'] == hash['type']))) &&
-          # And at the same time value is equal
-          (item['value'] == hash['value'])
+        same_name_type = (item['name'] == hash['name']) &&
+                         (item['type'] == hash['type'])
+        (unknown_no_text || same_name_type) &&
+        # And at the same time values are (almost) the same
+        (item['value'].downcase == hash['value'].downcase)
       end
 
       def stability

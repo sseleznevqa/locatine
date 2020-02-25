@@ -14,7 +14,9 @@ module Locatine
       def get_trusted(array)
         if !array.empty?
           max = max_stability(array)
-          (array.select { |i| i['stability'].to_i == max.to_i }).uniq
+          (array.select do |i|
+            (i['stability'].to_i == max.to_i) && !untrusted.include?(i['name'])
+          end).uniq
         else
           []
         end
@@ -35,7 +37,8 @@ module Locatine
           end
           xpath = '/*' + xpath
         end
-        xpath = any_depth ? xpath.gsub('/', '//'): '/' + xpath
+        xpath = any_depth ? xpath.gsub('/', '//') : '/' + xpath
+        puts "xpath = #{xpath}"
         xpath
       end
 

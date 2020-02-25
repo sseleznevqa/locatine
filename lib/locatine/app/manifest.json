@@ -1,7 +1,7 @@
 {
-  "name": "Locatine app",
+  "name": "Locatine Locator Helper",
   "version": "0.02651",
-  "description": "Name helper",
+  "description": "Locator helper for locatine",
   "devtools_page": "devtools.html",
   "permissions": ["activeTab", "storage", "contextMenus", "tabs"],
   "content_scripts": [{

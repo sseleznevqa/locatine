@@ -2,11 +2,14 @@
 
 require 'locatine/results'
 require 'locatine/element'
+require 'locatine/results_helpers/logger'
 
 module Locatine
   #
   # Locatine session operator finds and returns
   class Session
+
+    include Locatine::ResultsHelpers::Logger
     attr_accessor :json, :depth, :trusted, :untrusted, :tolerance, :stability,
                   :elements, :timeout
 
@@ -41,9 +44,7 @@ module Locatine
           f.write('{"elements" : {}}')
         end
       end
-      puts @json
       @elements = JSON.parse(File.read(@json))['elements']
-      puts @elements
     end
 
     def write
@@ -59,6 +60,11 @@ module Locatine
       @elements[results.name] = results.info unless answer.empty?
       write unless answer.empty?
       answer
+    rescue RuntimeError => e
+      raise e.message unless e.message == 'stale element reference'
+
+      warn_unstable_page
+      find(params, parent)
     end
 
     def execute_script(script, *args)

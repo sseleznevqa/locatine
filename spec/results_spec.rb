@@ -33,9 +33,9 @@ describe 'results logic' do
 
   it 'checking unknown equal' do
     expect(@results.info_hash_eq({ 'name' => '*', 'type' => '*',
-                                   'value' => '1' , 'a' => 'b'},
+                                   'value' => 's' , 'a' => 'b'},
                                  { 'name' => '1', 'type' => '1',
-                                   'value' => '1' , 'b' => 'c'})).to eq true
+                                   'value' => 'S' , 'b' => 'c'})).to eq true
   end
 
   it 'checking unknown not equal' do
@@ -46,6 +46,7 @@ describe 'results logic' do
   end
 
   it 'generates xpath' do
+    @results.instance_variable_set('@config', {'untrusted' => []})
     expect(@results.generate_xpath({'0': [{'name' => 'text',
                                            'value' => 'text',
                                            'type' => 'text'},
@@ -67,6 +68,7 @@ describe 'results logic' do
   end
 
   it 'generates less strict xpath' do
+    @results.instance_variable_set('@config', {'untrusted' => []})
     expect(@results.generate_xpath({'0': [{'name' => 'text',
                                            'value' => 'text',
                                            'type' => 'text'},

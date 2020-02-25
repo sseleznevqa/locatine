@@ -12,7 +12,7 @@ describe 'session basically' do
   end
 
   it 'inits with defauts' do
-    expect(@session.json).to eq './locatine_files/default.json'
+    expect(@session.json).to eq Dir.pwd + '/locatine_files/default.json'
     expect(@session.depth).to eq 3
     expect(@session.trusted).to eq []
     expect(@session.untrusted).to eq []
