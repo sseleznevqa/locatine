@@ -14,7 +14,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02651**. This is the 1st version since redesign. Next 5-15 versions will be about bug fixing and minor tweaks.
+Version of Locatine is **0.02653**. This is the 1st version since redesign. Next 5-15 versions will be about bug fixing and minor tweaks.
 
 ## Attention
 
@@ -80,7 +80,7 @@ driver = Selenium::WebDriver.
 
 This way is recommended because of the simplicity.
 
-Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wd-hub-session_id)
+Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wdhubsession)
 
 ## Settings to pass
 
