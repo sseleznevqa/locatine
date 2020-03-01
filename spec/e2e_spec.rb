@@ -1,161 +1,237 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
-describe 'E2E basic user story' do
+
+# Getting there!
+module Selenium
+  module WebDriver
+    module SearchContext
+      FINDERS = {
+        class: 'class name',
+        class_name: 'class name',
+        css: 'css selector',
+        id: 'id',
+        link: 'link text',
+        link_text: 'link text',
+        locatine: 'locatine', # Here we are!
+        name: 'name',
+        partial_link_text: 'partial link text',
+        relative: 'relative',
+        tag_name: 'tag name',
+        xpath: 'xpath'
+      }.freeze
+    end
+  end
+end
+
+describe 'user' do
   before(:all) do
-    @path1 = "file://#{Dir.pwd}/spec/test_data/test-1.html"
-    @path2 = "file://#{Dir.pwd}/spec/test_data/test-2.html"
-    @path3 = "file://#{Dir.pwd}/spec/test_data/test-3.html"
-    @path4 = "file://#{Dir.pwd}/spec/test_data/test-4.html"
-    @path5 = "file://#{Dir.pwd}/spec/test_data/test-5.html"
-    @path6 = "file://#{Dir.pwd}/spec/test_data/test-6.html"
-    @path7 = "file://#{Dir.pwd}/spec/test_data/test-7.html"
-    @dir = './Locatine_files/'
-    @file = './Locatine_files/default.json'
-    Watir.default_timeout = 3
-  end
-  before(:each) do
-    @s = Locatine::Search.new
-  end
-
-  it "works fine on empty selection" do
-    @s.browser.quit
-    @s.learn = true
-    @s.browser = Watir::Browser.new
-    @s.browser.goto @path7
-    expect(@s.find("span").text).to be == "Here we are"
-  end
-
-  it "Defining elements" do
-    @s.browser.quit
-    @s = Locatine::Search.new learn: true, visual_search: true, browser: Watir::Browser.new
-    @s.browser.window.resize_to(1200, 1000)
-    @s.browser.goto @path1
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.find(name: "element").text).to be == "Element"
-    # Guess test
-    expect(@s.find(name: "important span", vars: {"tag":"span", "text":"kadabra", "var":"che"}).text).to be == "Abrakadabra"
-    expect(@s.find(name: "span for guess").text).to be == "for guess"
-    iframe = @s.find(name: "iframe")
-    expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
-    expect(@s.find("h4 css").text).to be == "h4 css"
-    expect(@s.find("by coordinates", vars: {"x":"8", "y":"36"}).present?).to be == true
-    expect(@s.collect(name: "strange collection sub").length).to be == 2
-  end
-
-  it "remember selection" do
-    @s.learn = true
-    @s.browser = Watir::Browser.new
-    @s.browser.goto @path6
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.collect(name: "dogs")[0].text).to be == "ONE"
-  end
-
-  it "Not finding elements when vars are not provided" do
-    expect{@s.find(name: "important span", vars: {"tag":"span", "text":"kadabra"})}.to raise_error(ArgumentError, ":var must be provided in vars since element was defined with it")
-  end
-
-  it "Finding elements" do
-    @s.browser.goto @path2
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.find(name: "element", look_in: :labels).text).to be == "Element"
-    iframe = @s.find(name: "iframe", look_in: :iframe)
-    expect(@s.find(name: "h3 banana", iframe: iframe).text).to be == "Banana"
-  end
-
-  it "Finding elelements with dynamic vars" do
-    # Guess test
-    @s.browser.goto @path2
+    @t = Thread.new do
+      Locatine::Daemon.set :port, 7733
+      Locatine::Daemon.set :show_exceptions, false
+      Locatine::Daemon.run!
+    end
+    sleep 10
     Watir.default_timeout = 30
-    start = Time.now
-    expect(@s.find(name: "important span", vars: {"tag":"spoon", "text":"kedavra", "var":"ba"}).text).to be == "Abrakedavra"
-    Watir.default_timeout = 3
-    expect(Time.now-start).to be < 10
   end
 
-  it "can return a locator" do
-    @s.browser.goto @path2
-    expect(@s.browser.elements(@s.lctr(name: "lisa foxa")).length).to be == 3
-    expect(@s.browser.elements(@s.lctr("lisa foxa")).length).to be == 3
-    expect(@s.browser.element(@s.lctr(name: "element")).text).to be == "Element"
-    # Guess test
-    expect(@s.browser.element(@s.lctr(name: "important span", vars: {"tag":"spoon", "text":"kedavra", "var":"ba"})).text).to be == "Abrakedavra"
+  before(:each) do
+    @b = Watir::Browser.new :chrome, timeout: 120,
+                                     url: 'http://localhost:7733/wd/hub'
   end
 
-  it "Fails when there is no exact" do
-    @s.browser.goto @path2
-    expect{@s.check(name: "span for guess", exact: true)}.to raise_error(RuntimeError, 'Locatine cannot find element span for guess in Default')
+  it 'can pass vars to locatine via capabilities' do
+    @b.quit
+    @b = Watir::Browser.new :chrome,
+                            timeout: 120, url: 'http://localhost:7733/wd/hub',
+                            locatine: { json: './locatine_files/e2e.json' }
+    hash = JSON.parse(File.read('./locatine_files/e2e.json'))['elements']
+    expect(hash).to eq({})
   end
 
-  it "Finding exacts" do
-    @s.browser.goto @path2
-    expect(@s.collect(name: "lisa foxa", exact: true).length).to be == 3
-    expect(@s.find(name: "element", exact: true).text).to be == "Element"
+  it 'cannot find element (if it is not here)' do
+    expect do
+      @b.element(xpath: '//div')
+        .locate.click
+    end
+      .to raise_error Watir::Exception::UnknownObjectException
   end
 
-  it "Fails on exact when elements are lost" do
-    @s.browser.goto @path3
-    expect(@s.collect(name: "lisa foxa", exact: true, no_fail: true, locator: {id: "not welcome"})).to be == []
-    expect(@s.check_collection(name: "lisa foxa", exact: true, no_fail: true)).to be == []
-    expect(@s.exact_collection(name: "lisa foxa", no_fail: true)).to be == []
-    expect(@s.exact(name: "element", no_fail: true)).to be == nil
-    expect(@s.find(name: "span for guess", no_fail: true, exact: true)).to be == nil
+  it 'can find element' do
+    @b.goto page(1)
+    @b.element(xpath: '//div').locate.click
   end
 
-  it "Fails when elements are lost and there is nothing similar" do
-    @s.browser.goto @path4
-    expect{@s.collect(name: "lisa foxa")}.to raise_error(RuntimeError, 'Locatine cannot find element lisa foxa in Default')
-    expect{@s.find(name: "element")}.to raise_error(RuntimeError, 'Locatine cannot find element similar to element in Default')
+  it 'stores element' do
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['//div']['0'].include?('name' => 'text',
+                                                    'value' => 'Something',
+                                                    'type' => 'text',
+                                                    'stability' => 1)
+    expect(check).to eq true
   end
 
-  it "Will not fail with no_fail == true" do
-    @s.browser.goto @path4
-    expect(@s.collect(name: "lisa foxa", no_fail: true)).to be == []
-    expect(@s.find(name: "element", no_fail: true)).to be == nil
+  it 'bumps stability' do
+    @b.goto page(1)
+    @b.element(xpath: '//div').locate.click
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['//div']['0'].include?('name' => 'text',
+                                                    'value' => 'Something',
+                                                    'type' => 'text',
+                                                    'stability' => 2)
+    expect(check).to eq true
   end
 
-  it "Fails when visual is turned off but search is very css related" do
-    @s.browser.goto @path3
-    expect{@s.find("h4 css")}.to raise_error(RuntimeError, 'Locatine cannot find element similar to h4 css in Default')
+  it 'doesnt trust' do
+    @b.goto page(1)
+    config = { untrusted: ['text'] }.to_json
+    @b.element(xpath: "//div['#{config}']").locate.click
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['//div']['0'].include?('name' => 'text',
+                                                    'value' => 'Something',
+                                                    'type' => 'text',
+                                                    'stability' => 0)
+    expect(check).to eq true
   end
 
-  it "Finding lost elements" do
-    @s.browser.goto @path3
-    @s.browser.window.resize_to(1200, 1000)
-    expect(@s.collect(name: "strange collection sub").length).to be == 2
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.find(name: "element").text).to be == "Element"
-    @s.visual_search = true
-    expect(@s.find("h4 css").text).to be == "found anyway"
-    o = @s.find("by coordinates", vars: {"x":"17", "y":"371"})
-    expect(o.attribute('class')).to be == "zaitsu"
-    @s.browser.execute_script("arguments[0].class='some'", o)
-    a = @s.find("by coordinates", vars: {"x":"185", "y":"185"})
-    expect(a.attribute('class')).to be == "korove"
-    @s.browser.goto @path5
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
+  it 'trusts' do
+    @b.goto page(1)
+    config = { trusted: ['text'] }.to_json
+    @b.element(xpath: "//div['#{config}']").locate.click
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['//div']['0'].include?('name' => 'text',
+                                                    'value' => 'Something',
+                                                    'type' => 'text',
+                                                    'stability' => 4)
+    expect(check).to eq true
   end
 
-  it "Ignoring unstable attributes" do
-    Watir.default_timeout = 15
-    start = Time.now
-    @s.browser.goto @path2
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.find(name: "element").text).to be == "Element"
-    expect(Time.now-start).to be < 10
+  it 'doesnt trust' do
+    @b.goto page(1)
+    config = { untrusted: ['text'] }.to_json
+    @b.element(xpath: "//div['#{config}']").locate.click
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['//div']['0'].include?('name' => 'text',
+                                                    'value' => 'Something',
+                                                    'type' => 'text',
+                                                    'stability' => 0)
+    expect(check).to eq true
   end
 
-  it "Finds element if nesting structure is broken" do
-    Watir.default_timeout = 3
-    @s.browser.goto @path5
-    expect(@s.collect(name: "lisa foxa").length).to be == 3
-    expect(@s.find(name: "element").text).to be == "Element"
+  it 'reads attributes' do
+    @b.goto page(1)
+    element = @b.element(xpath: '//div')
+    @b.execute_script("arguments[0].setAttribute('id', '');", element)
+    @b.element(xpath: '//div').locate.click
+    file = File.read('./locatine_files/default.json')
+    check = file.include?('yyy')
+    expect(check).to eq false
+  end
+
+  it 'finds by remembered data' do
+    @b.goto page(1)
+    config = { name: 'test' }.to_json
+    @b.element(xpath: "//div['#{config}']").locate.click
+    expect(@b.element(xpath: "['test']").text).to eq 'Something'
+  end
+
+  it 'uses magic find' do
+    @b.goto page(2)
+    expect(@b.element(xpath: "['test']").text).to eq 'Something'
+  end
+
+  it 'uses magic find(without success)' do
+    @b.goto page(3)
+    expect do
+      @b.element(xpath: "['test']")
+        .locate.click
+    end
+      .to raise_error Watir::Exception::UnknownObjectException
+  end
+
+  it 'finds a collection' do
+    @b.goto page(4)
+    expect(@b.elements(css: '.gru.brr/*collection*/').length).to eq 3
+  end
+
+  it 'finds a collection via magic' do
+    @b.goto page(5)
+    expect(@b.elements(css: '.gru.brr/*collection*/').length).to eq 3
+    expect(@b.elements(css: '/*collection*/')[0].tag_name.downcase).to eq 'span'
+  end
+
+  it 'may use a locatine for search' do
+    @b.goto page(5)
+    @b.driver.find_element(locatine: 'collection')
+  end
+
+  it 'may use a locatine for search' do
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['collection']['3'].nil?
+    expect(check).to eq false
+    @b.goto page(5)
+    params = { name: 'collection', depth: 1 }.to_json
+    @b.driver.find_element(locatine: params)
+    file = File.read('./locatine_files/default.json')
+    data = JSON.parse(file)
+    check = data['elements']['collection']['1'].nil?
+    expect(check).to eq false
+    check = data['elements']['collection']['2'].nil?
+    expect(check).to eq true
+  end
+
+  it 'finds exactly collection' do
+    @b.goto page(6)
+    expect(@b.elements(css: '/*exactly collection*/').length).to eq 0
+    expect(@b.elements(css: '/*collection*/').length).to eq 3
+  end
+
+  it 'finds based on stability' do
+    @b.goto page(7)
+    10.times do
+      expect(@b.elements(css: '/*exactly collection*/').length).to eq 3
+    end
+    @b.goto page(6)
+    expect(@b.elements(css: '/*exactly collection*/').length).to eq 0
+  end
+
+  it 'finds something if it has time' do
+    @b.goto page(6)
+    params = { name: 'collection', timeout: 0.01 }.to_json
+    expect(@b.elements(css: "/*#{params}*/").length).to eq 0
+    expect(@b.elements(css: '/*collection*/').length).to eq 3
+  end
+
+  it 'seriously trusts' do
+    @b.goto page(1)
+    params = { name: 'xxx div', tolerance: 0, trusted: ['class'] }.to_json
+    @b.element(css: "/*#{params}*/").locate.click
+    @b.goto page(2)
+    expect(@b.element(css: "/*#{params}*/").text).to eq 'Something'
+  end
+
+  it 'untrusts even when element is lost' do
+    @b.goto page(9)
+    params = { name: 'aaa kkk', untrusted: ['class'] }.to_json
+    @b.driver.find_element(locatine: params)
+    @b.goto page(10)
+    expect(@b.driver.find_element(locatine: params).text).to eq 'Other'
   end
 
   after(:all) do
-    File.delete(@file) if File.exist?(@file)
-    FileUtils.remove_dir(@dir) if File.directory?(@dir)
+    FileUtils.remove_dir('./locatine_files/', true)
+    make_request('http://localhost:7733/locatine/stop')
+    sleep 3
+    @t.join
   end
+
   after(:each) do
-    @s.browser.quit
+    @b.quit
   end
 end

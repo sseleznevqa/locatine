@@ -159,3 +159,6 @@ First release. Locatine can
 - Little CSS tweak
 - Fixed bug with quotes in attribute value causing element loss
 - Little improve for xpath creation algorithm
+
+# Version 0.02651
+- Everything is rewrited.

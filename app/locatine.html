@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="locatine.css">
+  </head>
+<body>
+  <div id="controls">
+    <input id="add" type="button" value="Add element"></input>
+    <input id="clear" type="button" value="Clear all"></input>
+  </div>
+  <div id="results">
+    <label id="results-title">Click on a name to copy it to your clipboard</label>
+    <div>
+      <select id="results-list" class="list" multiple>
+        <option value="none">Hit 'Add element' to see suggested names</option>
+      </select>
+    </div>
+  </div>
+  <pre id="current">Hello. Data of currently selected element is gonna be here</pre>
+</body>
+</html>
+<script src="locatine.js"></script>

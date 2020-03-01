@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
 require 'json'
-require 'locatine/daemon_helpers'
+require 'locatine/session'
+require 'locatine/daemon_helpers/methods'
 
 module Locatine
   #
@@ -8,86 +11,67 @@ module Locatine
   #
   # run Locatine::Daemon.run!
   class Daemon < Sinatra::Base
-    include Locatine::DaemonHelpers
+    include Locatine::DaemonHelpers::Methods
+
     configure do
-      set :search, nil
+      set :sessions, {}
+      set :selenium, ENV['SELENIUM'] || 'http://localhost:4444'
+      set :headers, 'Content-Type' => 'application/json'
+      set :port, 7733
     end
 
-    get '/app' do
-      { app: File.join(Locatine::HOME, 'app').to_s }.to_json
-    end
-
+    # own calls
     get '/' do
-      redirect 'https://github.com/sseleznevqa/locatine#using-as-a-daemon'
+      redirect 'https://github.com/sseleznevqa/locatine'
     end
 
-    get '/stop' do
+    get '/locatine/stop' do
       Locatine::Daemon.quit!
       { result: 'dead' }.to_json
     end
 
-    post '/chromedriver' do
-      Webdrivers::Chromedriver.required_version = params['version']
-      { version: Webdrivers::Chromedriver.required_version }.to_json
+    post '/locatine/session/*' do
+      session = request.path_info.split('/').last
+      result = settings.sessions[session].configure(params)
+      { result: result }.to_json
     end
 
-    get '/chromedriver' do
-      { path: Webdrivers::Chromedriver.update }.to_json
+    # selenium calls
+    post '/wd/hub/session/*/element' do
+      content_type settings.headers['Content-Type']
+      results = settings.sessions[session_id].find(params, element_id)
+      status 200
+      results.empty? ? raise_not_found : { value: results.first.answer }.to_json
     end
 
-    post '/geckodriver' do
-      Webdrivers::Geckodriver.required_version = params['version']
-      { version: Webdrivers::Geckodriver.required_version }.to_json
+    post '/wd/hub/session/*/elements' do
+      content_type settings.headers['Content-Type']
+      results = settings.sessions[session_id].find(params, element_id)
+      status 200
+      answer = results.empty? ? [] : results.map(&:answer)
+      { value: answer }.to_json
     end
 
-    get '/geckodriver' do
-      { path: Webdrivers::Geckodriver.update }.to_json
+    post '/wd/hub/session' do
+      result = call_process('post')
+      the_session = JSON.parse(result)['value']['sessionId']
+      caps = params['desiredCapabilities']
+      locatine_caps = caps['locatine'] if caps
+      settings.sessions[the_session] = Locatine::Session
+                                       .new(selenium, the_session)
+      settings.sessions[the_session].configure(locatine_caps)
+      result
     end
 
-    post 'iedriver' do
-      Webdrivers::IEdriver.required_version = params['version']
-      { version: Webdrivers::IEdriver.required_version }.to_json
+    delete '/wd/hub/session/*' do
+      settings.sessions[session_id] = nil
+      call_process('delete')
     end
 
-    get '/iedriver' do
-      { path: Webdrivers::IEdriver.update }.to_json
-    end
-
-    post '/connect' do
-      steal
-      { result: true }.to_json
-    end
-
-    post '/lctr' do
-      data = Hash[params.map { |k, v| [k.to_sym, v] }]
-      data.each { |k, v| data[k] = false if v == 'false' }
-      search.lctr(data).to_json
-    end
-
-    post '/set' do
-      hash = params
-      search.json = hash['json'] if hash['json']
-      warn 'You cannot set browser like this. Use /connect' if hash['browser']
-      params.each_pair do |key, value|
-        unless (key == 'browser') || (key == 'json')
-          value = false if value == 'false'
-          search.instance_variable_set("@#{key}", value)
-        end
+    %w[get post put patch delete].each do |verb|
+      send(verb, '/wd/hub/*') do
+        call_process(verb)
       end
-      { result: true }.to_json
-    end
-
-    def search
-      return settings.search unless settings.search.nil?
-
-      settings.search = Locatine::Search.new
-      settings.search.browser.quit
-      settings.search
-    end
-
-    def params
-      request.body.rewind
-      JSON.parse request.body.read
     end
   end
 end

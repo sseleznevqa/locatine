@@ -1,26 +1,24 @@
 # Locatine
 
-Element location tool based on Watir.
+Locatine is a proxy between your code and selenium.
 
-You are asking Locatine to find element for you.
+It remembers element when you are finding it via selenium.
 
-It is asking you what element do you mean.
+It stores the findings to the json file for the future use.
 
-It is remembering your answer and collecting information about selected element.
+On the next search if element is lost Locatine will try to find it anyway using previously collected information.
 
-After that it is finding element by itself.
-
-If your element will be lost (due to id change for example) locatine will locate the most similar element.
+So your locator will be a little bit more stable than before.
 
 That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02637** only. It means so far this is an alfa. You can use it in a real project if you are a risky person.
+Version of Locatine is **0.02651**. This is the 1st version since redesign. Next 5-15 versions will be about bug fixing and minor tweaks.
 
 ## Attention
 
-Beginning with the next version locatine (especially locatine-daemon) will be refactored dramatically. It is highly possible that the next version will be not completable with that one.
+This version of Locatine is not compatible to previous.
 
 ## Installation
 
@@ -40,469 +38,442 @@ Or install it yourself as:
 
 ## Usage
 
-1. Be sure that you have [Chrome browser](https://www.google.com/chrome/browser/desktop/) installed. It should work with any browser but something you can do in Chrome only
-2. Write the code
+1. Be sure that you have [Chrome browser](https://www.google.com/chrome/browser/desktop/) installed.
+2. Be sure that you have [chromedriver](https://chromedriver.chromium.org/) installed.
+3. Write the code (using your language - ruby is an example)
 
 ```ruby
-require 'locatine'
-s = Locatine::Search.new
-s.browser.goto("yourpage.com.com")
-s.find(name: "element", scope: "Main").click
+driver = Selenium::WebDriver.for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: :chrome
+driver.navigate.to("yourpage.com.com")
+driver.find_element(xpath: "//*[@id = 'element']")
+driver.quit
 ```
 
-3. Run it in terminal with parameter LEARN=1 approximately like:
+4. Run the locatine daemon
 
-    $ LEARN=1 ruby path_to_your_test.rb
+```
+    $ SELENIUM=http://localhost:4444 locatine-daemon.rb --port=7733
+```
 
-4. It will open the browser and transfer you to the yourpage.com.com
-5. Click Locatine application icon at the browser panel
-6. Select element to represent *element* in the *Main* scope (you can click on it or select it in devtools)
-7. And confirm the selection
+5. SELENIUM - is for url where selenium hub is started, port is the port for your code to connect. 4444 and 7733 are defaults.
+6. Run your code
+7. Data of element will be stored to ./default.json file.
+8. Now if id of your element is changed on the page Locatine will show a warning and gonna try to retrieve it.
+9. See [example](https://github.com/sseleznevqa/locatine/tree/master/examples) to see how it really works.
 
-![U can see an image here. On github)](readme/567.png)
+## Session
 
-8. Now you can run the test without LEARN parameter and it will work.
+Each time when you initializing new selenium session, locatine session is created as well.
 
-## Locatine app window
+It is used to store default options for search.
 
-### Element name
+There are two ways to set options of the session:
 
-You can ask the app to save element with any name. This name should be used for element finding later.
-
-### Waiting for click
-
-If you need to do some actions on page for debug purposes before defining the element you can turn off waiting for click. If Locatine is waiting for click every click is gonna be counted as element selection.
-
-### Single\\Collection mode
-
-If you need to find a collection of elements. Turn collection mode on. And click two elements of the kind. Locatine will automatically select all the elements that are similar to selected
-
-### Clear selection
-
-Click it to start element selection process from the very beginning.
-
-### Abort selection
-
-Will forcedly stop the selection process. Use with care since ruby methods will return nils and errors since element is not selected properly. Use it when you finish to define a scope.
-
-### Confirm selection
-
-When you've selected a correct element - confirm it in order to save.
-
-## Locatine::Search options
+The most simple is to send it via desired capabilities like (ruby example again)
 
 ```ruby
-Locatine::Search.new(json: "./Locatine_files/default.json",
-                     depth: 3,
-                     browser: nil,
-                     learn: ENV['LEARN'].nil? ? false : true,
-                     stability_limit: 1000,
-                     scope: "Default",
-                     tolerance: 33,
-                     visual_search: false,
-                     no_fail: false,
-                     trusted: [],
-                     untrusted: [],
-                     autolearn: nil)
+caps = Selenium::WebDriver::Remote::Capabilities.
+                 chrome('locatine' => {'json' => '/your/path/elements.json'})
+driver = Selenium::WebDriver.
+   for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: caps
 ```
+
+This way is recommended because of the simplicity.
+
+Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wd-hub-session_id)
+
+## Settings to pass
 
 ### json
 
-the file where data collected about elements will be stored
+Provide a string here.
+
+Default is 'locatine-working-dir/locatine_files/default.json'
+
+**json** is the path of the file that will be used to store data collected about elements by locatine-daemon.
+
+It is recommended to use a different json for every test (or test group) in order to have lots of small and easily readable files and not the giant one.
+
+**NOTE! Only unix filesystems are supported so far.**
 
 ### depth
 
-shows how many info will be stored about each element
+Provide a non negative integer here.
 
-- 0 = everything about the element
-- 1 = everything about the element and the parent of it
-- 2 = everything about the element and the parent of it + one more parent
+Default is 3
 
-### browser
+**depth** value shows how deeply locatine will research the element.
 
-if not provided new Watir::Browser will be started. Do not provide browser if you are going to use learn mode
+0 - means that only the retrieved element will be remembered.
 
-### learn
+```html
+<div id="element to find"></div>
+```
 
-mode is used to train locatine to search your elements. By default is false. But if you are starting your test like:
+1 - means that the retrieved element and its ancestor will be examined:
 
-    $ LEARN=true ruby path_to_your_test.rb
+```html
+<div id="ancestor">
+  <div id="element to find"></div>
+</div>
+```
 
-it will turn learn to true by default.
+2 - means that two ancestors will be remembered.
 
-### scope
+And so on and so forth.
 
-is a setting that is representing default scope (group) where elements will be stored by default
+The higher depth the more easily locatine-daemon will find the element including the case when the element is lost (attributes are changed).
 
-### stability_limit
+On the other side large depth is making internal locator more unstable since it is requires stability of all the ancestors as well.
 
-shows how much times attribute should be present to be considered a trusted one. The extremely large value means that locatine will hardly trust your code. Extremely low means that locatine will always believe that nothing in the code gonna be changed.
+Read more about [finding elements](https://github.com/sseleznevqa/locatine#finding-elements)
+
+**NOTE! Taking additional information (larger depth) costs an additional time while retrieving element and when looking for the lost one**
+
+### trusted
+
+Provide an array of strings here.
+
+Default is []
+
+Usually if some attribute or tag or text is changing locatine is marking it as untrusted data and not using it in search till it appears enough times to be considered stable again.
+
+But locatine will always use for search for element something that is listed as trusted here.
+
+Use attribute name (like ['id']) for id attribute, use ['text'] for text and ['tag'] to trust the tag of element.
+
+**NOTE! ['text'] will affect both - text of element and attribute of element that is named 'text'**
+
+### untrusted
+
+Provide an array of strings here.
+
+Default is []
+
+Working completely opposite to [trusted](https://github.com/sseleznevqa/locatine#trusted)
+
+Locatine will never consider reliable attributes or text or tag if it is listed as untrusted. It will be never used to search elements.
+
+Use attribute name (like ['id']) for id attribute, use ['text'] for text and ['tag'] to untrust the tag of element.
+
+**NOTE! ['text'] will affect both - text of element and attribute of element that is named 'text'**
+
+### stability
+
+Provide a positive integer here.
+
+Default is 10
+
+At first locatine trusts everything except [untrusted](https://github.com/sseleznevqa/locatine#untrusted). But sometimes attribute value, text or tag changes. In that case those new values will be not used in search anymore.
+
+**stability** shows how much times new attribute or text or tag should be found without changes to be considered reliable to be used for search once again.
 
 ### tolerance
 
-If stored metrics of element (including attributes, text, css values and tags) were changed Locatine will find and suggest the most similar one. Tolerance is showing how different in per cent new element may be to the old one. If 0 (zero tolerance) - locatine will find nothing if element lost. If 50 it is enough for element to have only half of parameters of old element we are looking for to be returned. If 100 - at least something is found - it goes. Default if 67 (means only 33% of element should stay in element to be found and returned).
+Provide an integer in a range from 0 to 100
 
-### visual_search
+Default is 50
 
-locatine will count css values and position of element only if true. In that case locatine will not only read html code (attributes, tags, texts) but it will get css stylesheet for element, its position and size. In the most common case locatine is using attributes+tag+text to find the element. It is starting to use css styles of element and position only if element is lost in order to provide a better result and to mesure the similarity of the lost element and one that is found.
+If your element is changed locatine is trying to find it anyway. Tolerance shows how similar the new element should be to the ild one to be returned.
 
-Position and size for element will be stored for the current resolution only. Start with new browser resolution will lead to deletion of all previous location\\size data.
+Example:
 
-Be careful! Set true only if appearance of your page is pretty stable.
+```html
+<!--Old element-->
+<div id="too" class="old one">element</div>
+<!--New element-->
+<div id="too" class="new one">element</div>
+```
 
-### no_fail
+5 pieces of information will be collected about an old element (tag == div, id == too, class == old, class ==one, text == element)
 
-When element is lost and no_fail is true you will get nil for single element and [] for collection. If no_fail is false (which is default) and locatine cannot find something you will face an error.
+4 parts are staying the same after changes. So similarity will be counted like (4*100/5 == 80)
 
-### trusted/untrusted
+Since similarity(80)>=100-tolerance(50) the new element will be returned.
 
-If you are sure that some attribute (or something) is not good(generated by random, not uniq, etc.) you can forbid to use it in search. You can write attribute name, "text", "tag", or css attribute name (if you are using visual_search)
+But for the case:
 
-On the other hand you can force locatine to always trust something with trusted.
+```html
+<!--Old element-->
+<div id="too" class="old one">element</div>
+<!--New element-->
+<div id="lost" class="new two">element</div>
+```
 
-### autolearn
+Similarity will be only 40 which is less than 100-50. It means that no element will be returned.
 
-Determines wether Locatine will study elements by default or not.
+So default tolerance == 50 means that at least 50% of element data should be equal to stored data for element to be found.
 
-If true Locatine will always check element for changes even if it is found properly (to catch for example adding of a new attribute). This is slow.
+Only data of the element itself is counted here.
 
-If false Locatine will study element only in case when it is lost.
+**NOTE! 0 (zero tolerance) means that locatine will not even try to find the lost element. 100 tolerance is too opportunistic**
 
-If not stated Locatine will use false until it is not facing any lost element. After the first lost element it will be studying everything (true).
+### timeout
 
-Notice that if autolearn is false Locatine is not bumping the stability values of attributes for elements which were found normally.
+Provide an positive integer here (up to 25 is recommended)
 
-## Changing options on fly
+Default is 25
 
-You can get or set these values on fly. Like:
+**timeout** shows the maximum amount of seconds locatine will try to find something.
+
+Since default net timeout for most selenium implementations is 30 seconds, 25 is a good idea.
+
+**NOTE! It's not an exact time. When timeout is reached it means for locatine that it is time to finish the party. But it cannot be finished instantly and the speed of the process may slightly vary.**
+
+## Finding elements
+
+All the requests that are retrieving elements are wrapped by locatine-daemon.
 
 ```ruby
-s = Locatine::Search.new(learn: true)
-s.learn #=> true
-s.learn = false
+caps = Selenium::WebDriver::Remote::Capabilities.chrome('locatine' =>
+                                         {'json' => "#{Dir.pwd}/elements.json"})
+driver = Selenium::WebDriver.for :remote,
+                                 url: "http://localhost:7733/wd/hub",
+                                 desired_capabilities: caps
+# Page that has <div id='element' class='1 2 3'>Text</div>
+driver.navigate.to page 1
+# Getting element for the first ешьу
+element = driver.find_element(xpath: "//*[@id='element']")
+# We are changing id of the element
+driver.execute_script("arguments[0].setAttribute('id', 'lost')", element)
+# Element is gonna be found. Even with locator that is broken
+expect(driver.find_element(xpath: "//*[@id='element']").text).to eq "Text"
+driver.quit
 ```
 
-## Locatine::Search find options
+When locatine sees some locator for the first time it is not only returning the element& It is collecting some info about it. As the result if locator will suddenly become broken locatine will make an attempt to find the element using the data collected.
+
+### Magic comments
+
+If the usual locator only is provided locatine will treat it like a name for element. But if you want you can force locatine to remember it by name defined by you.
+
+Just add name at the end of xpath like ['*name*'] or like /\**name*\*/ after css selector. For example:
 
 ```ruby
-s.find(name: "some name",
-       scope: "Default",
-       exact: false,
-       locator: {},
-       vars: {},
-       look_in: nil,
-       iframe: nil,
-       return_locator: false,
-       collection: false,
-       tolerance: nil,
-       no_fail: nil,
-       trusted: [],
-       untrusted: [])
+element = driver.find_element(xpath: "//*[@id='element']['test element']")
+element = driver.find_element(css: "#element/*test element*/")
 ```
-### name
 
-should be always provided. Name of element to look for. Must be uniq one per scope. Ideally name should be made of 2-4 words separated by spaces describing its nature ("pay bill button", "search input", etc.) It will help Locatine to find them.
+**NOTE! Those locators are valid.  If you will switch back to selenium-webdriver it will work normally. The 'test element' text will be treated like a comment that is not affecting the locator body.**
 
-### scope
-
-group of elements. Must be uniq per file. This is to help to store elements with same names from different pages in one file
-
-### locator
-
-you may provide your own locator to use. Same syntax as in Watir:
+Once defined with name it can be called without locator part at all:
 
 ```ruby
-find(name: "element with custom locator", locator: {xpath: "//custom"})
+element = driver.find_element(xpath: "['test element']")
+element = driver.find_element(css: "/*test element*/")
 ```
 
-### vars
+**NOTE! Locators above will work only with locatine!**
 
-are used to pass dynamic attributes.
+### Dynamic locators
 
-For example you have created an account on your site with
+Always add names to dynamic locators. For example if you have some account_id which is new for every test and goes to an id attribute do
 
 ```ruby
-name == "stablePart_qljcrt24jh"
+account_id #=> 1234567890
+element = driver.find_element(xpath: "//*[@id='#{account_id}']['test element']")
+element = driver.find_element(css: "##{account_id}/*test element*/")
 ```
 
-where
+**NOTE! If there will be no name for the element that is changing locator for each run locatine will treat it like a new element each time. That will lead to overcrowding of your json file**
+
+### Zero tolerance shortcut
+
+If you need to check that element exists or not most probably you do not want locatine to look for the similar one. You can set zero tolerance (return only 100% same element) by adding word 'exactly' to the name.
 
 ```ruby
-random_string == "qljcrt24jh"
+element = driver.
+              find_element(xpath: "//*[@id='element']['exactly test element']")
+element = driver.find_element(css: "#element/*exactly test element*/")
 ```
 
-was generated by random. Now you need to find the element with this part on the page. You can do
+**NOTE! Zero tolerance will be used for that particular search only. Other searches will use session values**
+
+### Other ways to pass data to locatine
+
+There is another way to pass data to locatine. You can provide a json string as a comment.
 
 ```ruby
-random_string #=> "qljcrt24jh"
-find(name: "account name", vars: {text: random_string})
+require 'json' # That is to make everything a little bit simpler
+params = {name: "test element", tolerance: 0}.to_json
+#=> {\"name\":\"test element\",\"tolerance\":0}
+element = driver.find_element(xpath: "//*[@id='element'][#{params}']")
+element = driver.find_element(css: "#element/*#{params}*/")
 ```
 
-Next time when your test will generate another random_string it will use new value.
+**NOTE! Those requests will provide same results as previous because they have identical meaning**
+
+Like that you can set for each search any custom options (except json)
+
+For more information about possible options read [here](https://github.com/sseleznevqa/locatine#session)
+
+Additionally you can provide a custom locator inside of the comment json string.
+
+We are using 'json' library to make json string here.
 
 ```ruby
-vars = {text: random_substring} # If you want the text of element to be dynamic
-vars = {tag: random_tag} # The tag
-vars = {attribute_name: random_attr} # If attribute is dynamic (use name of the attribute)
-# And two lines work with visual_search == true only
-vars = {css_option: random_value} # If your css is dynamic
-vars = {x: random_x} # x, y for element position
+require 'json'
+xpath_params = {name: "test element",
+                tolerance: 0,
+                locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
+css_params = {name: "test element",
+              tolerance: 0,
+              locator: {using: "css selector", value: "#element"}}.to_json
+element = driver.find_element(xpath: "['#{xpath_params}']")
+element = driver.find_element(css: "/*#{css_params}*/")
 ```
 
-And if you do not like it you can do:
+For more information about locators read about [locator strategies](https://www.w3.org/TR/webdriver/#locator-strategies)
+
+### locatine locator strategy
+
+Locatine also provides its own locator strategy == 'locatine'. In order to use it you need to inject it to the code of selenium-webdriver implementation.
+
+See it's done for ruby [here](https://github.com/sseleznevqa/locatine/tree/master/spec/e2e_spec.rb#L6-L25)
+
+When it's done you can use:
 
 ```ruby
-random_string #=> "qljcrt24jh"
-find(name: "account name", locator:{text: "stablePart_#{random_string}")
+require 'json'
+xpath_params = {name: "test element",
+                tolerance: 0,
+                locator: {using: "xpath", value: "//*[@id='element']"}}.to_json
+css_params = {name: "test element",
+              tolerance: 0,
+              locator: {using: "css selector", value: "#element"}}.to_json
+element = driver.find_element(locatine: xpath_params)
+element = driver.find_element(locatine: css_params)
+# As well as
+element = driver.find_element(locatine: "test element")
+# And also
+element = driver.find_element(locatine: "exactly test element")
 ```
 
-### look_in
+### Locatine locators
 
-is for method name taken from Watir::Browser item. It should be a method that returns collection of elements like (text_fields, divs, links, etc.). If this option is stated locatine will look for your element only among elements of that kind. Be careful with it in a learn mode. If your look_in setting and real element are from different types. Locatine will be unable to find it.
+In some cases you can even forget about classic locators
 
-### iframe
+For example have element
 
-that is in order to find element inside of an iframe
+```html
+<input id="important" type="button" value="click me"></input>
+```
 
-### return_locator
-
-true is returning the locator of the element instead of element. Use with care if attributes of your elements are dynamic and you are in a learning mode.
-
-### collection
-
-if true array of elements will be returned. If false only the one element (the first one found) will be returned.
-
-### tolerance
-
-You can state custom tolerance for the element.
-
-### exact
-
-It is disabling attempts to find element by advanced algorithms. If locator is provided find method will use only locator. If there is no locator only the basic search will be performed.
-
-### no_fail
-
-no_fail option that will work for that search only.
-
-### trusted//untrusted
-
-You can set trusted elements just for search
-
-## Scope
-
-If you want to define a whole bunch of elements at once you can do:
+Let's pretend that id == important is a uniq attribute for the page (it should be so). In that case you can do:
 
 ```ruby
-search = Locatine::Search.new(learn: true)
-search.get_scope(name: "Name of scope") # Will ask you about all the elements in scope
-# or
-scope = Locatine::Scope.new('Name of scope', search)
-scope.define
+element = driver.find_element(css: "/*important input*/")
 ```
 
-You will be able to select all the elements and collections for scope one by one. When it is finished click "Abort Selection" button to exit the loop.
+Locatine will try to find it by those two words. If the id is really uniq it will return the desired element.
 
-You can force use dynamic variables on define where is possible (same rules as for find):
+Right now there is a Locatine Naming App that is in pending review status in the Chrome extension shop. This app is for creating good locatine locators.
 
-```ruby
-vars = {text: "dynamic text",
-        tag: "span",
-        attrName: "part of dynamic attr-value"}
-scope.define(vars) # Will ask you about all the elements in scope
-# Same
-search.get_scope(name: "Name of scope", vars: vars) # Will ask you...
-# Finally when scope is defined
-search.find(scope: "Name of scope",
-            name: "Name of element in scope",
-            vars: vars # Necessary if elements were defined with vars)
-```
+If you wanna try it before it is published - code is in the app folder of this repository.
 
-### Methods of scope
+**NOTE! Locatine locators case insensitive.**
 
-If you want to get a hash with all elements that are defined in scope:
+**NOTE! Locatine does not count text while looking for element.**
 
-```ruby
-# Lost elements will be found if possible!
-search.get_scope(name: "Name of scope").all
-# => {"element name": {
-#      elements: Array of Watir::Element,
-#      locator: valid xpath locator
-#      },
-#     "next element name":...
-#    }
-```
+**NOTE! Locatine tends to think that the last word of your locator is a tag**
 
-If you want to check presence of all elements:
+## Locatine daemon API
 
-```ruby
-# Will raise an error if something lost!
-search.get_scope(name: "Name of scope").check
-```
+When locatine-daemon is started it is reacting to several requests:
+Almost all post data should be transfered as a valid json.
 
-## Other ways to use find
+### GET to '/'
 
-If the scope is set and you do not want to provide any additional options you can do:
+Redirect to this page.
 
-```ruby
-s = Locatine::Search.new
-s.find("just name of element")
-```
+### GET to '/locatine/stop'
 
-Also you can do:
+Stops locatine-daemon
 
-```ruby
-s = Locatine::Search.new
-s.browser.button(s.lctr("name of the button"))
-# or
-s.browser.button(s.lctr(name: "name of the button", scope: "Some form"))
-# or
-s.browser.button(s.lctr("name of the button", scope: "Some form"))
-```
-
-That may be helpful in case of migration from plain watir to watir + locatine
-
-If you want to find collection of elements you can use:
-
-```ruby
-s = Locatine::Search.new
-s.collect("group of elements") # Will return an array
-# or
-s.collect(name: "group of elements")
-```
-
-Also:
-
-```ruby
-s.exact_collection(name: "something") == s.collect(exact: true, name: "something")
-s.exact(name: "something") == s.find(name: "something", exact: true)
-s.check(name: "something") == s.find(name: "something", tolerance: 0)
-s.check_collection(name: "something") == s.collect(name: "something", tolerance: 0)
-```
-
-## Using as a daemon
-
-Locatine daemon is a web server based on sinatra. You can run it from your code like:
-
-```ruby
-require 'locatine'
-Locatine::Daemon.set :port, 7733 #Your port goes here
-Locatine::Daemon.run!
-```
-
-Also you can do it with terminal:
-
-```bash
-locatine-daemon.rb -port=7733
-```
-
-You can see a python3 example in the [example](https://github.com/sseleznevqa/locatine/tree/master/example) folder. Main idea is
-
-1. Run daemon
-2. Ask daemon for the app path
-3. Run your browser with the app as extension
-4. Turn on the learn
-5. Provide data to the daemon for connect (browser name, session_id, connect url, proxy)
-6. Use API calls to teach daemon how to find elements
-7. After that you can start browser without the app
-8. Provide data for connect
-9. Now you can ask daemon to find your element via API call. And it will answer with a valid xpath you can use.
-
-### API
-
-#### GET call to /app
-
-returns path to locatine application in order to start chrome with it.
-
-Example of response:
-
-```
-{"app": "/some/path/to/app"}
-```
-
-#### GET call to /stop
-
-stops Locatine daemon.
-
-Returns:
+Returns
 
 ```
 {"result": "dead"}
 ```
 
-#### POST call to /connect
+### POST to '/locatine/session/%session_id%'
 
-allows Locatine Daemon to connect existing browser instance
-
-POST data:
+Data to post (example):
 
 ```
-{'browser': 'chrome', 'session_id': session_id, 'url': 'http://whatever_is_browser_ip:port_opened_by_browser_for_selenium', 'proxy': 'optionally' }
+"{\"json\":\"./daemon.json\"}"
 ```
 
-Answer:
+That will force session with *%session_id%* number to read\write data using ./daemon.json file.
+
+For more information about possible options read [here](https://github.com/sseleznevqa/locatine#session)
+
+Response:
 
 ```
-{"result": "true"}
+{ \"results\": {\"json\":\"./daemon.json\"} }
 ```
 
-#### POST call to /set
+### POST to '/wd/hub/session'
 
-is to control options of locatine search. Sending to set data ==
+Just the same rules as for [usual selenium session](https://www.w3.org/TR/webdriver/#new-session-0)
 
-```
-{"learn": "true"}
-```
-
-Answer:
+The only change that you can set locatine defaults via providing it in desired capabilities like:
 
 ```
-{"result": "true"}
+{...
+"desiredCapabilities": {
+  ...
+  "locatine": {"json": "./daemon.json"},
+  ...
+  }
+}
 ```
 
-is the same as
+That will force new session to read\write data using ./daemon.json file.
 
-```ruby
-search.learn = true
-```
+For more information about possible options read [here](https://github.com/sseleznevqa/locatine#session)
 
-#### POST call to /lctr
+### POST to '/wd/hub/session/%session_id%/element'
 
-is to find and return locator of an element found by locatine
+That will try to return element using %session_id%.
 
-POST data just the same as for find or lctr method. It's like:
+Rules are the same as for [usual selenium call](https://www.w3.org/TR/webdriver/#find-element)
 
-```
-{"name": "some name", "scope": "Default", "exact": "false" ...}
-```
+But you can provide magic locator comments for xpath and css. Or use 'locatine' element retrieve strategy.
 
-Answer:
+More information is [here](https://github.com/sseleznevqa/locatine#finding-elements)
 
-```
-{"xpath": "//YOUR[@xpath='goes here']"}
-```
+### POST to '/wd/hub/session/%session_id%/element/%element_id%/element'
 
-### GET /chromedriver || /geckodriver || /iedriver
+That will try to return element under %element_id% using %session_id%.
 
-returns path to the binary retrieved by locatine (using webdrivers gem)
+Rules are the same as for [usual selenium call](https://www.w3.org/TR/webdriver/#find-element-from-element)
 
-Answer:
+But you can provide magic locator comments for xpath and css. Or use 'locatine' element retrieve strategy.
 
-```
-{"path": "path/to/the/binary"}
-```
+More information is [here](https://github.com/sseleznevqa/locatine#finding-elements)
 
-### POST call to /chromedriver || /geckodriver || /iedriver
+### POST to '/wd/hub/session/%session_id%/elements'
 
-is to force locatine to use your webdriver (for example for using old version of browser)
+That will try to return element using %session_id%.
 
-POST data:
+Rules are the same as for [usual selenium call](https://www.w3.org/TR/webdriver/#find-elements)
 
-```
-{"version": "2.46"}
-```
+But you can provide magic locator comments for xpath and css. Or use 'locatine' element retrieve strategy.
 
-Answer:
+More information is [here](https://github.com/sseleznevqa/locatine#finding-elements)
 
-```
-{"version": "2.46"}
-```
+### POST to '/wd/hub/session/%session_id%/element/%element_id%/elements'
+
+That will try to return element under %element_id% using %session_id%.
+
+Rules are the same as for [usual selenium call](https://www.w3.org/TR/webdriver/#find-elements-from-element)
+
+But you can provide magic locator comments for xpath and css. Or use 'locatine' element retrieve strategy.
+
+More information is [here](https://github.com/sseleznevqa/locatine#finding-elements)
+
+### Other calls to /wd/hub...
+
+Any other call will be simply redirected to selenium webdriver hub.

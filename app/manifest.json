@@ -1,0 +1,16 @@
+{
+  "name": "Locatine Locator Helper",
+  "version": "0.02651",
+  "description": "Locator helper for locatine",
+  "devtools_page": "devtools.html",
+  "permissions": ["storage", "contextMenus"],
+  "content_scripts": [{
+       "matches": ["<all_urls>"],
+       "all_frames": true,
+       "js":      ["content.js"]
+   }],
+ "icons": { "16": "16.png",
+           "48": "48.png",
+          "128": "128.png"},
+  "manifest_version": 2
+}

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Locatine
   # constants here...
-  VERSION = '0.02637'.freeze
-  NAME = 'locatine'.freeze
+  VERSION = '0.02651'
+  NAME = 'locatine'
   HOME = if File.readable?("#{Dir.pwd}/lib/#{Locatine::NAME}")
            "#{Dir.pwd}/lib/#{Locatine::NAME}"
          else
