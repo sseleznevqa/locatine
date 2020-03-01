@@ -3,7 +3,7 @@
 module Locatine
   module ResultsHelpers
     #
-    # Some common methods without logic
+    # Some common methods without much logic
     module Common
       def timer
         @time ||= Time.now
@@ -18,17 +18,20 @@ module Locatine
         @session.elements[@name]
       end
 
+      def unknown_no_text(item, hash)
+        ((item['type'] == '*') && (hash['type'] != 'text')) ||
+          ((item['type'] != 'text') && (hash['type'] == '*'))
+      end
+
+      def same_name_type(item, hash)
+        (item['name'] == hash['name']) && (item['type'] == hash['type'])
+      end
+
       def info_hash_eq(item, hash)
         # Return true
         # If type is unknown (but not a text)
-        unknown_no_text = ((item['type'] == '*') &&
-                          (hash['type'] != 'text')) ||
-                          ((item['type'] != 'text') &&
-                          (hash['type'] == '*'))
         # Or when type and name are similar
-        same_name_type = (item['name'] == hash['name']) &&
-                         (item['type'] == hash['type'])
-        (unknown_no_text || same_name_type) &&
+        (unknown_no_text(item, hash) || same_name_type(item, hash)) &&
           # And at the same time values are (almost) the same
           (item['value'].downcase == hash['value'].downcase)
       end

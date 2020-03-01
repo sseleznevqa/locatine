@@ -101,32 +101,6 @@ module Locatine
           end
         end
       end
-
-      def count_similarity
-        all = 0
-        same = 0
-        # Next is necessary for unknown reason (smthing thread related)
-        raw = raw_info['0']
-        get_trusted(known['0']).each do |hash|
-          caught = (raw.select { |item| info_hash_eq(item, hash) }).first
-          all += 1
-          same += 1 if caught
-        end
-        similar_enough(same, all)
-      end
-
-      def similar?
-        return false if empty?
-
-        return true if tolerance == 100
-
-        count_similarity
-      end
-
-      def similar_enough(same, all)
-        sameness = (same * 100) / all
-        sameness >= 100 - tolerance
-      end
     end
   end
 end

@@ -46,6 +46,8 @@ describe 'results logic' do
   end
 
   it 'generates xpath' do
+    str = "//*[self::vid][contains(@rtta, 'rtta')][contains(text(), 'txet')]"\
+          "/*[self::div][contains(@attr, 'attr')][contains(text(), 'text')]"
     @results.instance_variable_set('@config', 'untrusted' => [])
     expect(@results.generate_xpath('0': [{ 'name' => 'text',
                                            'value' => 'text',
@@ -64,6 +66,6 @@ describe 'results logic' do
                                            'value' => 'rtta' },
                                          { 'name' => 'tag',
                                            'type' => 'tag',
-                                           'value' => 'vid' }])).to eq "//*[self::vid][contains(@rtta, 'rtta')][contains(text(), 'txet')]/*[self::div][contains(@attr, 'attr')][contains(text(), 'text')]"
+                                           'value' => 'vid' }])).to eq str
   end
 end
