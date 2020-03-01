@@ -43,8 +43,11 @@ module Locatine
     def classic_find
       first_attempt
       locating = @locator['value'].empty? || tolerance.positive?
-      second_attempt if locating
-      third_attempt if locating
+      return unless locating
+
+      second_attempt
+      third_attempt if known
+      forth_attempt if known
     end
 
     def first_attempt
@@ -53,26 +56,20 @@ module Locatine
       warn_locator if !@locator['value'].empty? && empty?
     end
 
-    def second_attempt
-      find_by_trusted if known && !trusted.empty? && empty?
+    def third_attempt
+      base = {}
+      base['0'] = known['0']
+      find_by_data(base) if empty?
     end
 
-    def third_attempt
+    def second_attempt
       find_by_data if known && empty?
     end
 
-    def find_by_trusted
-      xpath = generate_xpath(only_trusted, true)
-      @locator = { 'using' => 'xpath', 'value' => xpath }
-      simple_find
-    end
-
-    def only_trusted
-      result = {}
-      known.each_pair do |depth, array|
-        result[depth] = array.select { |hash| trusted.include?(hash['name']) }
-      end
-      result
+    def forth_attempt
+      base = {}
+      base['0'] = known['0'].select { |item| trusted.include?(item['name']) }
+      find_by_data(base) if empty? && !trusted.empty? && !base['0'].empty?
     end
 
     def find

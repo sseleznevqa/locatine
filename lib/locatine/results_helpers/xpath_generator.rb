@@ -5,8 +5,8 @@ module Locatine
     ##
     # Methods for generation xpath from stored data
     module XpathGenerator
-      def find_by_data
-        xpath = generate_xpath(known)
+      def find_by_data(base = known)
+        xpath = generate_xpath(base)
         @locator = { 'using' => 'xpath', 'value' => xpath }
         simple_find
       end
@@ -29,7 +29,7 @@ module Locatine
         0
       end
 
-      def generate_xpath(data, any_depth = false)
+      def generate_xpath(data)
         xpath = ''
         data.each_pair do |_depth, array|
           get_trusted(array).each do |hash|
@@ -37,8 +37,7 @@ module Locatine
           end
           xpath = '/*' + xpath
         end
-        xpath = any_depth ? xpath.gsub('/', '//') : '/' + xpath
-        puts "xpath = #{xpath}"
+        xpath = '/' + xpath
         xpath
       end
 

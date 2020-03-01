@@ -8,7 +8,6 @@ module Locatine
   #
   # Locatine session operator finds and returns
   class Session
-
     include Locatine::ResultsHelpers::Logger
     attr_accessor :json, :depth, :trusted, :untrusted, :tolerance, :stability,
                   :elements, :timeout
@@ -72,7 +71,8 @@ module Locatine
       value = JSON.parse(api_request('/execute/sync', 'Post',
                                      { script: script, args: args }
                                              .to_json).body)['value']
-      raise(value['error']).to_s if (value.class == Hash) && value['error']
+      error_present = (value.class == Hash) && value['error']
+      raise_script_error(script, args, value) if error_present
 
       value
     end

@@ -51,7 +51,9 @@ driver.quit
 
 4. Run the locatine daemon
 
+```
     $ SELENIUM=http://localhost:4444 locatine-daemon.rb --port=7733
+```
 
 5. SELENIUM - is for url where selenium hub is started, port is the port for your code to connect. 4444 and 7733 are defaults.
 6. Run your code
@@ -70,13 +72,17 @@ There are two ways to set options of the session:
 The most simple is to send it via desired capabilities like (ruby example again)
 
 ```ruby
-caps = Selenium::WebDriver::Remote::Capabilities.chrome('locatine' => {'json' => '/your/path/elements.json'})
-driver = Selenium::WebDriver.for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: caps
+caps = Selenium::WebDriver::Remote::Capabilities.
+                 chrome('locatine' => {'json' => '/your/path/elements.json'})
+driver = Selenium::WebDriver.
+   for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: caps
 ```
 
 This way is recommended because of the simplicity.
 
 Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wd-hub-session_id)
+
+## Settings to pass
 
 ### json
 
@@ -281,7 +287,7 @@ element = driver.
 element = driver.find_element(css: "#element/*exactly test element*/")
 ```
 
-**NOTE! Zero tolerance will be used for the search only. Other searches will use session values**
+**NOTE! Zero tolerance will be used for that particular search only. Other searches will use session values**
 
 ### Other ways to pass data to locatine
 

@@ -35,7 +35,7 @@ describe 'doing' do
     Watir.default_timeout = 30
   end
 
-  it "Speed test" do
+  it 'Speed test' do
     @b = Watir::Browser.new :chrome, timeout: 120,
                                      url: 'http://localhost:7733/wd/hub'
     @d = @b.driver
@@ -44,10 +44,10 @@ describe 'doing' do
     1000.times do
       @d.find_element(xpath: "//div[@id = 'xxx yyy']")
     end
-    puts Time.now-t
+    puts Time.now - t
   end
 
-  it "Speed test-2" do
+  it 'Speed test-2' do
     @b = Watir::Browser.new :chrome, timeout: 120,
                                      url: 'http://localhost:4444/wd/hub'
     @d = @b.driver
@@ -56,9 +56,8 @@ describe 'doing' do
     1000.times do
       @d.find_element(xpath: "//div[@id = 'xxx yyy']")
     end
-    puts Time.now-t
+    puts Time.now - t
   end
-
 
   after(:all) do
     FileUtils.remove_dir('./locatine_files/', true)
@@ -70,5 +69,4 @@ describe 'doing' do
   after(:each) do
     @b.quit
   end
-
 end

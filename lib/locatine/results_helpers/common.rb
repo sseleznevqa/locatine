@@ -29,8 +29,8 @@ module Locatine
         same_name_type = (item['name'] == hash['name']) &&
                          (item['type'] == hash['type'])
         (unknown_no_text || same_name_type) &&
-        # And at the same time values are (almost) the same
-        (item['value'].downcase == hash['value'].downcase)
+          # And at the same time values are (almost) the same
+          (item['value'].downcase == hash['value'].downcase)
       end
 
       def stability

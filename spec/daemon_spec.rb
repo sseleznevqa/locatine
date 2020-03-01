@@ -43,12 +43,12 @@ describe 'daemon' do
                      })
     session_id = s['value']['sessionId']
     make_request(
-        "http://localhost:7733/locatine/session/#{session_id}", 'Post',
-        {json: "./daemon.json"}
-      )
-      make_request("http://localhost:7733/wd/hub/session/#{session_id}",
-                   'Delete')
-    expect(File.file?("./daemon.json")).to eq true
+      "http://localhost:7733/locatine/session/#{session_id}", 'Post',
+      json: './daemon.json'
+    )
+    make_request("http://localhost:7733/wd/hub/session/#{session_id}",
+                 'Delete')
+    expect(File.file?('./daemon.json')).to eq true
   end
 
   it 'stops' do

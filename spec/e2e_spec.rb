@@ -210,7 +210,7 @@ describe 'user' do
 
   it 'seriously trusts' do
     @b.goto page(1)
-    params = { name: 'Something', tolerance: 0, trusted: ['class'] }.to_json
+    params = { name: 'xxx div', tolerance: 0, trusted: ['class'] }.to_json
     @b.element(css: "/*#{params}*/").locate.click
     @b.goto page(2)
     expect(@b.element(css: "/*#{params}*/").text).to eq 'Something'

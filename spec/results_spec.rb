@@ -8,9 +8,9 @@ describe 'results logic' do
 
   it 'sums' do
     @results.push([{ 'name' => '1', 'type' => '1', 'value' => '1' },
-                  { 'name' => '2', 'type' => '2', 'value' => '2' }])
+                   { 'name' => '2', 'type' => '2', 'value' => '2' }])
     @results.push([{ 'name' => '1', 'type' => '1', 'value' => '1' },
-                  { 'name' => '3', 'type' => '3', 'value' => '3' }])
+                   { 'name' => '3', 'type' => '3', 'value' => '3' }])
     first = @results.info_sum(@results.first, @results.first)
     second = @results.info_sum(@results.first, @results[1])
     expect(first).to eq @results.first
@@ -19,75 +19,51 @@ describe 'results logic' do
 
   it 'checking equal' do
     expect(@results.info_hash_eq({ 'name' => '1', 'type' => '1',
-                                   'value' => '1' , 'a' => 'b'},
-                                 { 'name' => '1', 'type' => '1',
-                                   'value' => '1' , 'b' => 'c'})).to eq true
+                                   'value' => '1', 'a' => 'b' },
+                                 'name' => '1', 'type' => '1',
+                                 'value' => '1', 'b' => 'c')).to eq true
   end
 
   it 'checking not equal' do
     expect(@results.info_hash_eq({ 'name' => '1', 'type' => '1',
-                                   'value' => '1' , 'a' => 'b'},
-                                 { 'name' => '1', 'type' => '1',
-                                   'value' => '2' , 'a' => 'b'})).to eq false
+                                   'value' => '1', 'a' => 'b' },
+                                 'name' => '1', 'type' => '1',
+                                 'value' => '2', 'a' => 'b')).to eq false
   end
 
   it 'checking unknown equal' do
     expect(@results.info_hash_eq({ 'name' => '*', 'type' => '*',
-                                   'value' => 's' , 'a' => 'b'},
-                                 { 'name' => '1', 'type' => '1',
-                                   'value' => 'S' , 'b' => 'c'})).to eq true
+                                   'value' => 's', 'a' => 'b' },
+                                 'name' => '1', 'type' => '1',
+                                 'value' => 'S', 'b' => 'c')).to eq true
   end
 
   it 'checking unknown not equal' do
     expect(@results.info_hash_eq({ 'name' => '*', 'type' => '*',
-                                   'value' => '1' , 'a' => 'b'},
-                                 { 'name' => '1', 'type' => '1',
-                                   'value' => '2' , 'b' => 'c'})).to eq false
+                                   'value' => '1', 'a' => 'b' },
+                                 'name' => '1', 'type' => '1',
+                                 'value' => '2', 'b' => 'c')).to eq false
   end
 
   it 'generates xpath' do
-    @results.instance_variable_set('@config', {'untrusted' => []})
-    expect(@results.generate_xpath({'0': [{'name' => 'text',
+    @results.instance_variable_set('@config', 'untrusted' => [])
+    expect(@results.generate_xpath('0': [{ 'name' => 'text',
                                            'value' => 'text',
-                                           'type' => 'text'},
-                                          {'name' => 'attr',
+                                           'type' => 'text' },
+                                         { 'name' => 'attr',
                                            'type' => 'attribute',
-                                           'value' => 'attr'},
-                                          {'name' => 'tag',
+                                           'value' => 'attr' },
+                                         { 'name' => 'tag',
                                            'type' => 'tag',
-                                           'value' => 'div'}],
-                                    '1': [{'name' => 'text',
+                                           'value' => 'div' }],
+                                   '1': [{ 'name' => 'text',
                                            'value' => 'txet',
-                                           'type' => 'text'},
-                                          {'name' => 'rtta',
+                                           'type' => 'text' },
+                                         { 'name' => 'rtta',
                                            'type' => 'attribute',
-                                           'value' => 'rtta'},
-                                          {'name' => 'tag',
+                                           'value' => 'rtta' },
+                                         { 'name' => 'tag',
                                            'type' => 'tag',
-                                           'value' => 'vid'}]})).to eq "//*[self::vid][contains(@rtta, 'rtta')][contains(text(), 'txet')]/*[self::div][contains(@attr, 'attr')][contains(text(), 'text')]"
+                                           'value' => 'vid' }])).to eq "//*[self::vid][contains(@rtta, 'rtta')][contains(text(), 'txet')]/*[self::div][contains(@attr, 'attr')][contains(text(), 'text')]"
   end
-
-  it 'generates less strict xpath' do
-    @results.instance_variable_set('@config', {'untrusted' => []})
-    expect(@results.generate_xpath({'0': [{'name' => 'text',
-                                           'value' => 'text',
-                                           'type' => 'text'},
-                                          {'name' => 'attr',
-                                           'type' => 'attribute',
-                                           'value' => 'attr'},
-                                          {'name' => 'tag',
-                                           'type' => 'tag',
-                                           'value' => 'div'}],
-                                    '1': [{'name' => 'text',
-                                           'value' => 'txet',
-                                           'type' => 'text'},
-                                          {'name' => 'rtta',
-                                           'type' => 'attribute',
-                                           'value' => 'rtta'},
-                                          {'name' => 'tag',
-                                           'type' => 'tag',
-                                           'value' => 'vid'}]}, true)).to eq "//*[self::vid][contains(@rtta, 'rtta')][contains(text(), 'txet')]//*[self::div][contains(@attr, 'attr')][contains(text(), 'text')]"
-  end
-
-
 end

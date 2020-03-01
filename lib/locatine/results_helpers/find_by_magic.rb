@@ -39,7 +39,7 @@ module Locatine
         page = @session.page
         data.each_pair do |depth, array|
           get_trusted(array).each do |hash|
-            Thread.current['temp'] = []
+            @temp = []
             catch(page, hash, depth)
             temp_results_push
           end
@@ -47,7 +47,7 @@ module Locatine
       end
 
       def temp_results_push
-        Thread.current['temp'].uniq.each do |index|
+        @temp.uniq.each do |index|
           thread_out[index] ||= 0
           thread_out[index] += 1
         end
@@ -95,7 +95,7 @@ module Locatine
 
       def kids(array, depth)
         array.each do |element|
-          Thread.current['temp'].push element['index']
+          @temp.push element['index']
           if !element['children'].empty? && depth.to_i.positive?
             kids(element['children'], depth)
           end

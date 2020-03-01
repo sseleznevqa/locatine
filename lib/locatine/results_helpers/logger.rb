@@ -15,6 +15,10 @@ module Locatine
         puts "MESSAGE: #{Time.now}: ".magenta + text
       end
 
+      def locatine_error(text)
+        puts "ERROR: #{Time.now}: ".red + text.red
+      end
+
       def warn_locator
         warn("Locator is broken. For #{name} by"\
              " #{@locator['using']}>>>'#{locator['value']}'")
@@ -39,13 +43,21 @@ module Locatine
       end
 
       def warn_unstable_page
-        warn 'Some elements found by locatine are not attached to DOM anymore.'\
-             ' Page is unstable. Starting it once more'
+        warn 'Locatine detected stale element error. It means some elements'\
+             ' found by locatine are not attached to DOM anymore.'\
+             ' Page is unstable. Starting searching process again'
       end
 
       def log_found
         log "Locatine found something as #{@name}"
         log "XPATH == #{generate_xpath(raw_info)}"
+      end
+
+      def raise_script_error(script, args, answer)
+        locatine_error 'Locatine faced an error while trying to perform '\
+          "js script.\n ---Script was: #{script}\n\n ---Arguments was: #{args}"\
+          "\n\n ---Answer was: #{answer}"
+        raise answer['error']
       end
     end
   end
