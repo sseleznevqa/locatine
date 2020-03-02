@@ -162,3 +162,8 @@ First release. Locatine can
 
 # Version 0.02651
 - Everything is rewrited.
+
+# Version 0.02653
+- Minor fixes of the readme, gemspec
+- Fixes to structure
+- Showstopper is fixed

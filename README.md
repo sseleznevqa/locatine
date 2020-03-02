@@ -329,7 +329,7 @@ For more information about locators read about [locator strategies](https://www.
 
 Locatine also provides its own locator strategy == 'locatine'. In order to use it you need to inject it to the code of selenium-webdriver implementation.
 
-See it's done for ruby [here](https://github.com/sseleznevqa/locatine/tree/master/spec/e2e_spec.rb#L6-L25)
+See it's done for ruby [here](https://github.com/sseleznevqa/locatine/tree/master/spec/e2e_spec.rb#L5-L11)
 
 When it's done you can use:
 

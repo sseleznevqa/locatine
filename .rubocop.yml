@@ -1,6 +1,3 @@
-Style/RedundantReturn:
-  AllowMultipleReturnValues: true
-
 Metrics/ParameterLists:
   # It is too much to use a config here!
   Max: 15

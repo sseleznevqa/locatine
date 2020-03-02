@@ -5,11 +5,13 @@ describe 'test' do
   it "fails" do
     # When we are using usual selenium webdriver it will lose element if
     # it has changed attribute that is used for locator.
-    driver = Selenium::WebDriver.for :remote, url: "http://localhost:4444/wd/hub", desired_capabilities: :chrome
+    driver = Selenium::WebDriver.for :remote,
+           url: "http://localhost:4444/wd/hub", desired_capabilities: :chrome
     driver.navigate.to page 1
     element = driver.find_element(xpath: "//*[@id='element']")
     driver.execute_script("arguments[0].setAttribute('id', 'lost')", element)
-    expect{driver.find_element(xpath: "//*[@id='element']")}.to raise_error Selenium::WebDriver::Error::NoSuchElementError
+    expect{driver.find_element(xpath: "//*[@id='element']")}.
+                  to raise_error Selenium::WebDriver::Error::NoSuchElementError
     driver.quit
   end
 

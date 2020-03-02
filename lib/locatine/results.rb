@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-require 'locatine/results_helpers/info_generator'
-require 'locatine/results_helpers/xpath_generator'
-require 'locatine/results_helpers/find_by_magic'
-require 'locatine/results_helpers/common'
-require 'locatine/results_helpers/logger'
-require 'locatine/results_helpers/guess'
-
 module Locatine
   #
   # Locatine results container
@@ -15,7 +8,7 @@ module Locatine
     include Locatine::ResultsHelpers::XpathGenerator
     include Locatine::ResultsHelpers::FindByMagic
     include Locatine::ResultsHelpers::Common
-    include Locatine::ResultsHelpers::Logger
+    include Locatine::Logger
     include Locatine::ResultsHelpers::Guess
 
     attr_accessor :name, :config, :locator

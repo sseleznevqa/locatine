@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-require 'locatine/results'
-require 'locatine/element'
-require 'locatine/results_helpers/logger'
-
 module Locatine
   #
   # Locatine session operator finds and returns
   class Session
-    include Locatine::ResultsHelpers::Logger
+    include Locatine::Logger
     attr_accessor :json, :depth, :trusted, :untrusted, :tolerance, :stability,
                   :elements, :timeout
 
