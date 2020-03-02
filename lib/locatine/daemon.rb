@@ -2,8 +2,6 @@
 
 require 'sinatra/base'
 require 'json'
-require 'locatine/session'
-require 'locatine/daemon_helpers/methods'
 
 module Locatine
   #

@@ -14,7 +14,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02651**. This is the 1st version since redesign. Next 5-15 versions will be about bug fixing and minor tweaks.
+Version of Locatine is **0.02653**. This is the 1st version since redesign. Next 5-15 versions will be about bug fixing and minor tweaks.
 
 ## Attention
 
@@ -80,7 +80,7 @@ driver = Selenium::WebDriver.
 
 This way is recommended because of the simplicity.
 
-Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wd-hub-session_id)
+Another way is to set options after the session was created by making [POST request to '/locatine/session/%session_id%'](https://github.com/sseleznevqa/locatine#post-to-wdhubsession)
 
 ## Settings to pass
 
@@ -329,7 +329,7 @@ For more information about locators read about [locator strategies](https://www.
 
 Locatine also provides its own locator strategy == 'locatine'. In order to use it you need to inject it to the code of selenium-webdriver implementation.
 
-See it's done for ruby [here](https://github.com/sseleznevqa/locatine/tree/master/spec/e2e_spec.rb#L6-L25)
+See it's done for ruby [here](https://github.com/sseleznevqa/locatine/tree/master/spec/e2e_spec.rb#L5-L11)
 
 When it's done you can use:
 

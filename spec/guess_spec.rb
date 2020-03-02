@@ -3,26 +3,12 @@
 require 'spec_helper'
 
 # Getting there!
-module Selenium
-  module WebDriver
-    module SearchContext
-      FINDERS = {
-        class: 'class name',
-        class_name: 'class name',
-        css: 'css selector',
-        id: 'id',
-        link: 'link text',
-        link_text: 'link text',
-        locatine: 'locatine', # Here we are!
-        name: 'name',
-        partial_link_text: 'partial link text',
-        relative: 'relative',
-        tag_name: 'tag name',
-        xpath: 'xpath'
-      }.freeze
-    end
-  end
+finders = {}
+Selenium::WebDriver::SearchContext::FINDERS.each_pair do |key, value|
+  finders[key] = value
 end
+finders[:locatine] = 'locatine'
+Selenium::WebDriver::SearchContext::FINDERS = finders.freeze
 
 describe 'user' do
   before(:all) do
