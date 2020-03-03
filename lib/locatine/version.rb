@@ -2,7 +2,7 @@
 
 module Locatine
   # constants here...
-  VERSION = '0.02653'
+  VERSION = '0.02710'
   NAME = 'locatine'
   HOME = if File.readable?("#{Dir.pwd}/lib/#{Locatine::NAME}")
            "#{Dir.pwd}/lib/#{Locatine::NAME}"

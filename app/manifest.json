@@ -1,6 +1,6 @@
 {
   "name": "Locatine Locator Helper",
-  "version": "0.02653",
+  "version": "0.02710",
   "description": "Locator helper for locatine",
   "devtools_page": "devtools.html",
   "permissions": ["storage", "contextMenus"],
