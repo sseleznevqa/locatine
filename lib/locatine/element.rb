@@ -7,6 +7,10 @@ module Locatine
     attr_accessor :answer
 
     def initialize(session, element_code)
+      unless element_code
+        raise ArgumentError, 'Cannot init element with no element data'
+      end
+
       @session = session
       @answer = element_code
     end
