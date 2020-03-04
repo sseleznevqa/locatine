@@ -64,9 +64,9 @@ module Locatine
 
     def execute_script(script, *args)
       args.map! { |item| item.class == Locatine::Element ? item.answer : item }
-      value = JSON.parse(api_request('/execute/sync', 'Post',
-                                     { script: script, args: args }
-                                             .to_json).body)['value']
+      response = api_request('/execute/sync', 'Post',
+                             { script: script, args: args }.to_json).body
+      value = JSON.parse(response, max_nesting: false)['value']
       error_present = (value.class == Hash) && value['error']
       raise_script_error(script, args, value) if error_present
 

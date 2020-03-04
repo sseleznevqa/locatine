@@ -1,0 +1,83 @@
+<html>
+<body>
+  <div>
+    </div>
+<body>
+</html>
+<script>
+  let index = 0;
+  function createElement(dom, tag, attrs, inner) {
+    const element = document.createElement(tag);
+    dom.appendChild(element);
+    for (var key in attrs) {
+      element.setAttribute(key, attrs[key])
+    };
+    element.innerHTML = inner;
+    return element;
+  };
+
+  function random() {
+    if (index >= 10000) {
+      index = 0;
+      console.log("10000 is hit");
+    }
+    //console.log(document.index);
+    index = index + 1;
+    return document.randoms[index-1];
+  }
+
+
+
+  function sample(array) {
+    return array[Math.floor(random() * array.length)];
+  }
+
+  function samples(array, count = (Math.floor(random() * 10)), result = []) {
+    result.push(sample(array));
+    if (count >= 1) {
+      return samples(array, count-1, result)
+    }
+    return result;
+  }
+
+  function createRandomElement() {
+    const list = document.body.getElementsByTagName("*");
+    const dom = sample(list);
+    const letters = "qwertyuiopasdfghjklzxcvbnm".split('');
+    const tag = samples(letters).join('');
+    const moreLetters = "qwertyuiopasdfghjklzxcvbnm123456790-   ";
+    const attrs = {};
+    for (let i = 0; i <= (Math.floor(random() * 10)); i++) {
+      attrs[samples(letters).join('')] = samples(moreLetters).join('');
+    }
+    const inner = samples(moreLetters).join('');
+    createElement(dom, tag, attrs, inner);
+  }
+
+  function clear(count) {
+    if (count <=0) {
+      return true;
+    }
+    const list = document.body.getElementsByTagName("*");
+    const dom = sample(list);
+    const child = dom.lastElementChild;
+    if (child && !child.innerHTML.includes('<')) {
+      dom.removeChild(child);
+      clear(count - 1);
+    } else {
+      clear(count);
+    }
+  }
+
+let crazy = setInterval(function() {
+  for(let i = 0; i<=1000; i++) {
+    createRandomElement();
+  }
+  clear(900);
+}, 500);
+
+setTimeout(function() {
+  clearInterval(crazy);
+  createElement(document.body, "span", {"id": "something magically find"}, "Check text");
+}, 20000)
+</script>

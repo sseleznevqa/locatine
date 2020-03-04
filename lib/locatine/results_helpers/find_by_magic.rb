@@ -28,10 +28,15 @@ module Locatine
         classic = classic_thread
         magic = magic_thread
         sleep 0.1 while timer && !similar?
-        classic.kill
-        magic.kill
+        kill_join(classic)
+        kill_join(magic)
         normalize_indexes(magic['out']) if empty? && (magic['out'].to_h != {})
         self
+      end
+
+      def kill_join(thread)
+        thread.kill
+        thread.join
       end
 
       def magic_routine(data)
@@ -54,14 +59,21 @@ module Locatine
       end
 
       def magic_find(data = known)
+        @everything = all_elements
         magic_routine(data)
         normalize_indexes
       end
 
-      def normalize_indexes(indexes = Thread.current['out'])
+      def all_elements
         all = { 'using' => 'tag name', 'value' => '*' }
         list = @session.api_request('/elements', 'Post', all.to_json).body
-        list = JSON.parse(list)['value']
+        JSON.parse(list)['value']
+      end
+
+      def normalize_indexes(indexes = Thread.current['out'])
+        list = all_elements
+        return warn_unstable_page if list != @everything
+
         answers = max_indexes(indexes).map { |index| list[index.to_i] }
         answers.each do |item|
           push Locatine::Element.new(@session, item)
