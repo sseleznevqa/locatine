@@ -167,3 +167,7 @@ First release. Locatine can
 - Minor fixes of the readme, gemspec
 - Fixes to structure
 - Showstopper is fixed
+
+# Version 0.02710
+- Fixed bug with more than 100-deep nested html elements
+- Fixed bug about handling stale element reference error

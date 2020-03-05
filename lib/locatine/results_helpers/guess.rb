@@ -60,6 +60,11 @@ module Locatine
         return true if tolerance == 100
 
         count_similarity
+      rescue RuntimeError => e
+        raise e.message unless e.message == 'stale element reference'
+
+        warn_unstable_page
+        false
       end
 
       def similar_enough(same, all)
