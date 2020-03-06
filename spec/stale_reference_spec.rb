@@ -49,7 +49,7 @@ describe 'locatine' do
   end
 
   seed = rand(1_000_000)
-  it "finds untouched element on changing page" do
+  it 'finds untouched element on changing page' do
     random = Random.new(seed)
     array = Array.new(10_000) { random.rand }
     @b.goto page 12
@@ -57,8 +57,8 @@ describe 'locatine' do
     @b.goto page 14
     @d.execute_script('document.randoms = arguments[0]', array)
     sleep 5
-    expect(@d.find_element(locatine: 'something to find span').
-                                    text.include?('Check text')).to eq true
+    expect(@d.find_element(locatine: 'something to find span')
+                                    .text.include?('Check text')).to eq true
   end
 
   after(:all) do

@@ -83,7 +83,7 @@ module Locatine
       # We need duplicated JSON parse since standart
       # chromedriver giving an error here
       page = execute_script(File.read("#{HOME}/scripts/page.js"))
-      JSON.parse(x, max_nesting: false)['result'];
+      JSON.parse(page, max_nesting: false)['result']
     end
 
     def call_uri(path)
