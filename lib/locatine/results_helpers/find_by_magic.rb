@@ -72,9 +72,12 @@ module Locatine
 
       def normalize_indexes(indexes = Thread.current['out'])
         list = all_elements
-        return warn_unstable_page if list != @everything
+        warn_unstable_page if list != @everything
+        max_list = max_indexes(indexes)
+        old_answers = max_list.map { |index| @everything[index.to_i] }
+        answers = max_list.map { |index| list[index.to_i] }
+        return if old_answers != answers
 
-        answers = max_indexes(indexes).map { |index| list[index.to_i] }
         answers.each do |item|
           push Locatine::Element.new(@session, item)
         end

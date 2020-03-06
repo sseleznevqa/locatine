@@ -1,6 +1,7 @@
 <html>
 <body>
   <div>
+    <span id="other for find">Check text</span>
     </div>
 <body>
 </html>
@@ -27,8 +28,6 @@
     index = index + 1;
     return document.randoms[index-1];
   }
-
-
 
   function sample(array) {
     return array[Math.floor(random() * array.length)];
@@ -63,7 +62,7 @@
     const list = document.body.getElementsByTagName("*");
     const dom = sample(list);
     const child = dom.lastElementChild;
-    if (child && !child.innerHTML.includes('<')) {
+    if (child && !child.innerHTML.includes('<') && !child.innerHTML.includes('Check text')) {
       dom.removeChild(child);
       clear(count - 1);
     } else {
@@ -80,6 +79,6 @@ let crazy = setInterval(function() {
 
 setTimeout(function() {
   clearInterval(crazy);
-  createElement(document.body, "span", {"id": "something magically find"}, "Check text");
+  createElement(document.body, "span", {"id": "something to find"}, "Wrong text");
 }, 20000)
 </script>

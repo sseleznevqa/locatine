@@ -34,10 +34,18 @@ module Locatine
       { result: result }.to_json
     end
 
+    def send_error(error)
+      status error.status
+
+      error.answer
+    end
+
     # selenium calls
     post '/wd/hub/session/*/element' do
       content_type settings.headers['Content-Type']
       results = settings.sessions[session_id].find(params, element_id)
+      return send_error(results.first) if results.first.class == Locatine::Error
+
       status 200
       results.empty? ? raise_not_found : { value: results.first.answer }.to_json
     end
@@ -45,6 +53,8 @@ module Locatine
     post '/wd/hub/session/*/elements' do
       content_type settings.headers['Content-Type']
       results = settings.sessions[session_id].find(params, element_id)
+      return send_error(results.first) if results.first.class == Locatine::Error
+
       status 200
       answer = results.empty? ? [] : results.map(&:answer)
       { value: answer }.to_json
