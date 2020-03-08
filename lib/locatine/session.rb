@@ -81,7 +81,7 @@ module Locatine
 
     def page
       # We need duplicated JSON parse since standart
-      # chromedriver giving an error here
+      # chromedriver giving an error here if the page is too large
       page = execute_script(File.read("#{HOME}/scripts/page.js"))
       JSON.parse(page, max_nesting: false)['result']
     end
