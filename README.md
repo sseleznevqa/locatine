@@ -367,9 +367,7 @@ element = driver.find_element(css: "/*important input*/")
 
 Locatine will try to find it by those two words. If the id is really uniq it will return the desired element.
 
-Right now there is a Locatine Naming App that is in pending review status in the Chrome extension shop. This app is for creating good locatine locators.
-
-If you wanna try it before it is published - code is in the app folder of this repository.
+There is a [Locatine Name Helper chrome extension](https://chrome.google.com/webstore/detail/locatine-locator-helper/heeoaalghiamfjphdlieoblmodpcficg). This app is for creating good locatine locators (it is creating a pair - most uniq attribute value + tag for selected element, elements). Note that the app is an early draft. It's gonne be better with time.
 
 **NOTE! Locatine locators case insensitive.**
 
