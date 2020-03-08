@@ -171,3 +171,8 @@ First release. Locatine can
 # Version 0.02710
 - Fixed bug with more than 100-deep nested html elements
 - Fixed bug about handling stale element reference error
+
+# Version 0.02878
+- Fixed bug with no handling selenium error
+- Fixed bug with no chance to find stable element on unstable page
+- Fixed bug with enormously nested element on the page

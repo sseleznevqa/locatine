@@ -22,8 +22,12 @@ module Locatine
 
     def simple_find
       path = @parent ? "/element/#{@parent}/elements" : '/elements'
-      selenium_found = @session.api_request(path, 'Post', @locator.to_json).body
-      JSON.parse(selenium_found)['value'].each do |item|
+      response = @session.api_request(path, 'Post', @locator.to_json)
+      found = JSON.parse(response.body)
+      error_present = (found['value'].class == Hash) && found['value']['error']
+      return error_routine(response) if error_present
+
+      found['value'].each do |item|
         push Locatine::Element.new(@session, item)
       end
       self
@@ -33,9 +37,15 @@ module Locatine
       #  {"element-6066-11e4
     end
 
+    def error_routine(answer)
+      @error = Locatine::Error.new(answer)
+      warn_error_detected(answer)
+      push @error
+    end
+
     def classic_find
       first_attempt
-      locating = @locator['value'].empty? || tolerance.positive?
+      locating = (@locator['value'].empty? || tolerance.positive?) && !@error
       return unless locating
 
       second_attempt

@@ -43,6 +43,14 @@ describe 'user' do
       .to raise_error Watir::Exception::UnknownObjectException
   end
 
+  it 'cannot find element by invalid locator' do
+    expect do
+      @b.element(xpath: '//div!@#$%^&*()[]Abrakadabra')
+        .locate.click
+    end
+      .to raise_error Selenium::WebDriver::Error::InvalidSelectorError
+  end
+
   it 'can find element' do
     @b.goto page(1)
     @b.element(xpath: '//div').locate.click

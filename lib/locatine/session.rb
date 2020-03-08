@@ -49,17 +49,23 @@ module Locatine
     end
 
     def find(params, parent = nil)
-      results = Results.new
-      results.configure(self, params, parent)
-      answer = results.find
-      @elements[results.name] = results.info unless answer.empty?
-      write unless answer.empty?
-      answer
+      find_routine(params, parent)
     rescue RuntimeError => e
       raise e.message unless e.message == 'stale element reference'
 
       warn_unstable_page
       find(params, parent)
+    end
+
+    def find_routine(params, parent)
+      results = Results.new
+      results.configure(self, params, parent)
+      answer = results.find
+      if !answer.empty? && answer.first.class != Locatine::Error
+        @elements[results.name] = results.info
+        write
+      end
+      answer
     end
 
     def execute_script(script, *args)
@@ -74,7 +80,10 @@ module Locatine
     end
 
     def page
-      execute_script(File.read("#{HOME}/scripts/page.js"))
+      # We need duplicated JSON parse since standart
+      # chromedriver giving an error here if the page is too large
+      page = execute_script(File.read("#{HOME}/scripts/page.js"))
+      JSON.parse(page, max_nesting: false)['result']
     end
 
     def call_uri(path)

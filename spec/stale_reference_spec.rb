@@ -27,14 +27,10 @@ describe 'locatine' do
     @d = @b.driver
   end
 
-  it 'parsing even deep nested pages' do
-    seed = 40 # rand(1000)
-    random = Random.new(seed)
-    array = Array.new(10_000) { random.rand }
+  it 'nested elements' do
     @b.goto page 12
     @d.find_element(locatine: 'something to find span')
-    @b.goto page 13
-    @d.execute_script('document.randoms = arguments[0]', array)
+    @b.goto page 15
     expect(@d.find_element(locatine: 'something to find span').text)
       .to eq 'Check text'
   end
@@ -47,8 +43,22 @@ describe 'locatine' do
     @d.find_element(locatine: 'something to find span')
     @b.goto page 13
     @d.execute_script('document.randoms = arguments[0]', array)
+    sleep 5
     expect(@d.find_element(locatine: 'something to find span').text)
       .to eq 'Check text'
+  end
+
+  seed = rand(1_000_000)
+  it 'finds untouched element on changing page' do
+    random = Random.new(seed)
+    array = Array.new(10_000) { random.rand }
+    @b.goto page 12
+    @d.find_element(locatine: 'something to find span')
+    @b.goto page 14
+    @d.execute_script('document.randoms = arguments[0]', array)
+    sleep 5
+    expect(@d.find_element(locatine: 'something to find span')
+                                    .text.include?('Check text')).to eq true
   end
 
   after(:all) do

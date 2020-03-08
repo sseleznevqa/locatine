@@ -58,5 +58,12 @@ module Locatine
         "\n\n ---Answer was: #{answer}"
       raise answer['error']
     end
+
+    def warn_error_detected(answer)
+      warn "selenium is returning an error with code #{answer.code} "\
+           'It will be returned to your code. It can be locatine internal '\
+           'bug, selenium problem (dead browser for example) or something '\
+           'in your code (invalid locator for example)'
+    end
   end
 end
