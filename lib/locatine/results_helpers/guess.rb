@@ -2,9 +2,11 @@
 
 module Locatine
   module ResultsHelpers
-    #
+    ##
     # Trying to guess element here
     module Guess
+      private
+
       def guess
         warn_guess
         @config['tolerance'] = 100

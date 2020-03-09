@@ -2,9 +2,11 @@
 
 module Locatine
   module ResultsHelpers
-    #
+    ##
     # Some common methods without much logic
     module Common
+      private
+
       def timer
         @time ||= Time.now
         timeout > Time.now - @time
@@ -25,15 +27,6 @@ module Locatine
 
       def same_name_type(item, hash)
         (item['name'] == hash['name']) && (item['type'] == hash['type'])
-      end
-
-      def info_hash_eq(item, hash)
-        # Return true
-        # If type is unknown (but not a text)
-        # Or when type and name are similar
-        (unknown_no_text(item, hash) || same_name_type(item, hash)) &&
-          # And at the same time values are (almost) the same
-          (item['value'].downcase == hash['value'].downcase)
       end
 
       def stability

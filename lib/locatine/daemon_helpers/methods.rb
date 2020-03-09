@@ -7,6 +7,8 @@ module Locatine
     #
     # Methods that are used by daemon
     module Methods
+      private
+
       def api_request(type, path, query_string, body, new_headers)
         uri = make_uri(path, query_string)
         req = Net::HTTP.const_get(type).new(uri,
@@ -79,6 +81,12 @@ module Locatine
       def element_id
         path_array = request.path_info.split('/')
         path_array.size >= 7 ? path_array[6] : nil
+      end
+
+      def send_error(error)
+        status error.status
+
+        error.answer
       end
     end
   end

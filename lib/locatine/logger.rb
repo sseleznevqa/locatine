@@ -3,9 +3,13 @@
 require 'colorize'
 
 module Locatine
-  #
+  ##
   # Methods for sending lines to STDOUT
+  #
+  # Some of methods are specific and should be run in a correct class only!
   module Logger
+    private
+
     def warn(text)
       puts "WARNING: #{Time.now}: ".yellow + text
     end
@@ -20,7 +24,7 @@ module Locatine
 
     def warn_locator
       warn("Locator is broken. For #{name} by"\
-           " #{@locator['using']}>>>'#{locator['value']}'")
+           " #{@locator['using']}>>>'#{@locator['value']}'")
     end
 
     def warn_guess

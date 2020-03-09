@@ -5,6 +5,8 @@ module Locatine
     ##
     # Methods for generation xpath from stored data
     module XpathGenerator
+      private
+
       def find_by_data(base = known)
         xpath = generate_xpath(base)
         @locator = { 'using' => 'xpath', 'value' => xpath }

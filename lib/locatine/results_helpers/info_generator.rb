@@ -2,12 +2,10 @@
 
 module Locatine
   module ResultsHelpers
-    #
+    ##
     # Methods for gathering element info
     module InfoGenerator
-      def info
-        stability_bump(raw_info)
-      end
+      private
 
       def raw_info
         result = {}
