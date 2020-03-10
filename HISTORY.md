@@ -176,3 +176,8 @@ First release. Locatine can
 - Fixed bug with no handling selenium error
 - Fixed bug with no chance to find stable element on unstable page
 - Fixed bug with enormously nested element on the page
+
+# Version 0.03050
+- More privacy for methods
+- App is slightly improved
+- Code is commented

@@ -50,7 +50,7 @@ async function addOptions() {
     document.data = document.current;
   } else {
     if (document.data.tag !== document.current.tag) {
-      await clearOptions();
+      await clearOptions(true);
       return setTitle("Selected elements were too different (different tags). Selection is dropped.")
     }
     const pairs = document.data.attrs.filter(x => document.current.attrs.filter(y => x == y).length >0);
