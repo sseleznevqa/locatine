@@ -14,7 +14,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.02878**. The 4th version since rewriting. 5-15 next versions is dedicated to bug fixing, tweaking.
+Version of Locatine is **0.03050**. The 4th version since rewriting. 5-15 next versions is dedicated to bug fixing, tweaking.
 
 ## Attention
 

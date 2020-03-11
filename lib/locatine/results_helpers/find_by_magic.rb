@@ -2,9 +2,11 @@
 
 module Locatine
   module ResultsHelpers
-    #
+    ##
     # Methods for active looking for element
     module FindByMagic
+      private
+
       def magic_thread
         Thread.new do
           while empty?

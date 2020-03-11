@@ -27,8 +27,10 @@ describe 'examples to see the powers of locatine' do
 
   it "finds the lost element with locatine" do
     # When we are using locatine it is much harder for element to hide.
-    caps = Selenium::WebDriver::Remote::Capabilities.chrome('locatine' => {'json' => "#{Dir.pwd}/jsons/elements.json"})
-    driver = Selenium::WebDriver.for :remote, url: "http://localhost:7733/wd/hub", desired_capabilities: caps
+    caps = Selenium::WebDriver::Remote::Capabilities.
+             chrome('locatine' => {'json' => "#{Dir.pwd}/jsons/elements.json"})
+    driver = Selenium::WebDriver.for :remote,
+                url: "http://localhost:7733/wd/hub", desired_capabilities: caps
     driver.navigate.to page 1
     element = driver.find_element(xpath: "//*[@id='good']kjhgkjhg")
     driver.execute_script("arguments[0].setAttribute('id', 'lost')", element)

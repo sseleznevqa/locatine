@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 module Locatine
+  ##
+  # Locatine results container.
   #
-  # Locatine results container
+  # Results is a pretty strange concept. It is an array of returned elements
+  # which is extended by methods of finding and gathering elements.
   class Results < Array
     include Locatine::ResultsHelpers::InfoGenerator
     include Locatine::ResultsHelpers::XpathGenerator
@@ -10,15 +13,48 @@ module Locatine
     include Locatine::ResultsHelpers::Common
     include Locatine::Logger
     include Locatine::ResultsHelpers::Guess
+    include Locatine::ResultsHelpers::Comparing
+    include Locatine::ResultsHelpers::Config
 
-    attr_accessor :name, :config, :locator
+    attr_accessor :name
 
-    def configure(session, locator, parent)
-      @session = session
-      @locator = locator.clone
-      read_locator
-      @parent = parent
+    ##
+    # Method to find elements
+    #
+    # +session+ instance of Locatine::Session
+    # +locator+ can be a classic locator shaped for webdriver protocol like:
+    # {'using => 'xpath', 'value' => '//div'} or
+    # {'using' => 'css selector', 'value' => 'div'}
+    # It also can be a locator with magic comment like
+    # {'using' => 'css selector', 'value' => 'div/*magic comment*/'}
+    # It also can be a locator with incapsulated json
+    # {'using' => 'css selector', 'value' => 'div/*{"name": "magic comment"}*/'}
+    # It can be a locatine locator
+    # {'using' => 'locatine', 'value' => '{"name": "magic comment"}'} or
+    # {'using' => 'locatine', 'value' => 'magic comment'
+    # +parent+ is the parent element to look for the nested ones.
+    def find(session, locator, parent)
+      configure(session, locator, parent)
+      timer
+      classic_find
+      guess if name_only?
+      return self unless empty?
+
+      find_by_magic if known && tolerance.positive?
+      similar? ? found : not_found
     end
+
+    ##
+    # Method to return information about elements found
+    #
+    # Information is returned combined with the previously known data and can
+    # be stored and used as is. It means that its returning not the data about
+    # one particular search. But the combined data of all previous searches
+    def info
+      stability_bump(raw_info)
+    end
+
+    private
 
     def simple_find
       path = @parent ? "/element/#{@parent}/elements" : '/elements'
@@ -75,16 +111,6 @@ module Locatine
       find_by_data(base) if empty? && !trusted.empty? && !base['0'].empty?
     end
 
-    def find
-      timer
-      classic_find
-      guess if name_only?
-      return self unless empty?
-
-      find_by_magic if known && tolerance.positive?
-      similar? ? found : not_found
-    end
-
     def found
       log_found
       uniq
@@ -93,36 +119,6 @@ module Locatine
     def not_found
       warn_lost
       []
-    end
-
-    def read_locator
-      case @locator['using']
-      when 'css selector'
-        # "button/*{json}*/"
-        read_locator_routine(%r{/\*(.*)\*/$})
-      when 'xpath'
-        # "//button['{json}']"
-        read_locator_routine(/\[\'(.*)\'\]$/)
-      when 'locatine'
-        read_locator_routine(/(.*)/)
-      end
-    end
-
-    def read_locator_routine(regexp)
-      matched = @locator['value'].match(regexp)
-      @config = matched ? config_provided(matched[1]) : {}
-      @locator['value'] = @locator['value'].gsub(matched[0], '') if matched
-      @locator = @config['locator'] if @config['locator']
-      @name = @config['name'] || @locator['value']
-    end
-
-    def config_provided(config)
-      JSON.parse(config)
-    rescue StandardError
-      result = {}
-      result['tolerance'] = 0 if config.start_with?('exactly')
-      result['name'] = config.gsub('exactly ', '')
-      result
     end
   end
 end

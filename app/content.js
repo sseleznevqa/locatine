@@ -10,6 +10,13 @@ function getSelected(target) {
   attrs.sort(function(a, b) {
     return weight(a, page) - weight(b, page);
   });
+  if (weight(attrs[0], page)>1) {
+    let temp = [];
+    for (let k = 1, n = attrs.length; k < n; k++) {
+      temp.push([`${attrs[0]} ${attrs[k]}`])
+    }
+    attrs = temp.concat(attrs);
+  }
   let data = {"attrs": attrs, "tag": target.tagName};
   set_value('locatined', data)
   return true;

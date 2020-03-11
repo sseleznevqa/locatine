@@ -28,7 +28,7 @@ describe 'session basically' do
 
   it 'writes files' do
     @session.instance_variable_set('@elements', 'hey' => %w[1 2])
-    @session.write
+    @session.send :write
     hash = JSON.parse(File.read('./locatine_files/default.json'))['elements']
     expect(hash['hey']).to eq(%w[1 2])
   end

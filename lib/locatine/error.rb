@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Locatine
-  #
+  ##
   # Simple error
   class Error
     attr_accessor :answer, :status

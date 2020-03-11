@@ -4,7 +4,7 @@ require 'sinatra/base'
 require 'json'
 
 module Locatine
-  #
+  ##
   # Locatine daemon based on sinatra
   #
   # run Locatine::Daemon.run!
@@ -32,12 +32,6 @@ module Locatine
       session = request.path_info.split('/').last
       result = settings.sessions[session].configure(params)
       { result: result }.to_json
-    end
-
-    def send_error(error)
-      status error.status
-
-      error.answer
     end
 
     # selenium calls
