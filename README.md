@@ -16,10 +16,6 @@ That's it.
 
 Version of Locatine is **0.03118**.
 
-## Attention
-
-This version of Locatine is not compatible to previous.
-
 ## Installation
 
 Add this line to your application's Gemfile:
