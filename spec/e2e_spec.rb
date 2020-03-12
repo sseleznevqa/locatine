@@ -43,7 +43,7 @@ describe 'user' do
       .to raise_error Watir::Exception::UnknownObjectException
   end
 
-  it 'cannot find element by invalid locator' do
+  it 'cannot find element by d locator' do
     expect do
       @b.element(xpath: '//div!@#$%^&*()[]Abrakadabra')
         .locate.click

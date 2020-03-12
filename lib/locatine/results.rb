@@ -44,10 +44,8 @@ module Locatine
     # @return class instance populated by results or an empty array
     def find(session, locator, parent)
       configure(session, locator, parent)
-      timer
-      classic_find
-      guess if name_only?
-      return found unless empty?
+      find_routine
+      return self unless empty?
 
       find_by_magic if known && tolerance.positive?
       similar? ? found : not_found
@@ -64,6 +62,15 @@ module Locatine
     end
 
     private
+
+    def find_routine
+      timer
+      classic_find
+      guess if name_only?
+      return if first.class == Locatine::Error || empty?
+
+      log_found if name_only?
+    end
 
     def simple_find
       path = @parent ? "/element/#{@parent}/elements" : '/elements'
