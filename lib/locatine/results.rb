@@ -21,18 +21,27 @@ module Locatine
     ##
     # Method to find elements
     #
-    # +session+ instance of Locatine::Session
-    # +locator+ can be a classic locator shaped for webdriver protocol like:
-    # {'using => 'xpath', 'value' => '//div'} or
-    # {'using' => 'css selector', 'value' => 'div'}
-    # It also can be a locator with magic comment like
-    # {'using' => 'css selector', 'value' => 'div/*magic comment*/'}
-    # It also can be a locator with incapsulated json
-    # {'using' => 'css selector', 'value' => 'div/*{"name": "magic comment"}*/'}
-    # It can be a locatine locator
-    # {'using' => 'locatine', 'value' => '{"name": "magic comment"}'} or
-    # {'using' => 'locatine', 'value' => 'magic comment'
-    # +parent+ is the parent element to look for the nested ones.
+    # @param session [Locatine::Session]
+    # @param locator [Hash] can be a classic locator shaped for webdriver
+    #   protocol like:
+    #
+    #   +{'using => 'xpath', 'value' => '//div'}+ or
+    #   +{'using' => 'css selector', 'value' => 'div'}+
+    #
+    #   It also can be a locator with magic comment like:
+    #
+    #   +{'using' => 'css selector', 'value' => 'div/*magic comment*/'}+
+    #
+    #   It also can be a locator with incapsulated json
+    #
+    #   +{'using' => 'css selector', 'value' => 'div/*{"name": "magic "}*/'}+
+    #
+    #   It can be a locatine locator
+    #
+    #   +{'using' => 'locatine', 'value' => '{"name": "magic comment"}'}+ or
+    #   +{'using' => 'locatine', 'value' => 'magic comment'}+
+    # @param parent is the parent element to look for the nested ones.
+    # @return class instance populated by results or an empty array
     def find(session, locator, parent)
       configure(session, locator, parent)
       timer

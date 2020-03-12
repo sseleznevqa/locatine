@@ -12,9 +12,11 @@ module Locatine
     ##
     # Init method
     #
-    # +session+ is a Locatine::Session instance
-    # +element_code+ is an element hash returned by selenium it is shaped like:
-    # {"element-6066-11e4-a52e-4f735466cecf"=>"c95a0580-4ac7-4c6d-..."}
+    # @param session [Locatine::Session instance]
+    # @param element_code [Hash] is an element hash returned by selenium,
+    #   it is shaped like:
+    #
+    #   +{"element-6066-11e4-a52e-4f735466cecf"=>"c95a0580-4ac7-4c6d-..."}+
     def initialize(session, element_code)
       unless element_code
         raise ArgumentError, 'Cannot init element with no element data'

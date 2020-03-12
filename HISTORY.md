@@ -181,3 +181,7 @@ First release. Locatine can
 - More privacy for methods
 - App is slightly improved
 - Code is commented
+
+# Version 0.03118
+- Fixed bug with no unnecessary magic if element appears after been concidered lost
+- Comment fixes

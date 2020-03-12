@@ -16,8 +16,8 @@ module Locatine
     ##
     # Init of the new session instance
     #
-    # +selenium+ is a selenium address like "https://host:port"
-    # +session+ is a session id provided by selenium
+    # @param selenium [String] is a selenium address like +"https://host:port"+
+    # @param session [String] is a session id provided by selenium
     def initialize(selenium, session)
       @selenium = selenium
       @parsed_selenium = URI.parse @selenium
@@ -31,7 +31,8 @@ module Locatine
     ##
     # This method is to set settings
     #
-    # +params+ is a hash of settings like {json: "some", depth: 0...}
+    # @param params [Hash] is for settings like +{json: "some", depth: 0...}+
+    # @return params hash :)
     def configure(params)
       params.to_h.each_pair do |var, value|
         instance_variable_set("@#{var}", value)
@@ -44,10 +45,13 @@ module Locatine
     # Find method is for finding elements.
     #
     # That is the part that is replacing simple finding by selenium
-    # +params+ is a hash of settings like {json: "some", depth: 0...}
-    # +parent+ is an element code of the element to look under. It is counted
-    # only for the most simple search. If element is lost parent will be
-    # ignored
+    # @param params [Hash] is for settings like +{json: "some", depth: 0...}+
+    # @param parent [String] is an element code of the element to look under.
+    #   It is counted
+    #   only for the most simple search. If element is lost parent will be
+    #   ignored
+    # @return populated instance of Locatine::Results or an empty array
+    #   or Locatine::Error
     def find(params, parent = nil)
       find_routine(params, parent)
     rescue RuntimeError => e
@@ -60,10 +64,10 @@ module Locatine
     ##
     # Session can execute js scripts on a page
     #
-    # Note this method will be not called when you are asking selenoum via
-    # locatine to execute a script. This class is for internal use.
-    # +script+ some valid js code
-    # +*args+ arguments to be passed to script.
+    # @note This method will be not called when you are asking selenum via
+    #   locatine to execute a script. This method is for internal use only.
+    # @param script [String] some valid js code
+    # @param *args [Array] arguments to be passed to script.
     def execute_script(script, *args)
       args.map! { |item| item.class == Locatine::Element ? item.answer : item }
       response = api_request('/execute/sync', 'Post',
@@ -89,9 +93,13 @@ module Locatine
     #
     # We are using it to ask for elements found by selenium or
     # for script execution
-    # +path+ is a relative path to call on selenium like '/elements'
-    # +method+ is an http method to perform ('Get', 'Post', etc.)
-    # +body+ is for request data. json here (selenium wants it) or nil
+    # @param path [String] is a relative path to call on selenium like
+    #   +'/elements'+
+    # @param method [String] is an http method to perform ( +'Get'+, +'Post'+,
+    #   etc.)
+    # @param body [String] is for request data. Json here (selenium wants it)
+    #   or nil
+    # @return result of call whatever it is
     def api_request(path, method, body)
       uri = call_uri(path)
       req = Net::HTTP.const_get(method)
