@@ -47,7 +47,7 @@ module Locatine
       timer
       classic_find
       guess if name_only?
-      return self unless empty?
+      return found unless empty?
 
       find_by_magic if known && tolerance.positive?
       similar? ? found : not_found

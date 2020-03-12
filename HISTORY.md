@@ -185,3 +185,4 @@ First release. Locatine can
 # Version 0.03118
 - Fixed bug with no unnecessary magic if element appears after been concidered lost
 - Comment fixes
+- Now what was found by guess will be showed
