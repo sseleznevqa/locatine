@@ -3,7 +3,7 @@
 module Locatine
   module ResultsHelpers
     #
-    # Trying to guess element here
+    # Trying to compare elements here
     module Comparing
       private
 

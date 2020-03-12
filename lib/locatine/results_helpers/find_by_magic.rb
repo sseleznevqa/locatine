@@ -19,8 +19,8 @@ module Locatine
       def classic_thread
         Thread.new do
           while empty?
-            sleep 0.5
             classic_find
+            sleep 1
           end
         end
       end

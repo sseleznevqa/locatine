@@ -3,7 +3,7 @@
 module Locatine
   module ResultsHelpers
     #
-    # Trying to guess element here
+    # Trying to configure results here
     module Config
       private
 
