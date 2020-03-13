@@ -49,6 +49,21 @@ describe 'locatine' do
   end
 
   seed = rand(1_000_000)
+  it "cannot find element if timeout is reached (seed == #{seed})" do
+    random = Random.new(seed)
+    array = Array.new(10_000) { random.rand }
+    @b.goto page 12
+    @d.find_element(locatine: 'something to find span')
+    @b.goto page 13
+    @d.execute_script('document.randoms = arguments[0]', array)
+    sleep 5
+    expect do
+      @d.find_element(locatine: { 'name' => 'something to find span',
+                                  'timeout' => 10 }.to_json)
+    end .to raise_error Selenium::WebDriver::Error::NoSuchElementError
+  end
+
+  seed = rand(1_000_000)
   it 'finds untouched element on changing page' do
     random = Random.new(seed)
     array = Array.new(10_000) { random.rand }
