@@ -3,8 +3,8 @@
 Gem::Specification.new do |s|
   s.name        = 'locatine'
   s.version     = '0.03143'
-  s.summary     = 'Element locating tool based on watir'
-  s.description = 'The main goal to write locators never'
+  s.summary     = 'Element locating proxy for selenium'
+  s.description = 'The main goal is to write locators (almost) never'
   s.authors     = ['Sergei Seleznev']
   s.email       = 's_seleznev_qa@hotmail.com'
   s.files       = ['lib/locatine.rb', 'README.md'] +
