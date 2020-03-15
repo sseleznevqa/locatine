@@ -44,5 +44,16 @@ module Locatine
       @info = @session.execute_script(info, self)
       @info
     end
+
+    ##
+    # Method to get tag of the particular element or return it if it was
+    # gathered before
+    def tag_name
+      return @tag if @tag
+
+      script = "return arguments[0].tagName"
+      @tag = @session.execute_script(script, self)
+      return @tag
+    end
   end
 end

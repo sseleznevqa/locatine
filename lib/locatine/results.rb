@@ -69,7 +69,11 @@ module Locatine
       guess if name_only?
       return if first.class == Locatine::Error || empty?
 
-      log_found if name_only?
+      check_guess if name_only?
+    end
+
+    def check_guess
+      (map { |i| i.tag_name }).uniq.size == 1 ? log_found : clear
     end
 
     def simple_find

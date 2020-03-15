@@ -13,7 +13,7 @@ module Locatine
 
     configure do
       set :sessions, {}
-      set :selenium, ENV['SELENIUM'] || 'http://localhost:4444'
+      set :selenium, 'http://localhost:4444'
       set :headers, 'Content-Type' => 'application/json'
       set :port, 7733
     end

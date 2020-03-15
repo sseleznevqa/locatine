@@ -189,4 +189,6 @@ First release. Locatine can
 
 # Version 0.03143
 - Fixed bug with endless search on stale element error
--
+- Fixed bug with broken guessing on a specific pages
+- Passing selenium url via system var SELENIUM is out.
+- Python example is added
