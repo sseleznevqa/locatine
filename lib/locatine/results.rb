@@ -73,7 +73,7 @@ module Locatine
     end
 
     def check_guess
-      (map { |i| i.tag_name }).uniq.size == 1 ? log_found : clear
+      map(&:tag_name).uniq.size == 1 ? log_found : clear
     end
 
     def simple_find

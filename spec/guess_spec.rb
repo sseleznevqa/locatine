@@ -35,13 +35,15 @@ describe 'user' do
 
   it 'fails to find anyting if there is nothing' do
     @b.goto page(16)
-    expect{@b.driver.find_element(locatine: 'never span')}.to raise_error Selenium::WebDriver::Error::NoSuchElementError
+    expect { @b.driver.find_element(locatine: 'never span') }
+      .to raise_error Selenium::WebDriver::Error::NoSuchElementError
     expect(@b.driver.find_elements(locatine: 'nothing label').length).to eq 0
   end
 
   it 'fails to find anyting if there is something strange' do
     @b.goto page(16)
-    expect{@b.driver.find_element(locatine: 'strange one')}.to raise_error Selenium::WebDriver::Error::NoSuchElementError
+    expect { @b.driver.find_element(locatine: 'strange one') }
+      .to raise_error Selenium::WebDriver::Error::NoSuchElementError
     expect(@b.driver.find_elements(locatine: 'not good').length).to eq 0
   end
 

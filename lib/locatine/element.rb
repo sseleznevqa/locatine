@@ -51,9 +51,9 @@ module Locatine
     def tag_name
       return @tag if @tag
 
-      script = "return arguments[0].tagName"
+      script = 'return arguments[0].tagName'
       @tag = @session.execute_script(script, self)
-      return @tag
+      @tag
     end
   end
 end
