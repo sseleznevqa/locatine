@@ -186,3 +186,9 @@ First release. Locatine can
 - Fixed bug with no unnecessary magic if element appears after been concidered lost
 - Comment fixes
 - Now what was found by guess will be showed
+
+# Version 0.03143
+- Fixed bug with endless search on stale element error
+- Fixed bug with broken guessing on a specific pages
+- Passing selenium url via system var SELENIUM is out.
+- Python example is added

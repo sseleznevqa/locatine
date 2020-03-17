@@ -14,7 +14,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.03118**.
+Version of Locatine is **0.03143**.
 
 ## Installation
 
@@ -48,14 +48,16 @@ driver.quit
 4. Run the locatine daemon
 
 ```
-    $ SELENIUM=http://localhost:4444 locatine-daemon.rb --port=7733
+    $ locatine-daemon.rb --port=7733 --selenium="http://localhost:4444"
 ```
 
-5. SELENIUM - is for url where selenium hub is started, port is the port for your code to connect. 4444 and 7733 are defaults.
+5. *--selenium* - is for url where selenium hub is started, *--port* is the port for your code to connect. 4444 and 7733 are defaults.
 6. Run your code
 7. Data of element will be stored to ./default.json file.
 8. Now if id of your element is changed on the page Locatine will show a warning and gonna try to retrieve it.
-9. See [example](https://github.com/sseleznevqa/locatine/tree/master/examples) to see how it really works.
+9. See [examples](https://github.com/sseleznevqa/locatine/tree/master/examples) to see how it really works.
+
+**NOTE!** All examples in readme are ruby language examples. But any language can be successfully used. You can find Python example using the link above.
 
 ## Session
 

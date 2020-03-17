@@ -53,12 +53,13 @@ module Locatine
     # @return populated instance of Locatine::Results or an empty array
     #   or Locatine::Error
     def find(params, parent = nil)
+      @start_time = Time.now
       find_routine(params, parent)
     rescue RuntimeError => e
       raise e.message unless e.message == 'stale element reference'
 
       warn_unstable_page
-      find(params, parent)
+      find_routine(params, parent)
     end
 
     ##
@@ -134,8 +135,15 @@ module Locatine
       end
     end
 
+    def define_timeout(params)
+      params['timeout'] = params['timeout']
+                          .to_i - (Time.now - @start_time).round
+      params
+    end
+
     def find_routine(params, parent)
       results = Results.new
+      params = define_timeout(params)
       answer = results.find(self, params, parent)
       if !answer.empty? && answer.first.class != Locatine::Error
         @elements[results.name] = results.info
