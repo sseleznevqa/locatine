@@ -14,7 +14,7 @@ That's it.
 
 ## Stage of development:
 
-Version of Locatine is **0.03143**.
+Version of Locatine is **0.03353**.
 
 ## Installation
 

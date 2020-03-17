@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = 'locatine'
-  s.version     = '0.03143'
+  s.version     = '0.03353'
   s.summary     = 'Element locating proxy for selenium'
   s.description = 'The main goal is to write locators (almost) never'
   s.authors     = ['Sergei Seleznev']
